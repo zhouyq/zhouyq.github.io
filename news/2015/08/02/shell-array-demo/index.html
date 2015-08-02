@@ -4,22 +4,53 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>SA-Logs</title>
+    <title>shell 数组应用实例 | SA-Logs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zhouyq">
     
 
     
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SA-Logs">
-<meta property="og:url" content="http://salogs.com/index.html">
+    <meta name="description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)
+
+说明：  
+
+默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来
+
+shell中的默认分隔符可以通过修改 $IFS变量来设置
+
+
+
+数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell 数组应用实例">
+<meta property="og:url" content="http://salogs.com/news/2015/08/02/shell-array-demo/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description">
+<meta property="og:description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)
+
+说明：  
+
+默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来
+
+shell中的默认分隔符可以通过修改 $IFS变量来设置
+
+
+
+数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
+<meta property="og:updated_time" content="2015-08-02T10:46:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SA-Logs">
-<meta name="twitter:description">
+<meta name="twitter:title" content="shell 数组应用实例">
+<meta name="twitter:description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)
+
+说明：  
+
+默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来
+
+shell中的默认分隔符可以通过修改 $IFS变量来设置
+
+
+
+数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
 
     
     <link rel="alternative" href="/atom.xml" title="SA-Logs" type="application/atom+xml">
@@ -73,12 +104,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2015/08/02/shell-array-demo/" title="shell 数组应用实例" itemprop="url">shell 数组应用实例</a>
@@ -92,9 +121,16 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <h1 id="数组定义">数组定义</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空数组</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义并给数组赋值</span></span><br><span class="line">arr=(a b c d e)</span><br></pre></td></tr></table></figure>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数组定义"><span class="toc-number">1.</span> <span class="toc-text">数组定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组读取/删除"><span class="toc-number">2.</span> <span class="toc-text">数组读取/删除</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切片/元素替换"><span class="toc-number">3.</span> <span class="toc-text">切片/元素替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">4.</span> <span class="toc-text">实例</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="数组定义">数组定义</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空数组</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义并给数组赋值</span></span><br><span class="line">arr=(a b c d e)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>说明：</strong>  </p>
 <ul>
@@ -119,14 +155,9 @@
 <p>日志格式：X-Forworld-IP User-IP YYYY-MM-DD HH:mm:ss method “URL” HTTP响应码 服务器处理时间 返回大小 “Refer” “浏览器信息” “虚拟主机域名” 真实处理请求的主机</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line">AWKB<span class="keyword">in</span>=<span class="string">"/usr/bin/awk"</span></span><br><span class="line">EGREPB<span class="keyword">in</span>=<span class="string">"/bin/egrep"</span></span><br><span class="line">SORTB<span class="keyword">in</span>=<span class="string">"/usr/bin/sort"</span></span><br><span class="line">SEDB<span class="keyword">in</span>=<span class="string">"/bin/sed"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 虚拟主机</span></span><br><span class="line">VSName=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时间段</span></span><br><span class="line">TimePeriod=<span class="variable">$2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤字符串</span></span><br><span class="line">FilterKeys=<span class="string">''</span><span class="string">'DNSPod-Monitor|JianKongBao'</span><span class="string">''</span></span><br><span class="line"><span class="comment"># 日志目录</span></span><br><span class="line">LOGPath=<span class="string">"/logs/nginx"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义最终输出的数组变量</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (( TimePeriod &gt; <span class="number">0</span> ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  LogTime=`date <span class="operator">-d</span> <span class="string">"- <span class="variable">$&#123;TimePeriod&#125;</span>hours"</span> +%Y-%m-%d-%H`</span><br><span class="line">  LogFile=<span class="variable">$&#123;VSName&#125;</span>_<span class="variable">$&#123;LogTime&#125;</span>.log</span><br><span class="line"></span><br><span class="line">  Result=(<span class="variable">$&#123;Result[@]&#125;</span> `<span class="variable">$AWKBin</span> <span class="string">'&#123;if($5!~/HEAD/ &amp;&amp; $5!~/\"\"/ ) print $0&#125;'</span> <span class="variable">$&#123;LOGPath&#125;</span>/<span class="variable">$&#123;LogFile&#125;</span> | \</span><br><span class="line">         <span class="variable">$EGREPBin</span> -v <span class="variable">$FilterKeys</span> | <span class="variable">$AWKBin</span> <span class="string">'&#123;print $NF&#125;'</span> | <span class="variable">$AWKBin</span> -F <span class="string">'@'</span> <span class="string">'&#123;print $1&#125;'</span> |\</span><br><span class="line">         <span class="variable">$SORTBin</span> -u`)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"第<span class="variable">$TimePeriod</span> 个日志:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ((TimePeriod--))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"未去重：<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">Result=($(awk -vRS=<span class="string">' '</span> <span class="string">'!a[$1]++'</span> &lt;&lt;&lt; <span class="variable">$&#123;Result[@]&#125;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"去重以后:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
@@ -144,81 +175,43 @@
 
 
 
-
-<div class="comments-count">
+	<div class="article-share" id="share">
 	
-</div>
+	  <div data-url="http://salogs.com/news/2015/08/02/shell-array-demo/" data-title="shell 数组应用实例 | SA-Logs" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
 
 </footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/news/2015/08/02/migration-to-github/" title="salogs正式迁移到github" itemprop="url">salogs正式迁移到github</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-01T16:00:00.000Z" itemprop="datePublished"> 发表于 2015-08-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>由于之前的blog内容过于陈旧，很多文档现在来看会给广大朋友带来困扰，因此决定将之前的所有内容都抛弃，从今天开始重新写！</p>
-<p>最近5年由于工作原因也没有顾得上更新blog，近期会有一系列文档更新，都是这五年来的一些工作经验。</p>
-<p>由于大家共识的问题，本blog与 2015-8-2 正式迁移到<a href="https://github.com/zhouyq/zhouyq.github.io" target="_blank" rel="external">GitHub</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/其他/">其他</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
+   	       
+	</article>
 	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/news/2015/08/02/migration-to-github/"  title="salogs正式迁移到github">
+ <strong>下一篇：</strong><br/> 
+ <span>salogs正式迁移到github
+</span>
+</a>
 </div>
 
-</footer>
+</nav>
 
+	
 
-    </article>
-
-
-
-
-
-
-
-</div>
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数组定义"><span class="toc-number">1.</span> <span class="toc-text">数组定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组读取/删除"><span class="toc-number">2.</span> <span class="toc-text">数组读取/删除</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切片/元素替换"><span class="toc-number">3.</span> <span class="toc-text">切片/元素替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">4.</span> <span class="toc-text">实例</span></a></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -354,6 +347,11 @@ $(document).ready(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
   
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
   $(window).resize(function(){
     getSize(); 
     if (myWidth >= 1024) {
@@ -362,12 +360,89 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
@@ -428,4 +503,4 @@ $(document).ready(function(){
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
