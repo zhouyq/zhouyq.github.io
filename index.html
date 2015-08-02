@@ -81,6 +81,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/news/2015/08/02/aliyun-vpc-snat-md/" title="阿里云VPC网络无EIP的主机上网问题" itemprop="url">阿里云VPC网络无EIP的主机上网问题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-02T13:38:58.000Z" itemprop="datePublished"> 发表于 2015-08-02</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="问题由来">问题由来</h1><p>阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。</p>
+<h1 id="VPC结构图">VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
+<h1 id="虚拟路由器配置">虚拟路由器配置</h1><h2 id="添加路由">添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
+<p><img src="/img/aliyun-vpc-snat-2.jpg" alt=""></p>
+<h1 id="绑定EIP的主机配置">绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则">iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -t nat -I POSTROUTING <span class="operator">-s</span> <span class="number">192.168</span>.<span class="number">2.0</span>/<span class="number">24</span> -j SNAT --to-source <span class="number">192.168</span>.<span class="number">2.20</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意：</strong> ubuntu 14.04 系统保存iptables设置需要安装iptables-persistent包，然后通过 <code>service iptables-persistent save</code> 的方式保存配置，安装完iptables-persistent后该服务随系统一起启动并会把保存的配置应用</p>
+</blockquote>
+<h2 id="开启IP转发">开启IP转发</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.ip_forward=1"</span> &gt;&gt;  /etc/sysctl.conf &amp;&amp; sysctl -p</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/经验分享/">经验分享</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/IaaS/">IaaS</a><a href="/tags/route/">route</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/news/2015/08/02/shell-array-demo/" title="shell 数组应用实例" itemprop="url">shell 数组应用实例</a>
   </h1>
   <p class="article-author">By
@@ -180,7 +247,7 @@
         
         <p>由于之前的blog内容过于陈旧，很多文档现在来看会给广大朋友带来困扰，因此决定将之前的所有内容都抛弃，从今天开始重新写！</p>
 <p>最近5年由于工作原因也没有顾得上更新blog，近期会有一系列文档更新，都是这五年来的一些工作经验。</p>
-<p>由于大家共识的问题，本blog与 2015-8-2 正式迁移到<a href="https://github.com/zhouyq/zhouyq.github.io" target="_blank" rel="external">GitHub</a></p>
+<p>由于大家共识的原因，本blog于2015-08-02正式迁移到<a href="https://github.com/zhouyq/zhouyq.github.io" target="_blank" rel="external">GitHub</a></p>
 
         
         
@@ -234,13 +301,11 @@
 		  
 		
 		  
-		
-		  
-		
-		  
-		
-		  
 			<li><a href="/categories/linux/script/" title="script">script<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经验分享/" title="经验分享">经验分享<sup>1</sup></a></li>
 		  
 		
 		</ul>
@@ -253,7 +318,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
 			
 		
 			
@@ -269,9 +338,7 @@
 			
 		
 			
-		
-			
-		
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 		</ul>
