@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+  <title><![CDATA[SA-Logs]]></title>
+  <subtitle><![CDATA[拥抱开源，分享经验!]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://salogs.com//"/>
+  <updated>2015-08-02T13:47:27.000Z</updated>
+  <id>http://salogs.com//</id>
+  
+  <author>
+    <name><![CDATA[zhouyq]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[阿里云VPC网络无EIP的主机上网问题]]></title>
+    <link href="http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/"/>
+    <id>http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/</id>
+    <published>2015-08-02T13:38:58.000Z</published>
+    <updated>2015-08-02T13:47:27.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="问题由来">问题由来</h1><p>阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。</p>
+<h1 id="VPC结构图">VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
+<h1 id="虚拟路由器配置">虚拟路由器配置</h1><h2 id="添加路由">添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
+<p><img src="/img/aliyun-vpc-snat-2.jpg" alt=""></p>
+<h1 id="绑定EIP的主机配置">绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则">iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -t nat -I POSTROUTING <span class="operator">-s</span> <span class="number">192.168</span>.<span class="number">2.0</span>/<span class="number">24</span> -j SNAT --to-source <span class="number">192.168</span>.<span class="number">2.20</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意：</strong> ubuntu 14.04 系统保存iptables设置需要安装iptables-persistent包，然后通过 <code>service iptables-persistent save</code> 的方式保存配置，安装完iptables-persistent后该服务随系统一起启动并会把保存的配置应用</p>
+</blockquote>
+<h2 id="开启IP转发">开启IP转发</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.ip_forward=1"</span> &gt;&gt;  /etc/sysctl.conf &amp;&amp; sysctl -p</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="问题由来">问题由来</h1><p>阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，]]>
+    </summary>
+    
+      <category term="IaaS" scheme="http://salogs.com/tags/IaaS/"/>
+    
+      <category term="route" scheme="http://salogs.com/tags/route/"/>
+    
+      <category term="经验分享" scheme="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[shell 数组应用实例]]></title>
+    <link href="http://salogs.com/news/2015/08/02/shell-array-demo/"/>
+    <id>http://salogs.com/news/2015/08/02/shell-array-demo/</id>
+    <published>2015-08-02T10:01:37.000Z</published>
+    <updated>2015-08-02T10:50:47.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="数组定义">数组定义</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空数组</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义并给数组赋值</span></span><br><span class="line">arr=(a b c d e)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>说明：</strong>  </p>
+<ul>
+<li><p>默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来</p>
+</li>
+<li><p>shell中的默认分隔符可以通过修改 $IFS变量来设置</p>
+</li>
+</ul>
+</blockquote>
+<h1 id="数组读取/删除">数组读取/删除</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算长度</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[@]&#125;</span>  <span class="comment"># 结果: 5</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[*]&#125;</span>  <span class="comment"># 结果: 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取出所有数据</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]&#125;</span>  <span class="comment"># 结果: a b c d e</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a b c d e</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取出第二个元素的数据</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[1]&#125;</span>  <span class="comment"># 结果: b</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历数组</span></span><br><span class="line">filelist=(`ls`)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$&#123;filelist[@]&#125;</span>;<span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$file</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除第二个元素</span></span><br><span class="line"><span class="built_in">unset</span> arr[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a c d e</span></span><br></pre></td></tr></table></figure>
+<h1 id="切片/元素替换">切片/元素替换</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切片</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"></span><br><span class="line">arr2=(<span class="variable">$&#123;arr[@]:0:3&#125;</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr2[@]&#125;</span>  <span class="comment"># 结果 a b c</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换</span></span><br><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]/a/aaa&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><strong>切片(分片):</strong> 直接通过 ${数组名[@或*]:起始位置:长度} 切片原先数组，返回是字符串，中间用“空格”分开，因此如果加上”()”，将得到切片数组，上面例子：c 就是一个新数据。</li>
+</ul>
+<ul>
+<li><strong>替换:</strong> ${数组名[@或*]/查找字符/替换字符} 该操作不会改变原先数组内容，如果需要修改，请重新定义变量并赋值。</li>
+</ul>
+</blockquote>
+<h1 id="实例">实例</h1><blockquote>
+<p>在一个多域名的web server环境中，通过分析访问日志，统计最近8小时有用户访问的域名（去重），并显示。</p>
+<p>日志格式：X-Forworld-IP User-IP YYYY-MM-DD HH:mm:ss method “URL” HTTP响应码 服务器处理时间 返回大小 “Refer” “浏览器信息” “虚拟主机域名” 真实处理请求的主机</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line">AWKB<span class="keyword">in</span>=<span class="string">"/usr/bin/awk"</span></span><br><span class="line">EGREPB<span class="keyword">in</span>=<span class="string">"/bin/egrep"</span></span><br><span class="line">SORTB<span class="keyword">in</span>=<span class="string">"/usr/bin/sort"</span></span><br><span class="line">SEDB<span class="keyword">in</span>=<span class="string">"/bin/sed"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 虚拟主机</span></span><br><span class="line">VSName=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时间段</span></span><br><span class="line">TimePeriod=<span class="variable">$2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤字符串</span></span><br><span class="line">FilterKeys=<span class="string">''</span><span class="string">'DNSPod-Monitor|JianKongBao'</span><span class="string">''</span></span><br><span class="line"><span class="comment"># 日志目录</span></span><br><span class="line">LOGPath=<span class="string">"/logs/nginx"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义最终输出的数组变量</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (( TimePeriod &gt; <span class="number">0</span> ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  LogTime=`date <span class="operator">-d</span> <span class="string">"- <span class="variable">$&#123;TimePeriod&#125;</span>hours"</span> +%Y-%m-%d-%H`</span><br><span class="line">  LogFile=<span class="variable">$&#123;VSName&#125;</span>_<span class="variable">$&#123;LogTime&#125;</span>.log</span><br><span class="line"></span><br><span class="line">  Result=(<span class="variable">$&#123;Result[@]&#125;</span> `<span class="variable">$AWKBin</span> <span class="string">'&#123;if($5!~/HEAD/ &amp;&amp; $5!~/\"\"/ ) print $0&#125;'</span> <span class="variable">$&#123;LOGPath&#125;</span>/<span class="variable">$&#123;LogFile&#125;</span> | \</span><br><span class="line">         <span class="variable">$EGREPBin</span> -v <span class="variable">$FilterKeys</span> | <span class="variable">$AWKBin</span> <span class="string">'&#123;print $NF&#125;'</span> | <span class="variable">$AWKBin</span> -F <span class="string">'@'</span> <span class="string">'&#123;print $1&#125;'</span> |\</span><br><span class="line">         <span class="variable">$SORTBin</span> -u`)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"第<span class="variable">$TimePeriod</span> 个日志:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ((TimePeriod--))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"未去重：<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">Result=($(awk -vRS=<span class="string">' '</span> <span class="string">'!a[$1]++'</span> &lt;&lt;&lt; <span class="variable">$&#123;Result[@]&#125;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"去重以后:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="数组定义">数组定义</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空数组</s]]>
+    </summary>
+    
+      <category term="array" scheme="http://salogs.com/tags/array/"/>
+    
+      <category term="script" scheme="http://salogs.com/tags/script/"/>
+    
+      <category term="shell" scheme="http://salogs.com/tags/shell/"/>
+    
+      <category term="linux" scheme="http://salogs.com/categories/linux/"/>
+    
+      <category term="script" scheme="http://salogs.com/categories/linux/script/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[salogs正式迁移到github]]></title>
+    <link href="http://salogs.com/news/2015/08/02/migration-to-github/"/>
+    <id>http://salogs.com/news/2015/08/02/migration-to-github/</id>
+    <published>2015-08-01T16:00:00.000Z</published>
+    <updated>2015-08-02T12:27:05.000Z</updated>
+    <content type="html"><![CDATA[<p>由于之前的blog内容过于陈旧，很多文档现在来看会给广大朋友带来困扰，因此决定将之前的所有内容都抛弃，从今天开始重新写！</p>
+<p>最近5年由于工作原因也没有顾得上更新blog，近期会有一系列文档更新，都是这五年来的一些工作经验。</p>
+<p>由于大家共识的原因，本blog于2015-08-02正式迁移到<a href="https://github.com/zhouyq/zhouyq.github.io" target="_blank" rel="external">GitHub</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>由于之前的blog内容过于陈旧，很多文档现在来看会给广大朋友带来困扰，因此决定将之前的所有内容都抛弃，从今天开始重新写！</p>
+<p>最近5年由于工作原因也没有顾得上更新blog，近期会有一系列文档更新，都是这五年来的一些工作经验。</p>
+<p>由于大家共识的原因，本b]]>
+    </summary>
+    
+      <category term="其他" scheme="http://salogs.com/tags/%E5%85%B6%E4%BB%96/"/>
+    
+  </entry>
+  
+</feed>
