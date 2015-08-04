@@ -5,7 +5,7 @@
   <subtitle><![CDATA[拥抱开源，分享经验!]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://salogs.com//"/>
-  <updated>2015-08-04T01:56:11.000Z</updated>
+  <updated>2015-08-04T01:59:45.000Z</updated>
   <id>http://salogs.com//</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[\[转\]十条有用的 GO 技术]]></title>
+    <title><![CDATA[【转】十条有用的 GO 技术]]></title>
     <link href="http://salogs.com/news/2015/08/04/ten-go-best-practice/"/>
     <id>http://salogs.com/news/2015/08/04/ten-go-best-practice/</id>
     <published>2015-08-04T01:16:16.000Z</published>
-    <updated>2015-08-04T01:56:11.000Z</updated>
+    <updated>2015-08-04T01:59:45.000Z</updated>
     <content type="html"><![CDATA[<p>原文<a href="http://mikespook.com/2014/07/%e5%8d%81%e6%9d%a1%e6%9c%89%e7%94%a8%e7%9a%84-go-%e6%8a%80%e6%9c%af/" target="_blank" rel="external">在此</a>，实用总结。</p>
 <hr>
 <p>#十条有用的 Go 技术<br>这里是我过去几年中编写的大量 Go 代码的经验总结而来的自己的最佳实践。我相信它们具有弹性的。这里的弹性是指：<br>某个应用需要适配一个灵活的环境。你不希望每过 3 到 4 个月就不得不将它们全部重构一遍。添加新的特性应当很容易。许多人参与开发该应用，它应当可以被理解，且维护简单。许多人使用该应用，bug 应该容易被发现并且可以快速的修复。我用了很长的时间学到了这些事情。其中的一些很微小，但对于许多事情都会有影响。所有这些都仅仅是建议，具体情况具体对待，并且如果有帮助的话务必告诉我。随时留言:)</p>
