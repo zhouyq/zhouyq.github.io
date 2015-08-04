@@ -5,7 +5,7 @@
   <subtitle><![CDATA[拥抱开源，分享经验!]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://salogs.com//"/>
-  <updated>2015-08-04T03:31:14.000Z</updated>
+  <updated>2015-08-04T03:36:14.000Z</updated>
   <id>http://salogs.com//</id>
   
   <author>
@@ -20,12 +20,11 @@
     <link href="http://salogs.com/news/2015/08/04/ten-go-best-practice/"/>
     <id>http://salogs.com/news/2015/08/04/ten-go-best-practice/</id>
     <published>2015-08-04T01:16:16.000Z</published>
-    <updated>2015-08-04T03:31:14.000Z</updated>
+    <updated>2015-08-04T03:36:14.000Z</updated>
     <content type="html"><![CDATA[<p>原文<a href="http://mikespook.com/2014/07/%e5%8d%81%e6%9d%a1%e6%9c%89%e7%94%a8%e7%9a%84-go-%e6%8a%80%e6%9c%af/" target="_blank" rel="external">在此</a>，实用总结。</p>
 <hr>
-<p>#十条有用的 Go 技术<br>这里是我过去几年中编写的大量 Go 代码的经验总结而来的自己的最佳实践。我相信它们具有弹性的。这里的弹性是指：<br>某个应用需要适配一个灵活的环境。你不希望每过 3 到 4 个月就不得不将它们全部重构一遍。添加新的特性应当很容易。许多人参与开发该应用，它应当可以被理解，且维护简单。许多人使用该应用，bug 应该容易被发现并且可以快速的修复。我用了很长的时间学到了这些事情。其中的一些很微小，但对于许多事情都会有影响。所有这些都仅仅是建议，具体情况具体对待，并且如果有帮助的话务必告诉我。随时留言:)</p>
-<p>#1. 使用单一的 GOPATH</p>
-<p>多个 GOPATH 的情况并不具有弹性。GOPATH 本身就是高度自我完备的（通过导入路径）。有多个 GOPATH 会导致某些副作用，例如可能使用了给定的库的不同的版本。你可能在某个地方升级了它，但是其他地方却没有升级。而且，我还没遇到过任何一个需要使用多个 GOPATH 的情况。所以只使用单一的 GOPATH，这会提升你 Go 的开发进度。</p>
+<h1 id="十条有用的_Go_技术">十条有用的 Go 技术</h1><p>这里是我过去几年中编写的大量 Go 代码的经验总结而来的自己的最佳实践。我相信它们具有弹性的。这里的弹性是指：<br>某个应用需要适配一个灵活的环境。你不希望每过 3 到 4 个月就不得不将它们全部重构一遍。添加新的特性应当很容易。许多人参与开发该应用，它应当可以被理解，且维护简单。许多人使用该应用，bug 应该容易被发现并且可以快速的修复。我用了很长的时间学到了这些事情。其中的一些很微小，但对于许多事情都会有影响。所有这些都仅仅是建议，具体情况具体对待，并且如果有帮助的话务必告诉我。随时留言:)</p>
+<h1 id="1-_使用单一的_GOPATH">1. 使用单一的 GOPATH</h1><p>多个 GOPATH 的情况并不具有弹性。GOPATH 本身就是高度自我完备的（通过导入路径）。有多个 GOPATH 会导致某些副作用，例如可能使用了给定的库的不同的版本。你可能在某个地方升级了它，但是其他地方却没有升级。而且，我还没遇到过任何一个需要使用多个 GOPATH 的情况。所以只使用单一的 GOPATH，这会提升你 Go 的开发进度。</p>
 <p>许多人不同意这一观点，接下来我会做一些澄清。像 <a href="https://github.com/coreos/etcd" target="_blank" rel="external">etcd</a> 或 <a href="https://camlistore.org/" target="_blank" rel="external">camlistore</a> 这样的大项目使用了像 <a href="https://github.com/tools/godep" target="_blank" rel="external">godep</a> 这样的工具，将所有依赖保存到某个目录中。也就是说，这些项目自身有一个单一的 GOPATH。它们只能在这个目录里找到对应的版本。除非你的项目很大并且极为重要，否则不要为每个项目使用不同的 GOPATH。如果你认为项目需要一个自己的 GOPATH 目录，那么就创建它，否则不要尝试使用多个 GOPATH。它只会拖慢你的进度。</p>
 <h1 id="2-_将_for-select_封装到函数中">2. 将 for-select 封装到函数中</h1><p>如果在某个条件下，你需要从 for-select 中退出，就需要使用标签。例如：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> main() &#123;</span><br><span class="line"> </span><br><span class="line">L:</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-time.After(time.Second):</span><br><span class="line">            fmt.Println(<span class="string">"hello"</span>)</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span> L</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    fmt.Println(<span class="string">"ending"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -34,8 +33,7 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">func</span> main() &#123;</span><br><span class="line">    foo()</span><br><span class="line">    fmt.Println(<span class="string">"ending"</span>)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">func</span> foo() &#123;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-time.After(time.Second):</span><br><span class="line">            fmt.Println(<span class="string">"hello"</span>)</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>你还可以返回一个错误（或任何其他值），也是同样漂亮的，只需要：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 阻塞</span><br><span class="line"><span class="keyword">if</span> err := foo(); err != nil &#123;</span><br><span class="line">    // 处理 err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>#3. 在初始化结构体时使用带有标签的语法</p>
-<p>这是一个无标签语法的例子：</p>
+<h1 id="3-_在初始化结构体时使用带有标签的语法">3. 在初始化结构体时使用带有标签的语法</h1><p>这是一个无标签语法的例子：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</span><br><span class="line">    Foo <span class="typename">string</span></span><br><span class="line">    Bar <span class="typename">int</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">func</span> main() &#123;</span><br><span class="line">    t := T&#123;<span class="string">"example"</span>, <span class="number">123</span>&#125; <span class="comment">// 无标签语法</span></span><br><span class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那么如果你添加一个新的字段到T结构体，代码会编译失败：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</span><br><span class="line">    Foo <span class="typename">string</span></span><br><span class="line">    Bar <span class="typename">int</span></span><br><span class="line">    Qux <span class="typename">string</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">func</span> main() &#123;</span><br><span class="line">    t := T&#123;<span class="string">"example"</span>, <span class="number">123</span>&#125; <span class="comment">// 无法编译</span></span><br><span class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
