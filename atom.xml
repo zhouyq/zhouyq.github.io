@@ -130,7 +130,7 @@
     <link href="http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/"/>
     <id>http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/</id>
     <published>2015-08-02T13:38:58.000Z</published>
-    <updated>2015-08-02T13:47:27.000Z</updated>
+    <updated>2015-08-04T03:20:09.000Z</updated>
     <content type="html"><![CDATA[<h1 id="问题由来">问题由来</h1><p>阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。</p>
 <h1 id="VPC结构图">VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
 <h1 id="虚拟路由器配置">虚拟路由器配置</h1><h2 id="添加路由">添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
