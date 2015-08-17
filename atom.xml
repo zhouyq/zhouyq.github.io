@@ -5,7 +5,7 @@
   <subtitle><![CDATA[拥抱开源，分享经验!]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://salogs.com//"/>
-  <updated>2015-08-04T03:36:14.000Z</updated>
+  <updated>2015-08-17T06:06:43.000Z</updated>
   <id>http://salogs.com//</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[MySQL备份与恢复]]></title>
+    <link href="http://salogs.com/news/2015/08/17/database-backup-and-recovery/"/>
+    <id>http://salogs.com/news/2015/08/17/database-backup-and-recovery/</id>
+    <published>2015-08-17T06:04:14.000Z</published>
+    <updated>2015-08-17T06:06:43.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="数据库备份与恢复">数据库备份与恢复</h1><h2 id="当前数据库结构">当前数据库结构</h2><p>db01 （主）</p>
+<p>db02 （从）</p>
+<h2 id="备份策略">备份策略</h2><ul>
+<li>每天一次全量备份</li>
+<li>每小时一次增量备份</li>
+<li>通过热备工具（不锁表，不影响线上应用）备份主库数据</li>
+<li>备份数据保存到db01，备份完成scp到db02</li>
+<li>保留一个月的增量及全量备份</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>备份类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00:01</td>
+<td>全量备份</td>
+</tr>
+<tr>
+<td>01:01</td>
+<td>增量备份(当天首次)</td>
+</tr>
+<tr>
+<td>02:01~23:01</td>
+<td>增量备份</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>随着数据量的增加，全量备份可以做成每周一次，每2~8小时一次增量备份</p>
+</blockquote>
+<h2 id="备份目录">备份目录</h2><p>db{01,02}:/data/backup/{full,incremental}/</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">backup/</span><br><span class="line">├── full</span><br><span class="line">│   ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>       <span class="comment"># 每日全量备份</span></span><br><span class="line">│   └── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>.log   <span class="comment"># 全量备份日志</span></span><br><span class="line">└── incremental </span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_14        <span class="comment"># 每小时增量备份</span></span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_14.log    <span class="comment"># 每小时增量备份日志</span></span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_15</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_15.log</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_16</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_16.log</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_17</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_17.log</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_18</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_18.log</span><br><span class="line">    ├── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_19</span><br><span class="line">    └── <span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_19.log</span><br></pre></td></tr></table></figure>
+<h2 id="备份计划任务">备份计划任务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Info   : 数据库备份</span></span><br><span class="line"><span class="comment"># Author : zhouyq</span></span><br><span class="line"><span class="comment"># CTime  : 2015-08-16</span></span><br><span class="line"><span class="comment"># 全量备份</span></span><br><span class="line"><span class="number">1</span> <span class="number">0</span> * * *     /bin/bash /root/bin/bakdb.sh full</span><br><span class="line"><span class="comment"># 第一次增量备份</span></span><br><span class="line"><span class="number">1</span> <span class="number">1</span> * * *     /bin/bash /root/bin/bakdb.sh incremental first</span><br><span class="line"><span class="comment"># 其他时间段增量备份</span></span><br><span class="line"><span class="number">1</span> <span class="number">2</span>-<span class="number">23</span> * * *  /bin/bash /root/bin/bakdb.sh incremental</span><br></pre></td></tr></table></figure>
+<h2 id="备份脚本">备份脚本</h2><p>/root/bin/bakdb.sh</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line">fullPath=<span class="string">"/data/backup/full"</span></span><br><span class="line">incrPath=<span class="string">"/data/backup/incremental"</span></span><br><span class="line">bakdate=`date +<span class="string">'%F'</span>`</span><br><span class="line">bakhour=`date +<span class="string">'%H'</span>`</span><br><span class="line"></span><br><span class="line">oneHourAgo=`date <span class="operator">-d</span> <span class="string">'1 hours ago'</span> +<span class="string">'%F_%H'</span>`</span><br><span class="line"></span><br><span class="line">BakB<span class="keyword">in</span>=<span class="string">"/usr/bin/innobackupex --no-timestamp --user=root --socket /data/db/tmp/mysql.sock  --defaults-file=/usr/local/mysql/my.cnf --sleep 100"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># backup function</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">hotbackup</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">  baktype=<span class="variable">$1</span></span><br><span class="line">  logfile=<span class="variable">$2</span></span><br><span class="line">  incrpath=<span class="variable">$3</span></span><br><span class="line">  bakpath=<span class="variable">$4</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="variable">$BakBin</span>  <span class="variable">$bakpath</span>   &gt; <span class="variable">$logfile</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">  <span class="keyword">elif</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="variable">$BakBin</span> --incremental <span class="variable">$incrpath</span> --incremental-basedir <span class="variable">$bakpath</span> &gt; <span class="variable">$logfile</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============= Main =============</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></span><br><span class="line">   <span class="comment"># 全量备份</span></span><br><span class="line">   hotbackup <span class="string">"full"</span> <span class="string">"<span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>.log"</span> <span class="string">"none"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></span><br><span class="line">   /usr/bin/scp -P <span class="number">9922</span> -rp  <span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>* db02:<span class="variable">$&#123;fullPath&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></span><br><span class="line">  <span class="comment"># 判断是否为第一次增量备份，只有第一次增量备份目录指向全量备份</span></span><br><span class="line">  <span class="comment"># 第二次开始增量备份的上一次目录指向第一次增量目录即可</span></span><br><span class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$2</span>"</span> == <span class="string">"first"</span> ];<span class="keyword">then</span></span><br><span class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></span><br><span class="line">     /usr/bin/scp -P <span class="number">9922</span> -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;oneHourAgo&#125;</span>"</span></span><br><span class="line">     /usr/bin/scp -P <span class="number">9922</span> -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h2 id="恢复">恢复</h2><h3 id="全量备份恢复">全量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --apply-log /data/backup/full/<span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span></span><br><span class="line"></span><br><span class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --move-back /data/backup/full/<span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span></span><br></pre></td></tr></table></figure>
+<h3 id="增量备份恢复">增量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/<span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span> </span><br><span class="line">  </span><br><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/<span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span> --incremental-dir=/data/backup/incremental/<span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_14  </span><br><span class="line">  </span><br><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/<span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span> --incremental-dir=/data/backup/incremental/<span class="number">2015</span>-<span class="number">08</span>-<span class="number">16</span>_15</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="数据库备份与恢复">数据库备份与恢复</h1><h2 id="当前数据库结构">当前数据库结构</h2><p>db01 （主）</p>
+<p>db02 （从）</p>
+<h2 id="备份策略">备份策略</h2><ul>
+<li>每天一次全量备份</li>
+<l]]>
+    </summary>
+    
+      <category term="XtraBackup" scheme="http://salogs.com/tags/XtraBackup/"/>
+    
+      <category term="经验分享" scheme="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+      <category term="MySQL" scheme="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/MySQL/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[【转】十条有用的 GO 技术]]></title>
