@@ -4,32 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>保存iptable规则并开机自动加载 | SA-Logs</title>
+    <title>配置 salt | SA-Logs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zhouyq">
     
 
     
-    <meta name="description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：
-Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4
-RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
-保存之后，可以">
+    <meta name="description" content="系列文章01.Ubuntu 安装salt02.配置 salt03.将client主机分组配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
+# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion res">
 <meta property="og:type" content="article">
-<meta property="og:title" content="保存iptable规则并开机自动加载">
-<meta property="og:url" content="http://salogs.com/news/2015/08/20/iptables-save/index.html">
+<meta property="og:title" content="配置 salt">
+<meta property="og:url" content="http://salogs.com/news/2015/08/20/configure-salt/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：
-Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4
-RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
-保存之后，可以">
-<meta property="og:updated_time" content="2015-08-20T09:07:36.000Z">
+<meta property="og:description" content="系列文章01.Ubuntu 安装salt02.配置 salt03.将client主机分组配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
+# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion res">
+<meta property="og:updated_time" content="2015-08-20T09:45:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="保存iptable规则并开机自动加载">
-<meta name="twitter:description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：
-Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4
-RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
-保存之后，可以">
+<meta name="twitter:title" content="配置 salt">
+<meta name="twitter:description" content="系列文章01.Ubuntu 安装salt02.配置 salt03.将client主机分组配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
+# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion res">
 
     
     <link rel="alternative" href="/atom.xml" title="SA-Logs" type="application/atom+xml">
@@ -89,14 +83,14 @@ RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/news/2015/08/20/iptables-save/" title="保存iptable规则并开机自动加载" itemprop="url">保存iptable规则并开机自动加载</a>
+      <a href="/news/2015/08/20/configure-salt/" title="配置 salt" itemprop="url">配置 salt</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-20T08:46:27.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
+    <time datetime="2015-08-20T09:31:26.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
     
   </p>
 </header>
@@ -105,39 +99,28 @@ RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-save"><span class="toc-number">1.</span> <span class="toc-text">iptables-save</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-persistent_(Debian/Ubuntu)"><span class="toc-number">2.</span> <span class="toc-text">iptables-persistent (Debian/Ubuntu)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存规则"><span class="toc-number">2.2.</span> <span class="toc-text">保存规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL_和_CentOS_保存规则"><span class="toc-number">3.</span> <span class="toc-text">RHEL 和 CentOS 保存规则</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系列文章"><span class="toc-number">1.</span> <span class="toc-text">系列文章</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#01-Ubuntu_安装salt"><span class="toc-number">1.1.</span> <span class="toc-text">01.Ubuntu 安装salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-配置_salt"><span class="toc-number">1.2.</span> <span class="toc-text">02.配置 salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-将client主机分组"><span class="toc-number">1.3.</span> <span class="toc-text">03.将client主机分组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端配置"><span class="toc-number">2.1.</span> <span class="toc-text">客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端操作"><span class="toc-number">2.2.</span> <span class="toc-text">服务端操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单验证执行命令"><span class="toc-number">3.</span> <span class="toc-text">简单验证执行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程执行命令"><span class="toc-number">3.1.</span> <span class="toc-text">远程执行命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下篇预告"><span class="toc-number">4.</span> <span class="toc-text">下篇预告</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-将client主机分组"><span class="toc-number">4.1.</span> <span class="toc-text">3.将client主机分组</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h1 id="iptables-save">iptables-save</h1><p>利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：</p>
-<p>Debian/Ubuntu: <code>iptables-save</code> &gt; /etc/iptables/rules.v4</p>
-<p>RHEL/CentOS: <code>iptables-save</code> &gt; /etc/sysconfig/iptables</p>
-<p>保存之后，可以通过iptables-restore命令载入（IPv4）：</p>
-<p>Debian/Ubuntu: <code>iptables-restore</code> &lt; /etc/iptables/rules.v4</p>
-<p>RHEL/CentOS: <code>iptables-restore</code> &lt; /etc/sysconfig/iptables</p>
-<p>上面是针对IPv5的规则，如果你有使用IPv6的规则，通常需要执行下面对应的IPv6保存和恢复的命令（IPv4：</p>
-<p>Debian/Ubuntu: <code>ip6tables-save</code> &gt; /etc/iptables/rules.v6<br>RHEL/CentOS: <code>ip6tables-save</code> &gt; /etc/sysconfig/ip6tables</p>
-<p><strong>注意：</strong> 这种方式只是保存规则和恢复的一种方式，并不是说保存规则后下次启动就会自动加载。一定要记住这点，如果要想系统启动后自动加载请看下面的方式。</p>
-<h1 id="iptables-persistent_(Debian/Ubuntu)">iptables-persistent (Debian/Ubuntu)</h1><p>从 Ubuntu 10.04 LTS (Lucid) 和 Debian 6.0 (Squeeze) 版本开始，可以通过安装一个名为 “iptables-persistent” 的包，安装后它以守护进程的方式来运行，系统重启后可以自动将保存的内容加载到iptables中。当然前提也是需要先保存规则。</p>
-<h2 id="安装">安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install iptables-persistent</span><br></pre></td></tr></table></figure>
-<h2 id="保存规则">保存规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service  iptables-persistent save</span><br><span class="line">* Saving rules...                                                                                                                                                                 *  IPv4...                                                                                                                                                                        *  IPv6...</span><br><span class="line"></span><br><span class="line">ls -<span class="number">1</span> /etc/iptables/</span><br><span class="line">rules.v4</span><br><span class="line">rules.v6</span><br><span class="line"></span><br><span class="line">cat  /etc/iptables/rules.v4</span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [<span class="number">5726</span>:<span class="number">774869</span>]</span><br><span class="line">:FORWARD ACCEPT [<span class="number">170</span>:<span class="number">27598</span>]</span><br><span class="line">:OUTPUT ACCEPT [<span class="number">5467</span>:<span class="number">789045</span>]</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*nat</span><br><span class="line">:PREROUTING ACCEPT [<span class="number">23</span>:<span class="number">1596</span>]</span><br><span class="line">:INPUT ACCEPT [<span class="number">0</span>:<span class="number">0</span>]</span><br><span class="line">:OUTPUT ACCEPT [<span class="number">9</span>:<span class="number">540</span>]</span><br><span class="line">:POSTROUTING ACCEPT [<span class="number">0</span>:<span class="number">0</span>]</span><br><span class="line">-A POSTROUTING <span class="operator">-s</span> <span class="number">10.0</span>.<span class="number">0.0</span>/<span class="number">16</span> -o eth0 -j MASQUERADE</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br></pre></td></tr></table></figure>
-<h1 id="RHEL_和_CentOS_保存规则">RHEL 和 CentOS 保存规则</h1><p>RHEL/CentOS 提供了简单的方式来持久化存储iptables规则，可以直接通过iptables服务的命令来完成：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chkconfig --list | grep iptables</span><br><span class="line">  iptables       	<span class="number">0</span>:off	<span class="number">1</span>:off	<span class="number">2</span>:on	<span class="number">3</span>:on	<span class="number">4</span>:on	<span class="number">5</span>:on	<span class="number">6</span>:off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不是开机启动，需要执行下面命令</span></span><br><span class="line">chkconfig iptables on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存规则</span></span><br><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
-<p>IPv4规则信息会保存到 /etc/sysconfig/iptables 文件中，IPv6 规则保存到 /etc/sysconfig/ip6tables 文件中。 必须执行<code>service iptables save</code> 命令才会保存，保存后系统重启后会自动加载。</p>
-  
+		<h1 id="系列文章">系列文章</h1><h2 id="01-Ubuntu_安装salt"><a href="http://salogs.com/news/2015/08/20/ubuntu-install-salt/">01.Ubuntu 安装salt</a></h2><h2 id="02-配置_salt"><a href="http://salogs.com/news/2015/08/20/configure-salt/">02.配置 salt</a></h2><h2 id="03-将client主机分组"><a href="http://salogs.com/news/2015/08/20/group-salt/">03.将client主机分组</a></h2><h1 id="配置">配置</h1><h2 id="客户端配置">客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置salt服务端地址</span></span><br><span class="line">vi /etc/salt/minion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里也可以写主机名</span></span><br><span class="line">master: <span class="number">192.168</span>.<span class="number">1.100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后重启服务</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
+<h2 id="服务端操作">服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></span><br><span class="line">salt-key list</span><br><span class="line"></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Rejected Keys:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接受所有验证请求</span></span><br><span class="line">salt-key -A</span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion host01 accepted.</span><br><span class="line">Key <span class="keyword">for</span> minion host02 accepted.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再查看一下</span></span><br><span class="line">salt-key list</span><br><span class="line">Accepted Keys:  <span class="comment"># 已经接受</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
+<h1 id="简单验证执行命令">简单验证执行命令</h1><h2 id="远程执行命令">远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">salt aws-bj* cmd.run uptime</span><br><span class="line">host01:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">13</span> up  <span class="number">2</span>:<span class="number">02</span>,  <span class="number">2</span> users,  load average: <span class="number">0.05</span>, <span class="number">0.03</span>, <span class="number">0.05</span></span><br><span class="line">host02:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">12</span> up  <span class="number">1</span>:<span class="number">28</span>,  <span class="number">1</span> user,  load average: <span class="number">0.00</span>, <span class="number">0.01</span>, <span class="number">0.05</span></span><br></pre></td></tr></table></figure>
+<h1 id="下篇预告">下篇预告</h1><h2 id="3-将client主机分组"><a href="http://salogs.com/news/2015/08/20/group-salt/">3.将client主机分组</a></h2>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/经验分享/">经验分享</a>►<a class="article-category-link" href="/categories/经验分享/Iptables/">Iptables</a>
+  <a class="article-category-link" href="/categories/运维自动化/">运维自动化</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/iptables/">iptables</a>
+  <span></span> <a href="/tags/salt/">salt</a>
   </div>
 
 </div>
@@ -146,7 +129,7 @@ RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://salogs.com/news/2015/08/20/iptables-save/" data-title="保存iptable规则并开机自动加载 | SA-Logs" data-tsina="null" class="share clearfix">
+	  <div data-url="http://salogs.com/news/2015/08/20/configure-salt/" data-title="配置 salt | SA-Logs" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -159,19 +142,11 @@ RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Ubuntu 安装salt</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/news/2015/08/17/database-backup-and-recovery/"  title="MySQL备份与恢复">
+<a href="/news/2015/08/20/ubuntu-install-salt/"  title="Ubuntu 安装salt">
  <strong>下一篇：</strong><br/> 
- <span>MySQL备份与恢复
+ <span>Ubuntu 安装salt
 </span>
 </a>
 </div>
@@ -186,7 +161,7 @@ RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-save"><span class="toc-number">1.</span> <span class="toc-text">iptables-save</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-persistent_(Debian/Ubuntu)"><span class="toc-number">2.</span> <span class="toc-text">iptables-persistent (Debian/Ubuntu)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存规则"><span class="toc-number">2.2.</span> <span class="toc-text">保存规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL_和_CentOS_保存规则"><span class="toc-number">3.</span> <span class="toc-text">RHEL 和 CentOS 保存规则</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系列文章"><span class="toc-number">1.</span> <span class="toc-text">系列文章</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#01-Ubuntu_安装salt"><span class="toc-number">1.1.</span> <span class="toc-text">01.Ubuntu 安装salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-配置_salt"><span class="toc-number">1.2.</span> <span class="toc-text">02.配置 salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-将client主机分组"><span class="toc-number">1.3.</span> <span class="toc-text">03.将client主机分组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端配置"><span class="toc-number">2.1.</span> <span class="toc-text">客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端操作"><span class="toc-number">2.2.</span> <span class="toc-text">服务端操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单验证执行命令"><span class="toc-number">3.</span> <span class="toc-text">简单验证执行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程执行命令"><span class="toc-number">3.1.</span> <span class="toc-text">远程执行命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下篇预告"><span class="toc-number">4.</span> <span class="toc-text">下篇预告</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-将client主机分组"><span class="toc-number">4.1.</span> <span class="toc-text">3.将client主机分组</span></a></li></ol></li></ol>
  
   </div>
 

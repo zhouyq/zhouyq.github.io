@@ -81,6 +81,69 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/news/2015/08/20/configure-salt/" title="配置 salt" itemprop="url">配置 salt</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-20T09:31:26.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="系列文章">系列文章</h1><h2 id="01-Ubuntu_安装salt"><a href="http://salogs.com/news/2015/08/20/ubuntu-install-salt/">01.Ubuntu 安装salt</a></h2><h2 id="02-配置_salt"><a href="http://salogs.com/news/2015/08/20/configure-salt/">02.配置 salt</a></h2><h2 id="03-将client主机分组"><a href="http://salogs.com/news/2015/08/20/group-salt/">03.将client主机分组</a></h2><h1 id="配置">配置</h1><h2 id="客户端配置">客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置salt服务端地址</span></span><br><span class="line">vi /etc/salt/minion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里也可以写主机名</span></span><br><span class="line">master: <span class="number">192.168</span>.<span class="number">1.100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后重启服务</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
+<h2 id="服务端操作">服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></span><br><span class="line">salt-key list</span><br><span class="line"></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Rejected Keys:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接受所有验证请求</span></span><br><span class="line">salt-key -A</span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion host01 accepted.</span><br><span class="line">Key <span class="keyword">for</span> minion host02 accepted.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再查看一下</span></span><br><span class="line">salt-key list</span><br><span class="line">Accepted Keys:  <span class="comment"># 已经接受</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
+<h1 id="简单验证执行命令">简单验证执行命令</h1><h2 id="远程执行命令">远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">salt aws-bj* cmd.run uptime</span><br><span class="line">host01:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">13</span> up  <span class="number">2</span>:<span class="number">02</span>,  <span class="number">2</span> users,  load average: <span class="number">0.05</span>, <span class="number">0.03</span>, <span class="number">0.05</span></span><br><span class="line">host02:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">12</span> up  <span class="number">1</span>:<span class="number">28</span>,  <span class="number">1</span> user,  load average: <span class="number">0.00</span>, <span class="number">0.01</span>, <span class="number">0.05</span></span><br></pre></td></tr></table></figure>
+<h1 id="下篇预告">下篇预告</h1><h2 id="3-将client主机分组"><a href="http://salogs.com/news/2015/08/20/group-salt/">3.将client主机分组</a></h2>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/运维自动化/">运维自动化</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/salt/">salt</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt" itemprop="url">Ubuntu 安装salt</a>
   </h1>
   <p class="article-author">By
@@ -717,7 +780,7 @@
 		  
 		
 		  
-			<li><a href="/categories/运维自动化/" title="运维自动化">运维自动化<sup>1</sup></a></li>
+			<li><a href="/categories/运维自动化/" title="运维自动化">运维自动化<sup>2</sup></a></li>
 		  
 		
 		</ul>
@@ -730,15 +793,15 @@
 		<ul class="clearfix">
 		
 			
+				<li><a href="/tags/salt/" title="salt">salt<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/salt/" title="salt">salt<sup>1</sup></a></li>
 			
 		
 			
