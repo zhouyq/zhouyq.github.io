@@ -11,19 +11,22 @@
     
 
     
-    <meta name="description" content="系列文章01.Ubuntu 安装salt02.配置 salt03.将client主机分组配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
-# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion res">
+    <meta name="description" content="配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
+# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion restart
+服务端操作# 查看有哪些client发起了验证请求 salt-key list">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置 salt">
 <meta property="og:url" content="http://salogs.com/news/2015/08/20/configure-salt/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description" content="系列文章01.Ubuntu 安装salt02.配置 salt03.将client主机分组配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
-# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion res">
-<meta property="og:updated_time" content="2015-08-20T09:45:13.000Z">
+<meta property="og:description" content="配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
+# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion restart
+服务端操作# 查看有哪些client发起了验证请求 salt-key list">
+<meta property="og:updated_time" content="2015-08-20T09:48:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置 salt">
-<meta name="twitter:description" content="系列文章01.Ubuntu 安装salt02.配置 salt03.将client主机分组配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
-# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion res">
+<meta name="twitter:description" content="配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍
+# 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion restart
+服务端操作# 查看有哪些client发起了验证请求 salt-key list">
 
     
     <link rel="alternative" href="/atom.xml" title="SA-Logs" type="application/atom+xml">
@@ -99,15 +102,23 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系列文章"><span class="toc-number">1.</span> <span class="toc-text">系列文章</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#01-Ubuntu_安装salt"><span class="toc-number">1.1.</span> <span class="toc-text">01.Ubuntu 安装salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-配置_salt"><span class="toc-number">1.2.</span> <span class="toc-text">02.配置 salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-将client主机分组"><span class="toc-number">1.3.</span> <span class="toc-text">03.将client主机分组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端配置"><span class="toc-number">2.1.</span> <span class="toc-text">客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端操作"><span class="toc-number">2.2.</span> <span class="toc-text">服务端操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单验证执行命令"><span class="toc-number">3.</span> <span class="toc-text">简单验证执行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程执行命令"><span class="toc-number">3.1.</span> <span class="toc-text">远程执行命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下篇预告"><span class="toc-number">4.</span> <span class="toc-text">下篇预告</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-将client主机分组"><span class="toc-number">4.1.</span> <span class="toc-text">3.将client主机分组</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端配置"><span class="toc-number">1.1.</span> <span class="toc-text">客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端操作"><span class="toc-number">1.2.</span> <span class="toc-text">服务端操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单验证执行命令"><span class="toc-number">2.</span> <span class="toc-text">简单验证执行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程执行命令"><span class="toc-number">2.1.</span> <span class="toc-text">远程执行命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下篇预告"><span class="toc-number">3.</span> <span class="toc-text">下篇预告</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#系列文章"><span class="toc-number">4.</span> <span class="toc-text">系列文章</span></a></li></ol>
 		
 		</div>
 		
-		<h1 id="系列文章">系列文章</h1><h2 id="01-Ubuntu_安装salt"><a href="http://salogs.com/news/2015/08/20/ubuntu-install-salt/">01.Ubuntu 安装salt</a></h2><h2 id="02-配置_salt"><a href="http://salogs.com/news/2015/08/20/configure-salt/">02.配置 salt</a></h2><h2 id="03-将client主机分组"><a href="http://salogs.com/news/2015/08/20/group-salt/">03.将client主机分组</a></h2><h1 id="配置">配置</h1><h2 id="客户端配置">客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
+		<h1 id="配置">配置</h1><h2 id="客户端配置">客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置salt服务端地址</span></span><br><span class="line">vi /etc/salt/minion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里也可以写主机名</span></span><br><span class="line">master: <span class="number">192.168</span>.<span class="number">1.100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后重启服务</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
 <h2 id="服务端操作">服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></span><br><span class="line">salt-key list</span><br><span class="line"></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Rejected Keys:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接受所有验证请求</span></span><br><span class="line">salt-key -A</span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion host01 accepted.</span><br><span class="line">Key <span class="keyword">for</span> minion host02 accepted.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再查看一下</span></span><br><span class="line">salt-key list</span><br><span class="line">Accepted Keys:  <span class="comment"># 已经接受</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
 <h1 id="简单验证执行命令">简单验证执行命令</h1><h2 id="远程执行命令">远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">salt aws-bj* cmd.run uptime</span><br><span class="line">host01:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">13</span> up  <span class="number">2</span>:<span class="number">02</span>,  <span class="number">2</span> users,  load average: <span class="number">0.05</span>, <span class="number">0.03</span>, <span class="number">0.05</span></span><br><span class="line">host02:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">12</span> up  <span class="number">1</span>:<span class="number">28</span>,  <span class="number">1</span> user,  load average: <span class="number">0.00</span>, <span class="number">0.01</span>, <span class="number">0.05</span></span><br></pre></td></tr></table></figure>
-<h1 id="下篇预告">下篇预告</h1><h2 id="3-将client主机分组"><a href="http://salogs.com/news/2015/08/20/group-salt/">3.将client主机分组</a></h2>  
+<h1 id="下篇预告">下篇预告</h1><ul>
+<li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
+</ul>
+<h1 id="系列文章">系列文章</h1><ul>
+<li><a href="http://salogs.com/news/2015/08/20/ubuntu-install-salt/">01. Ubuntu 安装salt</a></li>
+<li><a href="http://salogs.com/news/2015/08/20/configure-salt/">02. 配置 salt</a></li>
+<li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
+</ul>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -161,7 +172,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系列文章"><span class="toc-number">1.</span> <span class="toc-text">系列文章</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#01-Ubuntu_安装salt"><span class="toc-number">1.1.</span> <span class="toc-text">01.Ubuntu 安装salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-配置_salt"><span class="toc-number">1.2.</span> <span class="toc-text">02.配置 salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-将client主机分组"><span class="toc-number">1.3.</span> <span class="toc-text">03.将client主机分组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端配置"><span class="toc-number">2.1.</span> <span class="toc-text">客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端操作"><span class="toc-number">2.2.</span> <span class="toc-text">服务端操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单验证执行命令"><span class="toc-number">3.</span> <span class="toc-text">简单验证执行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程执行命令"><span class="toc-number">3.1.</span> <span class="toc-text">远程执行命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下篇预告"><span class="toc-number">4.</span> <span class="toc-text">下篇预告</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-将client主机分组"><span class="toc-number">4.1.</span> <span class="toc-text">3.将client主机分组</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端配置"><span class="toc-number">1.1.</span> <span class="toc-text">客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端操作"><span class="toc-number">1.2.</span> <span class="toc-text">服务端操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单验证执行命令"><span class="toc-number">2.</span> <span class="toc-text">简单验证执行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程执行命令"><span class="toc-number">2.1.</span> <span class="toc-text">远程执行命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下篇预告"><span class="toc-number">3.</span> <span class="toc-text">下篇预告</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#系列文章"><span class="toc-number">4.</span> <span class="toc-text">系列文章</span></a></li></ol>
  
   </div>
 
