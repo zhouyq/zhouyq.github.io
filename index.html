@@ -105,6 +105,7 @@
 <h2 id="手动添加仓库及PPA_key">手动添加仓库及PPA  key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> deb http://ppa.launchpad.net/saltstack/salt/ubuntu `lsb_release -sc` main | sudo tee /etc/apt/sources.list.d/saltstack.list</span><br><span class="line">wget -q -O- <span class="string">"http://keyserver.ubuntu.com:11371/pks/lookup?op=get&amp;search=0x4759FA960E27C0A6"</span> | sudo apt-key add -</span><br></pre></td></tr></table></figure>
 <h2 id="更新仓库元数据">更新仓库元数据</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
 <h1 id="安装包">安装包</h1><h2 id="服务端">服务端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install salt-master salt-minion salt-syndic</span><br></pre></td></tr></table></figure>
+<h2 id="客户端">客户端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install salt-master salt-minion</span><br></pre></td></tr></table></figure>
 <h1 id="ZEROMQ_4">ZEROMQ 4</h1><p>ZeroMQ 4 在 Ubuntu 14.04 以上版本已经与系统集成。因此Ubuntu 12.04 LTS 之前的版本需要升级到ZEROMQ 4</p>
 
         
