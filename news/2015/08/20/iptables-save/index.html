@@ -4,31 +4,32 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>阿里云VPC网络无EIP的主机上网问题 | SA-Logs</title>
+    <title>保存iptable规则并开机自动加载 | SA-Logs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zhouyq">
     
 
     
-    <meta name="description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。
-VPC结构图
-虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
+    <meta name="description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：
+Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4
+RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
+保存之后，可以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿里云VPC网络无EIP的主机上网问题">
-<meta property="og:url" content="http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/index.html">
+<meta property="og:title" content="保存iptable规则并开机自动加载">
+<meta property="og:url" content="http://salogs.com/news/2015/08/20/iptables-save/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。
-VPC结构图
-虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
-<meta property="og:image" content="http://salogs.com/img/aliyun-vpc-snat.jpg">
-<meta property="og:image" content="http://salogs.com/img/aliyun-vpc-snat-2.jpg">
-<meta property="og:updated_time" content="2015-08-04T03:26:22.000Z">
+<meta property="og:description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：
+Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4
+RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
+保存之后，可以">
+<meta property="og:updated_time" content="2015-08-20T09:07:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿里云VPC网络无EIP的主机上网问题">
-<meta name="twitter:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。
-VPC结构图
-虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
+<meta name="twitter:title" content="保存iptable规则并开机自动加载">
+<meta name="twitter:description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：
+Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4
+RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables
+保存之后，可以">
 
     
     <link rel="alternative" href="/atom.xml" title="SA-Logs" type="application/atom+xml">
@@ -88,14 +89,14 @@ VPC结构图
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/news/2015/08/02/aliyun-vpc-snat-md/" title="阿里云VPC网络无EIP的主机上网问题" itemprop="url">阿里云VPC网络无EIP的主机上网问题</a>
+      <a href="/news/2015/08/20/iptables-save/" title="保存iptable规则并开机自动加载" itemprop="url">保存iptable规则并开机自动加载</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-02T13:38:58.000Z" itemprop="datePublished"> 发表于 2015-08-02</time>
+    <time datetime="2015-08-20T08:46:27.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
     
   </p>
 </header>
@@ -104,32 +105,39 @@ VPC结构图
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题由来"><span class="toc-number">1.</span> <span class="toc-text">问题由来</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VPC结构图"><span class="toc-number">2.</span> <span class="toc-text">VPC结构图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虚拟路由器配置"><span class="toc-number">3.</span> <span class="toc-text">虚拟路由器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由"><span class="toc-number">3.1.</span> <span class="toc-text">添加路由</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#绑定EIP的主机配置"><span class="toc-number">4.</span> <span class="toc-text">绑定EIP的主机配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables添加SNAT规则"><span class="toc-number">4.1.</span> <span class="toc-text">iptables添加SNAT规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启IP转发"><span class="toc-number">4.2.</span> <span class="toc-text">开启IP转发</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-save"><span class="toc-number">1.</span> <span class="toc-text">iptables-save</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-persistent_(Debian/Ubuntu)"><span class="toc-number">2.</span> <span class="toc-text">iptables-persistent (Debian/Ubuntu)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存规则"><span class="toc-number">2.2.</span> <span class="toc-text">保存规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL_和_CentOS_保存规则"><span class="toc-number">3.</span> <span class="toc-text">RHEL 和 CentOS 保存规则</span></a></li></ol>
 		
 		</div>
 		
-		<h1 id="问题由来">问题由来</h1><p>阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。</p>
-<h1 id="VPC结构图">VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
-<h1 id="虚拟路由器配置">虚拟路由器配置</h1><h2 id="添加路由">添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
-<p><img src="/img/aliyun-vpc-snat-2.jpg" alt=""></p>
-<h1 id="绑定EIP的主机配置">绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则">iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -t nat -I POSTROUTING <span class="operator">-s</span> <span class="number">192.168</span>.<span class="number">2.0</span>/<span class="number">24</span> -j SNAT --to-source <span class="number">192.168</span>.<span class="number">2.20</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>注意：</strong> ubuntu 14.04 系统保存iptables设置需要安装iptables-persistent包，然后通过 <code>service iptables-persistent save</code> 的方式保存配置，安装完iptables-persistent后该服务随系统一起启动并会把保存的配置应用</p>
-</blockquote>
-<h2 id="开启IP转发">开启IP转发</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.ip_forward=1"</span> &gt;&gt;  /etc/sysctl.conf &amp;&amp; sysctl -p</span><br></pre></td></tr></table></figure>  
+		<h1 id="iptables-save">iptables-save</h1><p>利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：</p>
+<p>Debian/Ubuntu: <code>iptables-save</code> &gt; /etc/iptables/rules.v4</p>
+<p>RHEL/CentOS: <code>iptables-save</code> &gt; /etc/sysconfig/iptables</p>
+<p>保存之后，可以通过iptables-restore命令载入（IPv4）：</p>
+<p>Debian/Ubuntu: <code>iptables-restore</code> &lt; /etc/iptables/rules.v4</p>
+<p>RHEL/CentOS: <code>iptables-restore</code> &lt; /etc/sysconfig/iptables</p>
+<p>上面是针对IPv5的规则，如果你有使用IPv6的规则，通常需要执行下面对应的IPv6保存和恢复的命令（IPv4：</p>
+<p>Debian/Ubuntu: <code>ip6tables-save</code> &gt; /etc/iptables/rules.v6<br>RHEL/CentOS: <code>ip6tables-save</code> &gt; /etc/sysconfig/ip6tables</p>
+<p><strong>注意：</strong> 这种方式只是保存规则和恢复的一种方式，并不是说保存规则后下次启动就会自动加载。一定要记住这点，如果要想系统启动后自动加载请看下面的方式。</p>
+<h1 id="iptables-persistent_(Debian/Ubuntu)">iptables-persistent (Debian/Ubuntu)</h1><p>从 Ubuntu 10.04 LTS (Lucid) 和 Debian 6.0 (Squeeze) 版本开始，可以通过安装一个名为 “iptables-persistent” 的包，安装后它以守护进程的方式来运行，系统重启后可以自动将保存的内容加载到iptables中。当然前提也是需要先保存规则。</p>
+<h2 id="安装">安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install iptables-persistent</span><br></pre></td></tr></table></figure>
+<h2 id="保存规则">保存规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service  iptables-persistent save</span><br><span class="line">* Saving rules...                                                                                                                                                                 *  IPv4...                                                                                                                                                                        *  IPv6...</span><br><span class="line"></span><br><span class="line">ls -<span class="number">1</span> /etc/iptables/</span><br><span class="line">rules.v4</span><br><span class="line">rules.v6</span><br><span class="line"></span><br><span class="line">cat  /etc/iptables/rules.v4</span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [<span class="number">5726</span>:<span class="number">774869</span>]</span><br><span class="line">:FORWARD ACCEPT [<span class="number">170</span>:<span class="number">27598</span>]</span><br><span class="line">:OUTPUT ACCEPT [<span class="number">5467</span>:<span class="number">789045</span>]</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*nat</span><br><span class="line">:PREROUTING ACCEPT [<span class="number">23</span>:<span class="number">1596</span>]</span><br><span class="line">:INPUT ACCEPT [<span class="number">0</span>:<span class="number">0</span>]</span><br><span class="line">:OUTPUT ACCEPT [<span class="number">9</span>:<span class="number">540</span>]</span><br><span class="line">:POSTROUTING ACCEPT [<span class="number">0</span>:<span class="number">0</span>]</span><br><span class="line">-A POSTROUTING <span class="operator">-s</span> <span class="number">10.0</span>.<span class="number">0.0</span>/<span class="number">16</span> -o eth0 -j MASQUERADE</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br></pre></td></tr></table></figure>
+<h1 id="RHEL_和_CentOS_保存规则">RHEL 和 CentOS 保存规则</h1><p>RHEL/CentOS 提供了简单的方式来持久化存储iptables规则，可以直接通过iptables服务的命令来完成：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chkconfig --list | grep iptables</span><br><span class="line">  iptables       	<span class="number">0</span>:off	<span class="number">1</span>:off	<span class="number">2</span>:on	<span class="number">3</span>:on	<span class="number">4</span>:on	<span class="number">5</span>:on	<span class="number">6</span>:off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不是开机启动，需要执行下面命令</span></span><br><span class="line">chkconfig iptables on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存规则</span></span><br><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
+<p>IPv4规则信息会保存到 /etc/sysconfig/iptables 文件中，IPv6 规则保存到 /etc/sysconfig/ip6tables 文件中。 必须执行<code>service iptables save</code> 命令才会保存，保存后系统重启后会自动加载。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/经验分享/">经验分享</a>
+  <a class="article-category-link" href="/categories/经验分享/">经验分享</a>►<a class="article-category-link" href="/categories/经验分享/Iptables/">Iptables</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/IaaS/">IaaS</a><a href="/tags/route/">route</a>
+  <span></span> <a href="/tags/iptables/">iptables</a>
   </div>
 
 </div>
@@ -138,7 +146,7 @@ VPC结构图
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/" data-title="阿里云VPC网络无EIP的主机上网问题 | SA-Logs" data-tsina="null" class="share clearfix">
+	  <div data-url="http://salogs.com/news/2015/08/20/iptables-save/" data-title="保存iptable规则并开机自动加载 | SA-Logs" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -151,19 +159,11 @@ VPC结构图
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/news/2015/08/04/ten-go-best-practice/" title="【转】十条有用的 GO 技术">
-  <strong>上一篇：</strong><br/>
-  <span>
-  【转】十条有用的 GO 技术</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/news/2015/08/02/shell-array-demo/"  title="shell 数组应用实例">
+<a href="/news/2015/08/17/database-backup-and-recovery/"  title="MySQL备份与恢复">
  <strong>下一篇：</strong><br/> 
- <span>shell 数组应用实例
+ <span>MySQL备份与恢复
 </span>
 </a>
 </div>
@@ -178,7 +178,7 @@ VPC结构图
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题由来"><span class="toc-number">1.</span> <span class="toc-text">问题由来</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VPC结构图"><span class="toc-number">2.</span> <span class="toc-text">VPC结构图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虚拟路由器配置"><span class="toc-number">3.</span> <span class="toc-text">虚拟路由器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由"><span class="toc-number">3.1.</span> <span class="toc-text">添加路由</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#绑定EIP的主机配置"><span class="toc-number">4.</span> <span class="toc-text">绑定EIP的主机配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables添加SNAT规则"><span class="toc-number">4.1.</span> <span class="toc-text">iptables添加SNAT规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启IP转发"><span class="toc-number">4.2.</span> <span class="toc-text">开启IP转发</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-save"><span class="toc-number">1.</span> <span class="toc-text">iptables-save</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-persistent_(Debian/Ubuntu)"><span class="toc-number">2.</span> <span class="toc-text">iptables-persistent (Debian/Ubuntu)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存规则"><span class="toc-number">2.2.</span> <span class="toc-text">保存规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL_和_CentOS_保存规则"><span class="toc-number">3.</span> <span class="toc-text">RHEL 和 CentOS 保存规则</span></a></li></ol>
  
   </div>
 
