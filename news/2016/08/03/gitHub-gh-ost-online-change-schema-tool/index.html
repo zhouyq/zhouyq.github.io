@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://salogs.com/img/gh-ost.png">
 <meta property="og:image" content="http://salogs.com/img/gh-ost2.png">
 <meta property="og:image" content="http://salogs.com/img/gh-ost3.png">
-<meta property="og:updated_time" content="2016-08-03T15:16:48.000Z">
+<meta property="og:updated_time" content="2016-08-05T03:12:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GitHub开源的MySQL在线更改Schema工具">
 <meta name="twitter:description" content="MySQL在线更改schema的工具很多，如Percona的pt-online-schema-change、 Facebook的 OSC 和 LHM 等，但这些都是基于触发器（Trigger）的，今天咱们介绍的 gh-ost 号称是不需要触发器（Triggerless）支持的在线更改表结构的工具。
@@ -110,7 +110,7 @@
 		</div>
 		
 		<p>MySQL在线更改schema的工具很多，如Percona的<a href="https://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html" target="_blank" rel="external">pt-online-schema-change</a>、 Facebook的 <a href="https://www.facebook.com/notes/mysql-at-facebook/online-schema-change-for-mysql/430801045932/" target="_blank" rel="external">OSC</a> 和 <a href="https://github.com/soundcloud/lhm" target="_blank" rel="external">LHM</a> 等，但这些都是基于触发器（Trigger）的，今天咱们介绍的 <code>gh-ost</code> 号称是不需要触发器（Triggerless）支持的在线更改表结构的工具。</p>
-<p><img src="img/gh-ost.png" alt="gh-ost"></p>
+<p><img src="/img/gh-ost.png" alt="gh-ost"></p>
 <p>原文地址：<a href="http://githubengineering.com/gh-ost-github-s-online-migration-tool-for-mysql/" target="_blank" rel="external">gh-ost: GitHub’s online schema migration tool for MySQL</a></p>
 <blockquote>
 <p>本文先介绍一下当前业界已经存在的这些工具的使用场景和原理，然后再详细介绍  <code>gh-ost</code> 的工作原理和特性。</p>
@@ -154,7 +154,7 @@
 </li>
 </ul>
 <h1 id="gh-ost">gh-ost</h1><p><code>gh-ost</code>  GitHub 的在线 Schema 修改工具，下面工作原理图：</p>
-<p> <img src="img/gh-ost2.png" alt="gh-ost2"></p>
+<p> <img src="/img/gh-ost2.png" alt="gh-ost2"></p>
 <p><code>gh-ost</code> 具有如下特性:</p>
 <ul>
 <li>无触发器</li>
@@ -199,7 +199,7 @@
 </li>
 </ul>
 <h1 id="gh-ost_操作模式">gh-ost 操作模式</h1><p>gh-ost 可以同时连接多个服务器，为了获取二进制的数据流，它会作为一个从库，将数据从一个库复制到另外一个。它有各种不同的操作模式，这取决于你的设置，配置，和要运行迁移环境。</p>
-<p><img src="img/gh-ost3.png" alt="gh-ost3"></p>
+<p><img src="/img/gh-ost3.png" alt="gh-ost3"></p>
 <h2 id="a-_连接到从库，在主库做迁移">a. 连接到从库，在主库做迁移</h2><p>这是  gh-ost 默认的工作方式。gh-ost 将会检查从库状态，找到集群结构中的主库并连接，接下来进行迁移操作：</p>
 <ul>
 <li>行数据在主库上读写</li>
