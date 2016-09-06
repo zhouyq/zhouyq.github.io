@@ -5,7 +5,7 @@
   <subtitle><![CDATA[拥抱开源，分享经验!]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://salogs.com//"/>
-  <updated>2016-08-05T03:12:32.000Z</updated>
+  <updated>2016-09-06T04:11:51.000Z</updated>
   <id>http://salogs.com//</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Hexo网站优化之SEO]]></title>
+    <link href="http://salogs.com/news/2016/09/06/nexo-seo/"/>
+    <id>http://salogs.com/news/2016/09/06/nexo-seo/</id>
+    <published>2016-09-06T04:01:23.000Z</published>
+    <updated>2016-09-06T04:11:51.000Z</updated>
+    <content type="html"><![CDATA[<p>SEO (Search Engine Optimization)，即搜索引擎优化。对网站做SEO优化，有利于提高搜索引擎的收录速度及网页排名。下面讲解一些简单的SEO优化方法，主要针对Hexo网站。</p>
+<h1 id="SEO优化之title">SEO优化之title</h1><p>编辑站点目录下的<code>themes/layout/index.swig</code>文件，将下面的代码<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; &#123;% endlock %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>改成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; - &#123;&#123; theme.description &#125;&#125; &#123;% endlock %&#125;</span><br></pre></td></tr></table></figure>
+<p>这时将网站的描述及关键词加入了网站的title中，更有利于详细地描述网站。</p>
+<h1 id="添加robots-txt">添加robots.txt</h1><p>robots.txt是一种存放于网站根目录下的ASCII编码的文本文件，它的作用是告诉搜索引擎此网站中哪些内容是可以被爬取的，哪些是禁止爬取的。robots.txt应该放在站点目录下的source文件中，网站生成后在网站的根目录(<code>站点目录/public/</code>)下。</p>
+<p>我的robots.txt文件内容如下<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User-agent: *&#10;Allow: /&#10;Allow: /archives/&#10;Allow: /categories/&#10;Allow: /about/&#10;&#10;Disallow: /vendors/&#10;Disallow: /js/&#10;Disallow: /css/&#10;Disallow: /fonts/&#10;Disallow: /vendors/&#10;Disallow: /fancybox/</span><br></pre></td></tr></table></figure></p>
+<h1 id="添加sitemap">添加sitemap</h1><p>Sitemap即网站地图，它的作用在于便于搜索引擎更加智能地抓取网站。最简单和常见的sitemap形式，是XML文件，在其中列出网站中的网址以及关于每个网址的其他元数据（上次更新时间、更新的频率及相对其他网址重要程度等）。</p>
+<h2 id="Step_1:_安装sitemap生成插件">Step 1: 安装sitemap生成插件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save&#10;npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+<h2 id="Step_2:_编辑站点目录下的_config-yml，添加">Step 2: 编辑站点目录下的_config.yml，添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># hexo sitemap&#32593;&#31449;&#22320;&#22270;&#10;sitemap:&#10;path: sitemap.xml&#10;baidusitemap:&#10;path: baidusitemap.xml</span><br></pre></td></tr></table></figure>
+<h2 id="Step_3:_在robots-txt文件中添加">Step 3: 在robots.txt文件中添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Sitemap: http://www.jeyzhang.com/sitemap.xml&#10;Sitemap: http://www.jeyzhang.com/baidusitemap.xml</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>本文转自：<a href="http://www.jeyzhang.com/hexo-website-seo.html" target="_blank" rel="external">http://www.jeyzhang.com/hexo-website-seo.html</a></p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>SEO (Search Engine Optimization)，即搜索引擎优化。对网站做SEO优化，有利于提高搜索引擎的收录速度及网页排名。下面讲解一些简单的SEO优化方法，主要针对Hexo网站。</p>
+<h1 id="SEO优化之title">SEO优化之title<]]>
+    </summary>
+    
+      <category term="hexo,seo" scheme="http://salogs.com/tags/hexo-seo/"/>
+    
+      <category term="经验分析" scheme="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[GitHub开源的MySQL在线更改Schema工具]]></title>
