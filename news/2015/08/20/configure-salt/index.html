@@ -41,7 +41,7 @@
     <link rel="apple-touch-icon" href="/img/jacman.jpg">
     <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
     
-    <link rel="stylesheet" href="../../../../../css/style.css" type="text/css">
+    <link rel="stylesheet" href="../../../../../css/style.css">
 </head>
 
   <body>
@@ -110,14 +110,14 @@
 		
 		</div>
 		
-		<h1 id="配置">配置</h1><h2 id="客户端配置">客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置salt服务端地址</span></span><br><span class="line">vi /etc/salt/minion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里也可以写主机名</span></span><br><span class="line">master: <span class="number">192.168</span>.<span class="number">1.100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后重启服务</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
-<h2 id="服务端操作">服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></span><br><span class="line">salt-key list</span><br><span class="line"></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Rejected Keys:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接受所有验证请求</span></span><br><span class="line">salt-key -A</span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion host01 accepted.</span><br><span class="line">Key <span class="keyword">for</span> minion host02 accepted.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再查看一下</span></span><br><span class="line">salt-key list</span><br><span class="line">Accepted Keys:  <span class="comment"># 已经接受</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
-<h1 id="简单验证执行命令">简单验证执行命令</h1><h2 id="远程执行命令">远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">salt aws-bj* cmd.run uptime</span><br><span class="line">host01:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">13</span> up  <span class="number">2</span>:<span class="number">02</span>,  <span class="number">2</span> users,  load average: <span class="number">0.05</span>, <span class="number">0.03</span>, <span class="number">0.05</span></span><br><span class="line">host02:</span><br><span class="line">     <span class="number">09</span>:<span class="number">42</span>:<span class="number">12</span> up  <span class="number">1</span>:<span class="number">28</span>,  <span class="number">1</span> user,  load average: <span class="number">0.00</span>, <span class="number">0.01</span>, <span class="number">0.05</span></span><br></pre></td></tr></table></figure>
-<h1 id="下篇预告">下篇预告</h1><ul>
+		<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 配置salt服务端地址</span></div><div class="line">vi /etc/salt/minion</div><div class="line"></div><div class="line"><span class="comment"># 这里也可以写主机名</span></div><div class="line">master: 192.168.1.100</div><div class="line"></div><div class="line"><span class="comment"># 修改完成后重启服务</span></div><div class="line">service salt-minion restart</div></pre></td></tr></table></figure>
+<h2 id="服务端操作"><a href="#服务端操作" class="headerlink" title="服务端操作"></a>服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></div><div class="line">salt-key list</div><div class="line"></div><div class="line">Accepted Keys:</div><div class="line">Denied Keys:</div><div class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></div><div class="line">host01</div><div class="line">host02</div><div class="line">Rejected Keys:</div><div class="line"></div><div class="line"><span class="comment"># 接受所有验证请求</span></div><div class="line">salt-key -A</div><div class="line">The following keys are going to be accepted:</div><div class="line">Unaccepted Keys:</div><div class="line">host01</div><div class="line">host02</div><div class="line">Proceed? [n/Y] Y</div><div class="line">Key <span class="keyword">for</span> minion host01 accepted.</div><div class="line">Key <span class="keyword">for</span> minion host02 accepted.</div><div class="line"></div><div class="line"><span class="comment"># 再查看一下</span></div><div class="line">salt-key list</div><div class="line">Accepted Keys:  <span class="comment"># 已经接受</span></div><div class="line">host01</div><div class="line">host02</div><div class="line">Denied Keys:</div><div class="line">Unaccepted Keys:</div><div class="line">Rejected Keys:</div></pre></td></tr></table></figure>
+<h1 id="简单验证执行命令"><a href="#简单验证执行命令" class="headerlink" title="简单验证执行命令"></a>简单验证执行命令</h1><h2 id="远程执行命令"><a href="#远程执行命令" class="headerlink" title="远程执行命令"></a>远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">salt aws-bj* cmd.run uptime</div><div class="line">host01:</div><div class="line">     09:42:13 up  2:02,  2 users,  load average: 0.05, 0.03, 0.05</div><div class="line">host02:</div><div class="line">     09:42:12 up  1:28,  1 user,  load average: 0.00, 0.01, 0.05</div></pre></td></tr></table></figure>
+<h1 id="下篇预告"><a href="#下篇预告" class="headerlink" title="下篇预告"></a>下篇预告</h1><ul>
 <li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
 </ul>
-<h1 id="系列文章">系列文章</h1><ul>
+<h1 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h1><ul>
 <li><a href="http://salogs.com/news/2015/08/20/ubuntu-install-salt/">01. Ubuntu 安装salt</a></li>
 <li><a href="http://salogs.com/news/2015/08/20/configure-salt/">02. 配置 salt</a></li>
 <li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
@@ -129,7 +129,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="../../../../../categories/index.html">运维自动化</a>
+  <a class="article-category-link" href="../../../../../categories/运维自动化/">运维自动化</a>
 </div>
 
 
@@ -284,27 +284,15 @@
 			
 		
 			
+				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/iptables/" title="iptables">iptables<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
@@ -316,7 +304,7 @@
 			
 		
 			
-				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
 			
 		
 			
@@ -324,7 +312,23 @@
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/iptables/" title="iptables">iptables<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
 		</ul>

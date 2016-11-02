@@ -32,6 +32,7 @@
 <meta name="twitter:description" content="MySQL在线更改schema的工具很多，如Percona的pt-online-schema-change、 Facebook的 OSC 和 LHM 等，但这些都是基于触发器（Trigger）的，今天咱们介绍的 gh-ost 号称是不需要触发器（Triggerless）支持的在线更改表结构的工具。
 
 原文地址：gh-ost: GitHub’s online schema migration too">
+<meta name="twitter:image" content="http://salogs.com/img/gh-ost.png">
 <meta name="twitter:creator" content="@ZhouYueqiu">
 
     
@@ -44,7 +45,7 @@
     <link rel="apple-touch-icon" href="/img/jacman.jpg">
     <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
     
-    <link rel="stylesheet" href="../../../../../css/style.css" type="text/css">
+    <link rel="stylesheet" href="../../../../../css/style.css">
 </head>
 
   <body>
@@ -109,7 +110,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在线修改表结构，已存在的场景"><span class="toc-number">1.</span> <span class="toc-text">在线修改表结构，已存在的场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于触发器的在线修改有哪些问题呢？"><span class="toc-number">2.</span> <span class="toc-text">基于触发器的在线修改有哪些问题呢？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost"><span class="toc-number">3.</span> <span class="toc-text">gh-ost</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无触发器"><span class="toc-number">4.</span> <span class="toc-text">无触发器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#轻量级"><span class="toc-number">5.</span> <span class="toc-text">轻量级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可暂停"><span class="toc-number">6.</span> <span class="toc-text">可暂停</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可动态控制"><span class="toc-number">7.</span> <span class="toc-text">可动态控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可审计"><span class="toc-number">8.</span> <span class="toc-text">可审计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可测试"><span class="toc-number">9.</span> <span class="toc-text">可测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#值得信赖"><span class="toc-number">10.</span> <span class="toc-text">值得信赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost_操作模式"><span class="toc-number">11.</span> <span class="toc-text">gh-ost 操作模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-_连接到从库，在主库做迁移"><span class="toc-number">11.1.</span> <span class="toc-text">a. 连接到从库，在主库做迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-_连接到主库"><span class="toc-number">11.2.</span> <span class="toc-text">b. 连接到主库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-_在从库迁移/测试"><span class="toc-number">11.3.</span> <span class="toc-text">c. 在从库迁移/测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost_at_GitHub"><span class="toc-number">12.</span> <span class="toc-text">gh-ost at GitHub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开源"><span class="toc-number">13.</span> <span class="toc-text">开源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#译者注"><span class="toc-number">13.1.</span> <span class="toc-text">译者注</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在线修改表结构，已存在的场景"><span class="toc-number">1.</span> <span class="toc-text">在线修改表结构，已存在的场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于触发器的在线修改有哪些问题呢？"><span class="toc-number">2.</span> <span class="toc-text">基于触发器的在线修改有哪些问题呢？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost"><span class="toc-number">3.</span> <span class="toc-text">gh-ost</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无触发器"><span class="toc-number">4.</span> <span class="toc-text">无触发器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#轻量级"><span class="toc-number">5.</span> <span class="toc-text">轻量级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可暂停"><span class="toc-number">6.</span> <span class="toc-text">可暂停</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可动态控制"><span class="toc-number">7.</span> <span class="toc-text">可动态控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可审计"><span class="toc-number">8.</span> <span class="toc-text">可审计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可测试"><span class="toc-number">9.</span> <span class="toc-text">可测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#值得信赖"><span class="toc-number">10.</span> <span class="toc-text">值得信赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost-操作模式"><span class="toc-number">11.</span> <span class="toc-text">gh-ost 操作模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-连接到从库，在主库做迁移"><span class="toc-number">11.1.</span> <span class="toc-text">a. 连接到从库，在主库做迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-连接到主库"><span class="toc-number">11.2.</span> <span class="toc-text">b. 连接到主库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-在从库迁移-测试"><span class="toc-number">11.3.</span> <span class="toc-text">c. 在从库迁移/测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost-at-GitHub"><span class="toc-number">12.</span> <span class="toc-text">gh-ost at GitHub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开源"><span class="toc-number">13.</span> <span class="toc-text">开源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#译者注"><span class="toc-number">13.1.</span> <span class="toc-text">译者注</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -123,7 +124,7 @@
 <p>开发 <code>gh-ost</code> 是为了应付GitHub在生产环境中面临的持续的、不断变化的在线修改表结构的需求。<code>gh-ost</code> 通过提供低影响、可控、可审计和操作友好的解决方案改变了现有的在线迁移表工具的工作模式。</p>
 <p>MySQL表迁移及结构更改操作是业界众所周知的问题，2009年以来已经可以通过在线（不停服务）变更的工具来解决。迅速增长，快速迭代的产品往往需要频繁的需改数据库的结构。增加/更改/删除/ 字段和索引等等，这些操作在MySQL中默认都会锁表，影响线上的服务。 向这种数据库结构层面的变更我们每天都会面临多次，当然这种操作不应该影响用户的正常服务。</p>
 <p>在开始介绍 <code>gh-ost</code> 工具之前，咱们先来看一下当前现有的这些工具的解决方案。</p>
-<h1 id="在线修改表结构，已存在的场景">在线修改表结构，已存在的场景</h1><p>如今，在线修改表结构可以通过下面的三种方式来完成：</p>
+<h1 id="在线修改表结构，已存在的场景"><a href="#在线修改表结构，已存在的场景" class="headerlink" title="在线修改表结构，已存在的场景"></a>在线修改表结构，已存在的场景</h1><p>如今，在线修改表结构可以通过下面的三种方式来完成：</p>
 <ul>
 <li>在从库上修改表结构，操作会在其他的从库上生效，将结构变更了的从库设置为主库</li>
 <li>使用 MySQL  InnoDB 存储引擎提供的在线DDL特性</li>
@@ -139,7 +140,7 @@
 <li><p>我们用了很多年的 <code>pt-online-schema-change</code> 工具。然而随着我们不断增长的业务和流量，我们遇到了很多的问题，我们必须考虑在操作中的哪些 <code>危险操作</code> （译者注：pt工具集的文档中经常会有一些危险提示）。某些操作必须避开高峰时段来进行，否则MySQL可能就挂了。所有现存的在线表结构修改的工具都是利用了MySQL的触发器来执行的，这种方式有一些潜藏的问题。</p>
 </li>
 </ul>
-<h1 id="基于触发器的在线修改有哪些问题呢？">基于触发器的在线修改有哪些问题呢？</h1><p>所有在线表结构修改工具的操作方式都类似：创建与原表结构一致的临时表，该临时表已经是按要求修改后的表结构了，缓慢增量的从原表中复制数据，同时记录原表的更改(所有的 INSERT, DELETE, UPDATE 操作) 并应用到临时表。当工具确认表数据已经同步完成，它会进行替换工作，将临时表更名为原表。</p>
+<h1 id="基于触发器的在线修改有哪些问题呢？"><a href="#基于触发器的在线修改有哪些问题呢？" class="headerlink" title="基于触发器的在线修改有哪些问题呢？"></a>基于触发器的在线修改有哪些问题呢？</h1><p>所有在线表结构修改工具的操作方式都类似：创建与原表结构一致的临时表，该临时表已经是按要求修改后的表结构了，缓慢增量的从原表中复制数据，同时记录原表的更改(所有的 INSERT, DELETE, UPDATE 操作) 并应用到临时表。当工具确认表数据已经同步完成，它会进行替换工作，将临时表更名为原表。</p>
 <p><code>pt-online-schema-change</code>, <code>LHM</code> 和 <code>oak-online-alter-table</code> 这些工具都使用同步的方式，当原表有变更操作时利用一些事务的间隙时间将这些变化同步到临时表。Facebook 的工具使用异步的方式将变更写入到changelog表中，然后重复的将changelog表的变更应用到临时表。所有的这些工具都使用触发器来识别原表的变更操作。</p>
 <p>当表中的每一行数据有 INSERT, DELETE, UPDATE 操作时都会调用存储的触发器。一个触发器可能在一个事务空间中包含一系列查询操作。这样就会造成一个原子操作不单会在原表执行，还会调用相应的触发器执行多个操作。</p>
 <p>在基于触发器迁移实践中，遇到了如下的问题：</p>
@@ -157,7 +158,7 @@
 <li><p>测试：我们修改表结构可能只是为了测试，或者评估其负载开销。基于触发器的表结构修改操作只能通过基于语句复制的方式来进行模拟实验，离真实的主库操作还有一定的距离，不能真实的反映实际情况。</p>
 </li>
 </ul>
-<h1 id="gh-ost">gh-ost</h1><p><code>gh-ost</code>  GitHub 的在线 Schema 修改工具，下面工作原理图：</p>
+<h1 id="gh-ost"><a href="#gh-ost" class="headerlink" title="gh-ost"></a>gh-ost</h1><p><code>gh-ost</code>  GitHub 的在线 Schema 修改工具，下面工作原理图：</p>
 <p> <img src="/img/gh-ost2.png" alt="gh-ost2"></p>
 <p><code>gh-ost</code> 具有如下特性:</p>
 <ul>
@@ -169,10 +170,10 @@
 <li>可测试</li>
 <li>值得信赖 :blush:</li>
 </ul>
-<h1 id="无触发器">无触发器</h1><p><code>gh-ost</code> 没有使用触发器。它通过分析binlog日志的形式来监听表中的数据变更。因此它的工作模式是异步的，只有当原始表的更改被提交后才会将变更同步到临时表（ghost table）</p>
+<h1 id="无触发器"><a href="#无触发器" class="headerlink" title="无触发器"></a>无触发器</h1><p><code>gh-ost</code> 没有使用触发器。它通过分析binlog日志的形式来监听表中的数据变更。因此它的工作模式是异步的，只有当原始表的更改被提交后才会将变更同步到临时表（ghost table）</p>
 <p><code>gh-ost</code> 要求binlog是RBR格式 ( 基于行的复制)；然而也不是说你就不能在基于SBR（基于语句的复制）日志格式的主库上执行在线变更操作。实际上是可以的。gh-ost 可以将从库的 SBR日志转换为RBR日志，只需要重新配置就可以了。</p>
-<h1 id="轻量级">轻量级</h1><p>由于没有使用触发器，因此在操作的过程中对主库的影响是最小的。当然在操作的过程中也不用担心并发和锁的问题。 变更操作都是以流的形式顺序的写到binlog文件中，gh-ost只是读取他们并应用到gh-ost表中。实际上，gh-ost 通过读取binlog的写事件来进行顺序的行复制操作。因此，主库只会有一个单独连接顺序的将数据写入到临时表（ghost table）。这和ETL操作有很大的不同。</p>
-<h1 id="可暂停">可暂停</h1><p>所有的写操作都是由gh-ost控制的，并且以异步的方式读取binlog，当限速的时候，gh-ost可以暂停向主库写入数据，限速意味着不会在主库进行复制，也不会有行更新。当限速时gh-ost会创建一个内部的跟踪（tracking）表，以最小的系统开销向这个表中写入心跳事件</p>
+<h1 id="轻量级"><a href="#轻量级" class="headerlink" title="轻量级"></a>轻量级</h1><p>由于没有使用触发器，因此在操作的过程中对主库的影响是最小的。当然在操作的过程中也不用担心并发和锁的问题。 变更操作都是以流的形式顺序的写到binlog文件中，gh-ost只是读取他们并应用到gh-ost表中。实际上，gh-ost 通过读取binlog的写事件来进行顺序的行复制操作。因此，主库只会有一个单独连接顺序的将数据写入到临时表（ghost table）。这和ETL操作有很大的不同。</p>
+<h1 id="可暂停"><a href="#可暂停" class="headerlink" title="可暂停"></a>可暂停</h1><p>所有的写操作都是由gh-ost控制的，并且以异步的方式读取binlog，当限速的时候，gh-ost可以暂停向主库写入数据，限速意味着不会在主库进行复制，也不会有行更新。当限速时gh-ost会创建一个内部的跟踪（tracking）表，以最小的系统开销向这个表中写入心跳事件</p>
 <p>gh-ost 支持多种方式的限速：</p>
 <ul>
 <li>负载: 为熟悉 <code>pt-online-schema-change</code> 工具的用户提供了类似的功能，可以设置MySQL中的状态阈值，如 Threads_running=30</li>
@@ -181,17 +182,17 @@
 <li>标示文件: 可以通过创建一个标示文件来让程序限速，当删除文件后可以恢复正常操作。</li>
 <li>用户命令: 可以动态的连接到 <code>gh-ost</code> (下文会提到) 通过网络连接的方式实现限速。</li>
 </ul>
-<h1 id="可动态控制">可动态控制</h1><p>现在的工具，当执行操作的过程中发现负载上升了，DBA不得不终止操作，重新配置参数，如 chunk-size，然后重新执行操作命令，我们发现这种方式效率非常低。</p>
+<h1 id="可动态控制"><a href="#可动态控制" class="headerlink" title="可动态控制"></a>可动态控制</h1><p>现在的工具，当执行操作的过程中发现负载上升了，DBA不得不终止操作，重新配置参数，如 chunk-size，然后重新执行操作命令，我们发现这种方式效率非常低。</p>
 <p><code>gh-ost</code> 可以通过 unix socket 文件或者TCP端口（可配置）的方式来监听请求，操作者可以在命令运行后更改相应的参数，参考下面的例子：</p>
 <ul>
 <li><code>echo throttle | socat - /tmp/gh-ost.sock</code>  打开限速，同样的，可以使用 <code>no-throttle</code> 来关闭限流。</li>
 <li>改变执行参数: <code>chunk-size=1500</code>, <code>max-lag-millis=2000</code>, <code>max-load=Thread_running=30</code> 这些参数都可以在运行时变更。</li>
 </ul>
-<h1 id="可审计">可审计</h1><p>同样的，使用上文提到的程序接口可以获取 <code>gh-ost</code> 的状态。<code>gh-ost</code> 可以报告当前的进度，主要参数的配置以及当前服务器的标示等等。这些信息都可以通过网络接口取到，相对于传统的tail日志的方式要灵活很多。</p>
-<h1 id="可测试">可测试</h1><p>因为日志文件和主库负载关系不大，因此在从库上执行修改表结构的操作可以更真实的体现出这些操作锁产生的实际影响。(虽然不是十分理想，后续我们会做优化工作)。</p>
+<h1 id="可审计"><a href="#可审计" class="headerlink" title="可审计"></a>可审计</h1><p>同样的，使用上文提到的程序接口可以获取 <code>gh-ost</code> 的状态。<code>gh-ost</code> 可以报告当前的进度，主要参数的配置以及当前服务器的标示等等。这些信息都可以通过网络接口取到，相对于传统的tail日志的方式要灵活很多。</p>
+<h1 id="可测试"><a href="#可测试" class="headerlink" title="可测试"></a>可测试</h1><p>因为日志文件和主库负载关系不大，因此在从库上执行修改表结构的操作可以更真实的体现出这些操作锁产生的实际影响。(虽然不是十分理想，后续我们会做优化工作)。</p>
 <p><code>gh-ost</code> 內建支持测试功能，通过使用 <code>--test-on-replica</code> 的参数来指定: 它可以在从库上进行变更操作，在操作结束时<code>gh-ost</code> 将会停止复制，交换表，反向交换表，保留2个表并保持同步，停止复制。可以在空闲时候测试和比较两个表的数据情况。</p>
 <p>这是我们在GitHub的生产环境中的测试：我们生产环境中有多个从库；部分从库并不是为用户提供服务的，而是用来对所有表运行的连续覆盖迁移测试。我们生产环境中的表，小的可能没有数据，大的会达到数百GB，我们只是做个标记，并不会正在的修改表结构（engine=innodb）。当每一个迁移结束后会停止复制，我们会对原表和临时表的数据进行完整的checksum确保他们的数据一致性。然后我们会恢复复制，再去操作下一张表。我们的生产环境的从库中已经通过 gh-ost 成功的操作了很多表。</p>
-<h1 id="值得信赖">值得信赖</h1><p>上文提到说了这么多，都是为了提高大家对 <code>gh-ost</code> 的信任程度。毕竟在业界它还是一个新手，类似的工具已经存在了很多年了。</p>
+<h1 id="值得信赖"><a href="#值得信赖" class="headerlink" title="值得信赖"></a>值得信赖</h1><p>上文提到说了这么多，都是为了提高大家对 <code>gh-ost</code> 的信任程度。毕竟在业界它还是一个新手，类似的工具已经存在了很多年了。</p>
 <ul>
 <li><p>在第一次试手之前我们建议用户先在从库上测试，校验数据的一致性。我们已经在从库上成功的进行了数以千计的迁移操作。</p>
 </li>
@@ -202,9 +203,9 @@
 <li><p>说到 ETA, <code>--exact-rowcount</code> 参数你可能会喜欢。相对于一条漫长的 <code>SELECT COUNT(*)</code> 语句，gh-ost 会预估出迁移操作所需要花费的时间，还会根据当前迁移的工作状况更新预估时间。虽然ETA的时间随时更改，但进度百分比的显示是准确的。</p>
 </li>
 </ul>
-<h1 id="gh-ost_操作模式">gh-ost 操作模式</h1><p>gh-ost 可以同时连接多个服务器，为了获取二进制的数据流，它会作为一个从库，将数据从一个库复制到另外一个。它有各种不同的操作模式，这取决于你的设置，配置，和要运行迁移环境。</p>
+<h1 id="gh-ost-操作模式"><a href="#gh-ost-操作模式" class="headerlink" title="gh-ost 操作模式"></a>gh-ost 操作模式</h1><p>gh-ost 可以同时连接多个服务器，为了获取二进制的数据流，它会作为一个从库，将数据从一个库复制到另外一个。它有各种不同的操作模式，这取决于你的设置，配置，和要运行迁移环境。</p>
 <p><img src="/img/gh-ost3.png" alt="gh-ost3"></p>
-<h2 id="a-_连接到从库，在主库做迁移">a. 连接到从库，在主库做迁移</h2><p>这是  gh-ost 默认的工作方式。gh-ost 将会检查从库状态，找到集群结构中的主库并连接，接下来进行迁移操作：</p>
+<h2 id="a-连接到从库，在主库做迁移"><a href="#a-连接到从库，在主库做迁移" class="headerlink" title="a. 连接到从库，在主库做迁移"></a>a. 连接到从库，在主库做迁移</h2><p>这是  gh-ost 默认的工作方式。gh-ost 将会检查从库状态，找到集群结构中的主库并连接，接下来进行迁移操作：</p>
 <ul>
 <li>行数据在主库上读写</li>
 <li>读取从库的二进制日志，将变更应用到主库</li>
@@ -214,21 +215,21 @@
 </ul>
 <p>如果你的主库的日志格式是 SBR，工具也可以正常工作。但从库必须启用二级制日志(log_bin, log_slave_updates) 并且设置 <code>binlog_format=ROW</code> ( gh-ost 是读取从库的二级制文件)。</p>
 <p>如果直接在主库上操作，当然也需要二进制日志格式是RBR。</p>
-<h2 id="b-_连接到主库">b. 连接到主库</h2><p>如果你没有从库，或者不想使用从库，你可以直接在主库上操作。<code>gh-ost</code> 将会直接在主库上进行所有操作。你需要持续关注复制延迟问题。</p>
+<h2 id="b-连接到主库"><a href="#b-连接到主库" class="headerlink" title="b. 连接到主库"></a>b. 连接到主库</h2><p>如果你没有从库，或者不想使用从库，你可以直接在主库上操作。<code>gh-ost</code> 将会直接在主库上进行所有操作。你需要持续关注复制延迟问题。</p>
 <ul>
 <li>你的主库的二进制日志必须是 RBR 格式。</li>
 <li>在这个模式中你必须指定 <code>--allow-on-master</code> 参数</li>
 </ul>
-<h2 id="c-_在从库迁移/测试">c. 在从库迁移/测试</h2><p>该模式会在从库执行迁移操作。gh-ost 会简单的连接到主库，此后所有的操作都在从库执行，不会对主库进行任何的改动。整个操作过程中，gh-ost 将控制速度保证从库可以及时的进行数据同步</p>
+<h2 id="c-在从库迁移-测试"><a href="#c-在从库迁移-测试" class="headerlink" title="c. 在从库迁移/测试"></a>c. 在从库迁移/测试</h2><p>该模式会在从库执行迁移操作。gh-ost 会简单的连接到主库，此后所有的操作都在从库执行，不会对主库进行任何的改动。整个操作过程中，gh-ost 将控制速度保证从库可以及时的进行数据同步</p>
 <ul>
 <li><code>--migrate-on-replica</code> 表示 gh-ost 会直接在从库上进行迁移操作。即使在复制运行阶段也可以进行表的切换操作。</li>
 <li><code>--test-on-replica</code> 表示 迁移操作只是为了测试在切换之前复制会停止，然后会进行切换操作，然后在切换回来，你的原始表最终还是原始表。两个表都会保存下来，复制操作是停止的。你可以对这两个表进行一致性检查等测试操作。</li>
 </ul>
-<h1 id="gh-ost_at_GitHub">gh-ost at GitHub</h1><p>我们已经在所有线上所有的数据库在线操作中使用了gh-ost ，我们每天都需要使用它，根据数据库修改需求，可能每天要运行多次。凭借其审计和控制功能我们已经将它集成到了<a href="https://www.pagerduty.com/blog/what-is-chatops/" target="_blank" rel="external">ChatOps</a>流程中。我们的工程师可以清醒的了解到迁移操作的进度，而且可以灵活的控制其行为。</p>
-<h1 id="开源">开源</h1><p>gh-ost 在<a href="https://github.com/github/gh-ost/blob/master/LICENSE" target="_blank" rel="external">MIT的许可</a>下发布到了<a href="https://github.com/github/gh-ost" target="_blank" rel="external">开源社区</a>。</p>
+<h1 id="gh-ost-at-GitHub"><a href="#gh-ost-at-GitHub" class="headerlink" title="gh-ost at GitHub"></a>gh-ost at GitHub</h1><p>我们已经在所有线上所有的数据库在线操作中使用了gh-ost ，我们每天都需要使用它，根据数据库修改需求，可能每天要运行多次。凭借其审计和控制功能我们已经将它集成到了<a href="https://www.pagerduty.com/blog/what-is-chatops/" target="_blank" rel="external">ChatOps</a>流程中。我们的工程师可以清醒的了解到迁移操作的进度，而且可以灵活的控制其行为。</p>
+<h1 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h1><p>gh-ost 在<a href="https://github.com/github/gh-ost/blob/master/LICENSE" target="_blank" rel="external">MIT的许可</a>下发布到了<a href="https://github.com/github/gh-ost" target="_blank" rel="external">开源社区</a>。</p>
 <p>虽然gh-ost在使用中很稳定，我们还在不断的完善和改进。我们将其开源也欢迎社会各界的朋友能够参与和贡献。随后我们会发布 贡献和建议的页面。</p>
 <p>我们会积极的维护 gh-ost 项目，同时希望广大的用户可以尝试和测试这个工具，我们做了很大努力使之更值得信赖。</p>
-<h2 id="译者注">译者注</h2><p>gh-ost 是MySQL业界在线修改表结构工具中的一名新秀，通常我们都是通过Percona的pt-online-schema-change工具来做这项工作，gh-ost的出现给我们带来了一种全新的方式。本文是翻译了一篇gh-ost的介绍文章，还没有尝试过这个工具。欢迎喜欢尝鲜网友谈谈使用感受。</p>
+<h2 id="译者注"><a href="#译者注" class="headerlink" title="译者注"></a>译者注</h2><p>gh-ost 是MySQL业界在线修改表结构工具中的一名新秀，通常我们都是通过Percona的pt-online-schema-change工具来做这项工作，gh-ost的出现给我们带来了一种全新的方式。本文是翻译了一篇gh-ost的介绍文章，还没有尝试过这个工具。欢迎喜欢尝鲜网友谈谈使用感受。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -236,7 +237,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="../../../../../categories/index.html">数据库工具</a>
+  <a class="article-category-link" href="../../../../../categories/数据库工具/">数据库工具</a>
 </div>
 
 
@@ -318,7 +319,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在线修改表结构，已存在的场景"><span class="toc-number">1.</span> <span class="toc-text">在线修改表结构，已存在的场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于触发器的在线修改有哪些问题呢？"><span class="toc-number">2.</span> <span class="toc-text">基于触发器的在线修改有哪些问题呢？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost"><span class="toc-number">3.</span> <span class="toc-text">gh-ost</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无触发器"><span class="toc-number">4.</span> <span class="toc-text">无触发器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#轻量级"><span class="toc-number">5.</span> <span class="toc-text">轻量级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可暂停"><span class="toc-number">6.</span> <span class="toc-text">可暂停</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可动态控制"><span class="toc-number">7.</span> <span class="toc-text">可动态控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可审计"><span class="toc-number">8.</span> <span class="toc-text">可审计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可测试"><span class="toc-number">9.</span> <span class="toc-text">可测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#值得信赖"><span class="toc-number">10.</span> <span class="toc-text">值得信赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost_操作模式"><span class="toc-number">11.</span> <span class="toc-text">gh-ost 操作模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-_连接到从库，在主库做迁移"><span class="toc-number">11.1.</span> <span class="toc-text">a. 连接到从库，在主库做迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-_连接到主库"><span class="toc-number">11.2.</span> <span class="toc-text">b. 连接到主库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-_在从库迁移/测试"><span class="toc-number">11.3.</span> <span class="toc-text">c. 在从库迁移/测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost_at_GitHub"><span class="toc-number">12.</span> <span class="toc-text">gh-ost at GitHub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开源"><span class="toc-number">13.</span> <span class="toc-text">开源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#译者注"><span class="toc-number">13.1.</span> <span class="toc-text">译者注</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在线修改表结构，已存在的场景"><span class="toc-number">1.</span> <span class="toc-text">在线修改表结构，已存在的场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于触发器的在线修改有哪些问题呢？"><span class="toc-number">2.</span> <span class="toc-text">基于触发器的在线修改有哪些问题呢？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost"><span class="toc-number">3.</span> <span class="toc-text">gh-ost</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无触发器"><span class="toc-number">4.</span> <span class="toc-text">无触发器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#轻量级"><span class="toc-number">5.</span> <span class="toc-text">轻量级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可暂停"><span class="toc-number">6.</span> <span class="toc-text">可暂停</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可动态控制"><span class="toc-number">7.</span> <span class="toc-text">可动态控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可审计"><span class="toc-number">8.</span> <span class="toc-text">可审计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可测试"><span class="toc-number">9.</span> <span class="toc-text">可测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#值得信赖"><span class="toc-number">10.</span> <span class="toc-text">值得信赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost-操作模式"><span class="toc-number">11.</span> <span class="toc-text">gh-ost 操作模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-连接到从库，在主库做迁移"><span class="toc-number">11.1.</span> <span class="toc-text">a. 连接到从库，在主库做迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-连接到主库"><span class="toc-number">11.2.</span> <span class="toc-text">b. 连接到主库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-在从库迁移-测试"><span class="toc-number">11.3.</span> <span class="toc-text">c. 在从库迁移/测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gh-ost-at-GitHub"><span class="toc-number">12.</span> <span class="toc-text">gh-ost at GitHub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开源"><span class="toc-number">13.</span> <span class="toc-text">开源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#译者注"><span class="toc-number">13.1.</span> <span class="toc-text">译者注</span></a></li></ol></li></ol>
  
   </div>
 
@@ -391,27 +392,15 @@
 			
 		
 			
+				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/iptables/" title="iptables">iptables<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
@@ -423,7 +412,7 @@
 			
 		
 			
-				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
 			
 		
 			
@@ -431,7 +420,23 @@
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/iptables/" title="iptables">iptables<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
 		</ul>

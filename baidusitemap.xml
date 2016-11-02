@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>http://salogs.com/news/2016/11/02/mac-shadowsocks/</loc>
+    <lastmod>2016-11-02T08:37:15.000Z</lastmod>
+    <data>
+        <display>
+        <title>Mac 安装与使用Shadowsocks</title>
+        <pubTime>2016-11-02T04:31:17.000Z</pubTime>
+        
+        <tag>shadowsocks</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://salogs.com/news/2016/09/06/nexo-seo/</loc>
+    <lastmod>2016-09-06T04:11:51.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo网站优化之SEO</title>
+        <pubTime>2016-09-06T04:01:23.000Z</pubTime>
+        
+        <tag>hexo,seo</tag>
+         
+         
+           
+             
+              <breadCrumb title="经验分析" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E6%9E%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2016/08/03/gitHub-gh-ost-online-change-schema-tool/</loc>
+    <lastmod>2016-08-05T03:12:32.000Z</lastmod>
+    <data>
+        <display>
+        <title>GitHub开源的MySQL在线更改Schema工具</title>
+        <pubTime>2016-08-03T07:46:26.000Z</pubTime>
+        
+        <tag>MySQL</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据库工具" url="http://salogs.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/20/ubuntu-install-salt/</loc>
+    <lastmod>2016-07-19T10:26:27.000Z</lastmod>
+    <data>
+        <display>
+        <title>Ubuntu 安装salt</title>
+        <pubTime>2015-08-20T09:10:26.000Z</pubTime>
+        
+        <tag>salt</tag>
+         
+         
+           
+             
+              <breadCrumb title="运维自动化" url="http://salogs.com/categories/%E8%BF%90%E7%BB%B4%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/20/configure-salt/</loc>
+    <lastmod>2015-08-20T09:48:08.000Z</lastmod>
+    <data>
+        <display>
+        <title>配置 salt</title>
+        <pubTime>2015-08-20T09:31:26.000Z</pubTime>
+        
+        <tag>salt</tag>
+         
+         
+           
+             
+              <breadCrumb title="运维自动化" url="http://salogs.com/categories/%E8%BF%90%E7%BB%B4%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/20/iptables-save/</loc>
+    <lastmod>2015-08-20T09:07:36.000Z</lastmod>
+    <data>
+        <display>
+        <title>保存iptable规则并开机自动加载</title>
+        <pubTime>2015-08-20T08:46:27.000Z</pubTime>
+        
+        <tag>iptables</tag>
+         
+         
+           
+             
+              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+          
+             
+              <breadCrumb title="Iptables" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/Iptables/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/17/database-backup-and-recovery/</loc>
+    <lastmod>2015-08-17T06:06:43.000Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL备份与恢复</title>
+        <pubTime>2015-08-17T06:04:14.000Z</pubTime>
+        
+        <tag>XtraBackup</tag>
+         
+         
+           
+             
+              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+          
+             
+              <breadCrumb title="MySQL" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/04/ten-go-best-practice/</loc>
+    <lastmod>2015-08-04T03:36:14.000Z</lastmod>
+    <data>
+        <display>
+        <title>【转】十条有用的 GO 技术</title>
+        <pubTime>2015-08-04T01:16:16.000Z</pubTime>
+        
+        <tag>Go</tag>
+         
+         
+           
+             
+              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+          
+             
+              <breadCrumb title="Go" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/Go/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/</loc>
+    <lastmod>2015-08-04T03:26:22.000Z</lastmod>
+    <data>
+        <display>
+        <title>阿里云VPC网络无EIP的主机上网问题</title>
+        <pubTime>2015-08-02T13:38:58.000Z</pubTime>
+        
+        <tag>route</tag>
+         
+        <tag>IaaS</tag>
+         
+         
+           
+             
+              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/02/migration-to-github/</loc>
+    <lastmod>2015-08-02T12:27:05.000Z</lastmod>
+    <data>
+        <display>
+        <title>salogs正式迁移到github</title>
+        <pubTime>2015-08-01T16:00:00.000Z</pubTime>
+        
+        <tag>其他</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://salogs.com/news/2015/08/02/shell-array-demo/</loc>
+    <lastmod>2015-08-02T10:50:47.000Z</lastmod>
+    <data>
+        <display>
+        <title>shell 数组应用实例</title>
+        <pubTime>2015-08-02T10:01:37.000Z</pubTime>
+        
+        <tag>shell</tag>
+         
+        <tag>script</tag>
+         
+        <tag>array</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://salogs.com/categories/linux/"/>
+          
+             
+              <breadCrumb title="script" url="http://salogs.com/categories/linux/script/"/>
+          
+        </display>
+    </data>
+    </url>
+
+</urlset>
