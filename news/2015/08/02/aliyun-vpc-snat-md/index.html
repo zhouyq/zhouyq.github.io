@@ -13,24 +13,20 @@
     
 
     
-    <meta name="description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。
-VPC结构图
-虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
+    <meta name="description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。 VPC结构图 虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
+<meta name="keywords" content="route,IaaS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阿里云VPC网络无EIP的主机上网问题">
 <meta property="og:url" content="http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。
-VPC结构图
-虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
+<meta property="og:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。 VPC结构图 虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://salogs.com/img/aliyun-vpc-snat.jpg">
 <meta property="og:image" content="http://salogs.com/img/aliyun-vpc-snat-2.jpg">
-<meta property="og:updated_time" content="2015-08-04T03:26:22.000Z">
+<meta property="og:updated_time" content="2018-06-19T02:48:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里云VPC网络无EIP的主机上网问题">
-<meta name="twitter:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。
-VPC结构图
-虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
+<meta name="twitter:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。 VPC结构图 虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
 <meta name="twitter:image" content="http://salogs.com/img/aliyun-vpc-snat.jpg">
 <meta name="twitter:creator" content="@ZhouYueqiu">
 
@@ -117,7 +113,7 @@ VPC结构图
 <h1 id="VPC结构图"><a href="#VPC结构图" class="headerlink" title="VPC结构图"></a>VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
 <h1 id="虚拟路由器配置"><a href="#虚拟路由器配置" class="headerlink" title="虚拟路由器配置"></a>虚拟路由器配置</h1><h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
 <p><img src="/img/aliyun-vpc-snat-2.jpg" alt=""></p>
-<h1 id="绑定EIP的主机配置"><a href="#绑定EIP的主机配置" class="headerlink" title="绑定EIP的主机配置"></a>绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则"><a href="#iptables添加SNAT规则" class="headerlink" title="iptables添加SNAT规则"></a>iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">iptables -t nat -I POSTROUTING <span class="_">-s</span> 192.168.2.0/24 -j SNAT --to-source 192.168.2.20</div></pre></td></tr></table></figure>
+<h1 id="绑定EIP的主机配置"><a href="#绑定EIP的主机配置" class="headerlink" title="绑定EIP的主机配置"></a>绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则"><a href="#iptables添加SNAT规则" class="headerlink" title="iptables添加SNAT规则"></a>iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">iptables -t nat -A POSTROUTING <span class="_">-s</span> 192.168.2.0/24 -o eth0 -j MASQUERADE</div></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>注意：</strong> ubuntu 14.04 系统保存iptables设置需要安装iptables-persistent包，然后通过 <code>service iptables-persistent save</code> 的方式保存配置，安装完iptables-persistent后该服务随系统一起启动并会把保存的配置应用</p>
 </blockquote>
@@ -283,15 +279,11 @@ VPC结构图
 			
 		
 			
-				<li><a href="/tags/array/" title="array">array<sup>1</sup></a></li>
+				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
 			
 		
 			
@@ -303,7 +295,7 @@ VPC结构图
 			
 		
 			
-				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
+				<li><a href="/tags/array/" title="array">array<sup>1</sup></a></li>
 			
 		
 			
@@ -311,11 +303,7 @@ VPC结构图
 			
 		
 			
-				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
 			
 		
 			
@@ -323,11 +311,19 @@ VPC结构图
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -415,7 +411,7 @@ VPC结构图
 		<span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
 		</p>
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
 		<a href="/about" target="_blank" title="zhouyq">zhouyq</a>
 		

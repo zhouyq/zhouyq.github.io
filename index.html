@@ -17,6 +17,7 @@
 <meta property="og:title" content="SA-Logs">
 <meta property="og:url" content="http://salogs.com/index.html">
 <meta property="og:site_name" content="SA-Logs">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SA-Logs">
 <meta name="twitter:creator" content="@ZhouYueqiu">
@@ -908,7 +909,7 @@
 <h1 id="VPC结构图"><a href="#VPC结构图" class="headerlink" title="VPC结构图"></a>VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
 <h1 id="虚拟路由器配置"><a href="#虚拟路由器配置" class="headerlink" title="虚拟路由器配置"></a>虚拟路由器配置</h1><h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
 <p><img src="/img/aliyun-vpc-snat-2.jpg" alt=""></p>
-<h1 id="绑定EIP的主机配置"><a href="#绑定EIP的主机配置" class="headerlink" title="绑定EIP的主机配置"></a>绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则"><a href="#iptables添加SNAT规则" class="headerlink" title="iptables添加SNAT规则"></a>iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">iptables -t nat -I POSTROUTING <span class="_">-s</span> 192.168.2.0/24 -j SNAT --to-source 192.168.2.20</div></pre></td></tr></table></figure>
+<h1 id="绑定EIP的主机配置"><a href="#绑定EIP的主机配置" class="headerlink" title="绑定EIP的主机配置"></a>绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则"><a href="#iptables添加SNAT规则" class="headerlink" title="iptables添加SNAT规则"></a>iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">iptables -t nat -A POSTROUTING <span class="_">-s</span> 192.168.2.0/24 -o eth0 -j MASQUERADE</div></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>注意：</strong> ubuntu 14.04 系统保存iptables设置需要安装iptables-persistent包，然后通过 <code>service iptables-persistent save</code> 的方式保存配置，安装完iptables-persistent后该服务随系统一起启动并会把保存的配置应用</p>
 </blockquote>
@@ -1115,15 +1116,11 @@
 			
 		
 			
-				<li><a href="/tags/array/" title="array">array<sup>1</sup></a></li>
+				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
 			
 		
 			
@@ -1135,7 +1132,7 @@
 			
 		
 			
-				<li><a href="/tags/IaaS/" title="IaaS">IaaS<sup>1</sup></a></li>
+				<li><a href="/tags/array/" title="array">array<sup>1</sup></a></li>
 			
 		
 			
@@ -1143,11 +1140,7 @@
 			
 		
 			
-				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
 			
 		
 			
@@ -1155,11 +1148,19 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -1247,7 +1248,7 @@
 		<span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
 		</p>
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
 		<a href="/about" target="_blank" title="zhouyq">zhouyq</a>
 		
