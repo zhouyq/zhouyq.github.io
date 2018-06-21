@@ -81,6 +81,7 @@
     
       <a href="/news/2018/06/21/install-dell-omsa/" title="CentOS 7.x 安装 Dell OMSA 与监控" itemprop="url">CentOS 7.x 安装 Dell OMSA 与监控</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -90,6 +91,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <p>各大厂商的服务器都有配到的硬件管理及监控软件，本文主要针对Dell服务器，讲解它的管理与监控。</p>
@@ -111,18 +113,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install srvadmin-all -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机启动</span></span><br><span class="line">/opt/dell/srvadmin/sbin/srvadmin-services.sh <span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">/opt/dell/srvadmin/sbin/srvadmin-services.sh start</span><br><span class="line">Starting instsvcdrv (via systemctl):                       [  确定  ]</span><br><span class="line">Starting dataeng (via systemctl):                          [  确定  ]</span><br><span class="line">Starting dsm_om_connsvc (via systemctl):                   [  确定  ]</span><br></pre></td></tr></table></figure>
 <h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><p>安装完OMSA后，可以通过访问 https://&lt;本机IP&gt;:000 通过浏览器的方式查看硬件信息，如果机器成百上千台，这种方式的工作效率是非常低的，因此本文介绍通过<code>nagios</code>插件 <a href="http://folk.uio.no/trondham/software/check_openmanage.html" target="_blank" rel="noopener">check_openmanage</a> 的方式通过命令行检查，当然这个插件可以结合nagios和zabbix使用，有兴趣的同学可以深入学习一下。 下文只简单介绍使用方法</p>
 <h3 id="下载check-openmanage"><a href="#下载check-openmanage" class="headerlink" title="下载check_openmanage"></a>下载check_openmanage</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://folk.uio.no/trondham/software/files/check_openmanage-3.7.12.tar.gz</span><br></pre></td></tr></table></figure>
-<h3 id="使用check-openmanage"><a href="#使用check-openmanage" class="headerlink" title="使用check_openmanage"></a>使用check_openmanage</h3><p>···bash<br>./check_openmanage -h<br>Usage: check_openmanage [OPTION]…</p>
-<p>GENERAL OPTIONS:</p>
-<p>   -f, –config         Specify configuration file<br>   -p, –perfdata       Output performance data [default=no]<br>   -t, –timeout        Plugin timeout in seconds [default=30]<br>   -c, –critical       Custom temperature critical limits<br>   -w, –warning        Custom temperature warning limits<br>   -F, –fahrenheit     Use Fahrenheit as temperature unit<br>   -d, –debug          Debug output, reports everything<br>   -h, –help           Display this help text<br>   -V, –version        Display version info</p>
-<p>SNMP OPTIONS:</p>
-<p>   -H, –hostname       Hostname or IP (required for SNMP)<br>   -C, –community      SNMP community string [default=public]<br>   -P, –protocol       SNMP protocol version [default=2c]<br>   –port               SNMP port number [default=161]<br>   -6, –ipv6           Use IPv6 instead of IPv4 [default=no]<br>   –tcp                Use TCP instead of UDP [default=no]</p>
-<p>OUTPUT OPTIONS:</p>
-<p>   -i, –info           Prefix any alerts with the service tag<br>   -e, –extinfo        Append system info to alerts<br>   -s, –state          Prefix alerts with alert state<br>   -S, –short-state    Prefix alerts with alert state abbreviated<br>   -o, –okinfo         Verbosity when check result is OK<br>   -B, –show-blacklist Show blacklistings in OK output<br>   -I, –htmlinfo       HTML output with clickable links</p>
-<p>CHECK CONTROL AND BLACKLISTING:</p>
-<p>   -a, –all            Check everything, even log content<br>   -b, –blacklist      Blacklist missing and/or failed components<br>   –only               Only check a certain component or alert type<br>   –check              Fine-tune which components are checked<br>   –no-storage         Don’t check storage<br>   –vdisk-critical     Make any alerts on virtual disks critical</p>
-<p>For more information and advanced options, see the manual page or URL:<br>  <a href="http://folk.uio.no/trondham/software/check_openmanage.html" target="_blank" rel="noopener">http://folk.uio.no/trondham/software/check_openmanage.html</a></p>
-<p>```</p>
-
+<h3 id="使用check-openmanage"><a href="#使用check-openmanage" class="headerlink" title="使用check_openmanage"></a>使用check_openmanage</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./check_openmanage -h</span><br><span class="line">Usage: check_openmanage [OPTION]...</span><br><span class="line"></span><br><span class="line">GENERAL OPTIONS:</span><br><span class="line"></span><br><span class="line">   <span class="_">-f</span>, --config         Specify configuration file</span><br><span class="line">   -p, --perfdata       Output performance data [default=no]</span><br><span class="line">   -t, --timeout        Plugin timeout <span class="keyword">in</span> seconds [default=30]</span><br><span class="line">   -c, --critical       Custom temperature critical limits</span><br><span class="line">   -w, --warning        Custom temperature warning limits</span><br><span class="line">   -F, --fahrenheit     Use Fahrenheit as temperature unit</span><br><span class="line">   <span class="_">-d</span>, --debug          Debug output, reports everything</span><br><span class="line">   -h, --help           Display this <span class="built_in">help</span> text</span><br><span class="line">   -V, --version        Display version info</span><br><span class="line"></span><br><span class="line">SNMP OPTIONS:</span><br><span class="line"></span><br><span class="line">   -H, --hostname       Hostname or IP (required <span class="keyword">for</span> SNMP)</span><br><span class="line">   -C, --community      SNMP community string [default=public]</span><br><span class="line">   -P, --protocol       SNMP protocol version [default=2c]</span><br><span class="line">   --port               SNMP port number [default=161]</span><br><span class="line">   -6, --ipv6           Use IPv6 instead of IPv4 [default=no]</span><br><span class="line">   --tcp                Use TCP instead of UDP [default=no]</span><br><span class="line"></span><br><span class="line">OUTPUT OPTIONS:</span><br><span class="line"></span><br><span class="line">   -i, --info           Prefix any alerts with the service tag</span><br><span class="line">   <span class="_">-e</span>, --extinfo        Append system info to alerts</span><br><span class="line">   <span class="_">-s</span>, --state          Prefix alerts with alert state</span><br><span class="line">   -S, --short-state    Prefix alerts with alert state abbreviated</span><br><span class="line">   -o, --okinfo         Verbosity when check result is OK</span><br><span class="line">   -B, --show-blacklist Show blacklistings <span class="keyword">in</span> OK output</span><br><span class="line">   -I, --htmlinfo       HTML output with clickable links</span><br><span class="line"></span><br><span class="line">CHECK CONTROL AND BLACKLISTING:</span><br><span class="line"></span><br><span class="line">   <span class="_">-a</span>, --all            Check everything, even <span class="built_in">log</span> content</span><br><span class="line">   -b, --blacklist      Blacklist missing and/or failed components</span><br><span class="line">   --only               Only check a certain component or alert <span class="built_in">type</span></span><br><span class="line">   --check              Fine-tune <span class="built_in">which</span> components are checked</span><br><span class="line">   --no-storage         Don<span class="string">'t check storage</span></span><br><span class="line"><span class="string">   --vdisk-critical     Make any alerts on virtual disks critical</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">For more information and advanced options, see the manual page or URL:</span></span><br><span class="line"><span class="string">  http://folk.uio.no/trondham/software/check_openmanage.html</span></span><br></pre></td></tr></table></figure>
         
         
         <p class="article-more-link">
@@ -170,6 +161,7 @@
     
       <a href="/news/2018/06/21/rainbond-install-s1/" title="开源PaaS Rainbond不完全评测01 —— 安装篇" itemprop="url">开源PaaS Rainbond不完全评测01 —— 安装篇</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -179,6 +171,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         
@@ -219,6 +212,7 @@
     
       <a href="/news/2016/11/02/mac-shadowsocks/" title="Mac 安装与使用Shadowsocks" itemprop="url">Mac 安装与使用Shadowsocks</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -228,6 +222,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>A secure socks5 proxy,designed to protect your Internet traffic.—— 来自 <a href="https://shadowsocks.org/en/index.html" target="_blank" rel="noopener">shadowsocks.org</a></p>
@@ -297,6 +292,7 @@
     
       <a href="/news/2016/09/06/nexo-seo/" title="Hexo网站优化之SEO" itemprop="url">Hexo网站优化之SEO</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -306,6 +302,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <p>SEO (Search Engine Optimization)，即搜索引擎优化。对网站做SEO优化，有利于提高搜索引擎的收录速度及网页排名。下面讲解一些简单的SEO优化方法，主要针对Hexo网站。</p>
@@ -370,6 +367,7 @@
     
       <a href="/news/2016/08/03/gitHub-gh-ost-online-change-schema-tool/" title="GitHub开源的MySQL在线更改Schema工具" itemprop="url">GitHub开源的MySQL在线更改Schema工具</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -379,6 +377,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <p>MySQL在线更改schema的工具很多，如Percona的<a href="https://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html" target="_blank" rel="noopener">pt-online-schema-change</a>、 Facebook的 <a href="https://www.facebook.com/notes/mysql-at-facebook/online-schema-change-for-mysql/430801045932/" target="_blank" rel="noopener">OSC</a> 和 <a href="https://github.com/soundcloud/lhm" target="_blank" rel="noopener">LHM</a> 等，但这些都是基于触发器（Trigger）的，今天咱们介绍的 <code>gh-ost</code> 号称是不需要触发器（Triggerless）支持的在线更改表结构的工具。</p>
@@ -545,6 +544,7 @@
     
       <a href="/news/2015/08/20/configure-salt/" title="配置 salt" itemprop="url">配置 salt</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -554,6 +554,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
@@ -616,6 +617,7 @@
     
       <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt" itemprop="url">Ubuntu 安装salt</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -625,6 +627,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <h1 id="添加仓库"><a href="#添加仓库" class="headerlink" title="添加仓库"></a>添加仓库</h1><p>最新的salt包会发布在 Ubuntu saltstack PPA。如果你的系统中有<code>add-apt-repository</code> 工具，可以通过一条命令添加仓库并导入PPA key：</p>
@@ -688,6 +691,7 @@
     
       <a href="/news/2015/08/20/iptables-save/" title="保存iptable规则并开机自动加载" itemprop="url">保存iptable规则并开机自动加载</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -697,6 +701,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <h1 id="iptables-save"><a href="#iptables-save" class="headerlink" title="iptables-save"></a>iptables-save</h1><p>利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：</p>
@@ -762,6 +767,7 @@
     
       <a href="/news/2015/08/17/database-backup-and-recovery/" title="MySQL备份与恢复" itemprop="url">MySQL备份与恢复</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -771,6 +777,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <h1 id="数据库备份与恢复"><a href="#数据库备份与恢复" class="headerlink" title="数据库备份与恢复"></a>数据库备份与恢复</h1><h2 id="当前数据库结构"><a href="#当前数据库结构" class="headerlink" title="当前数据库结构"></a>当前数据库结构</h2><p>db01 （主）</p>
@@ -862,6 +869,7 @@
     
       <a href="/news/2015/08/04/ten-go-best-practice/" title="【转】十条有用的 GO 技术" itemprop="url">【转】十条有用的 GO 技术</a>
   </h1>
+  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -871,6 +879,7 @@
     
   </p>
 </header>
+
     <div class="article-content">
         
         <p>原文<a href="http://mikespook.com/2014/07/%e5%8d%81%e6%9d%a1%e6%9c%89%e7%94%a8%e7%9a%84-go-%e6%8a%80%e6%9c%af/" target="_blank" rel="noopener">在此</a>，实用总结。</p>
@@ -1214,6 +1223,8 @@
 			
 		
 
+                <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+                <span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
