@@ -4,7 +4,47 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/</loc>
+    <loc>https://salogs.com/news/2018/06/21/install-dell-omsa/</loc>
+    <lastmod>2018-06-21T07:52:20.000Z</lastmod>
+    <data>
+        <display>
+        <title>CentOS 7.x 安装 Dell OMSA 与监控</title>
+        <pubTime>2018-06-21T06:44:44.000Z</pubTime>
+        
+        <tag>Hardware</tag>
+         
+        <tag>monitor</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="https://salogs.com/categories/linux/"/>
+          
+             
+              <breadCrumb title="monitor" url="https://salogs.com/categories/linux/monitor/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://salogs.com/news/2018/06/21/rainbond-install-s1/</loc>
+    <lastmod>2018-06-21T06:53:15.000Z</lastmod>
+    <data>
+        <display>
+        <title>开源PaaS Rainbond不完全评测01 —— 安装篇</title>
+        <pubTime>2018-06-21T04:50:57.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/</loc>
     <lastmod>2018-06-19T02:48:22.000Z</lastmod>
     <data>
         <display>
@@ -18,7 +58,7 @@
          
            
              
-              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+              <breadCrumb title="经验分享" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
           
         </display>
     </data>
@@ -27,7 +67,7 @@
     
     
   <url>
-    <loc>http://salogs.com/news/2016/11/02/mac-shadowsocks/</loc>
+    <loc>https://salogs.com/news/2016/11/02/mac-shadowsocks/</loc>
     <lastmod>2016-11-02T08:37:15.000Z</lastmod>
     <data>
         <display>
@@ -44,7 +84,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2016/09/06/nexo-seo/</loc>
+    <loc>https://salogs.com/news/2016/09/06/nexo-seo/</loc>
     <lastmod>2016-09-06T04:11:51.000Z</lastmod>
     <data>
         <display>
@@ -56,7 +96,7 @@
          
            
              
-              <breadCrumb title="经验分析" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E6%9E%90/"/>
+              <breadCrumb title="经验分析" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E6%9E%90/"/>
           
         </display>
     </data>
@@ -64,7 +104,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2016/08/03/gitHub-gh-ost-online-change-schema-tool/</loc>
+    <loc>https://salogs.com/news/2016/08/03/gitHub-gh-ost-online-change-schema-tool/</loc>
     <lastmod>2016-08-05T03:12:32.000Z</lastmod>
     <data>
         <display>
@@ -76,7 +116,7 @@
          
            
              
-              <breadCrumb title="数据库工具" url="http://salogs.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B7%A5%E5%85%B7/"/>
+              <breadCrumb title="数据库工具" url="https://salogs.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B7%A5%E5%85%B7/"/>
           
         </display>
     </data>
@@ -84,7 +124,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/20/ubuntu-install-salt/</loc>
+    <loc>https://salogs.com/news/2015/08/20/ubuntu-install-salt/</loc>
     <lastmod>2016-07-19T10:26:27.000Z</lastmod>
     <data>
         <display>
@@ -96,7 +136,7 @@
          
            
              
-              <breadCrumb title="运维自动化" url="http://salogs.com/categories/%E8%BF%90%E7%BB%B4%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+              <breadCrumb title="运维自动化" url="https://salogs.com/categories/%E8%BF%90%E7%BB%B4%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
           
         </display>
     </data>
@@ -104,7 +144,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/20/configure-salt/</loc>
+    <loc>https://salogs.com/news/2015/08/20/configure-salt/</loc>
     <lastmod>2015-08-20T09:48:08.000Z</lastmod>
     <data>
         <display>
@@ -116,7 +156,7 @@
          
            
              
-              <breadCrumb title="运维自动化" url="http://salogs.com/categories/%E8%BF%90%E7%BB%B4%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+              <breadCrumb title="运维自动化" url="https://salogs.com/categories/%E8%BF%90%E7%BB%B4%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
           
         </display>
     </data>
@@ -124,7 +164,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/20/iptables-save/</loc>
+    <loc>https://salogs.com/news/2015/08/20/iptables-save/</loc>
     <lastmod>2015-08-20T09:07:36.000Z</lastmod>
     <data>
         <display>
@@ -136,10 +176,10 @@
          
            
              
-              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+              <breadCrumb title="经验分享" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
           
              
-              <breadCrumb title="Iptables" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/Iptables/"/>
+              <breadCrumb title="Iptables" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/Iptables/"/>
           
         </display>
     </data>
@@ -147,7 +187,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/17/database-backup-and-recovery/</loc>
+    <loc>https://salogs.com/news/2015/08/17/database-backup-and-recovery/</loc>
     <lastmod>2015-08-17T06:06:43.000Z</lastmod>
     <data>
         <display>
@@ -159,10 +199,10 @@
          
            
              
-              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+              <breadCrumb title="经验分享" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
           
              
-              <breadCrumb title="MySQL" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/MySQL/"/>
+              <breadCrumb title="MySQL" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/MySQL/"/>
           
         </display>
     </data>
@@ -170,7 +210,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/04/ten-go-best-practice/</loc>
+    <loc>https://salogs.com/news/2015/08/04/ten-go-best-practice/</loc>
     <lastmod>2015-08-04T03:36:14.000Z</lastmod>
     <data>
         <display>
@@ -182,10 +222,10 @@
          
            
              
-              <breadCrumb title="经验分享" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+              <breadCrumb title="经验分享" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
           
              
-              <breadCrumb title="Go" url="http://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/Go/"/>
+              <breadCrumb title="Go" url="https://salogs.com/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/Go/"/>
           
         </display>
     </data>
@@ -193,7 +233,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/02/migration-to-github/</loc>
+    <loc>https://salogs.com/news/2015/08/02/migration-to-github/</loc>
     <lastmod>2015-08-02T12:27:05.000Z</lastmod>
     <data>
         <display>
@@ -210,7 +250,7 @@
 
     
   <url>
-    <loc>http://salogs.com/news/2015/08/02/shell-array-demo/</loc>
+    <loc>https://salogs.com/news/2015/08/02/shell-array-demo/</loc>
     <lastmod>2015-08-02T10:50:47.000Z</lastmod>
     <data>
         <display>
@@ -226,10 +266,10 @@
          
            
              
-              <breadCrumb title="linux" url="http://salogs.com/categories/linux/"/>
+              <breadCrumb title="linux" url="https://salogs.com/categories/linux/"/>
           
              
-              <breadCrumb title="script" url="http://salogs.com/categories/linux/script/"/>
+              <breadCrumb title="script" url="https://salogs.com/categories/linux/script/"/>
           
         </display>
     </data>

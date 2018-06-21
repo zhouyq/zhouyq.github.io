@@ -1,8 +1,6 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
 <head>
   <meta charset="UTF-8">
   
@@ -15,7 +13,7 @@
     
     <meta property="og:type" content="website">
 <meta property="og:title" content="SA-Logs">
-<meta property="og:url" content="http://salogs.com/index.html">
+<meta property="og:url" content="https://salogs.com/index.html">
 <meta property="og:site_name" content="SA-Logs">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -56,7 +54,7 @@
 					 
 						<li><a href="/">Home</a></li>
 					
-						<li><a href="/history">Archives</a></li>
+						<li><a href="/archives">Archives</a></li>
 					
 						<li><a href="/about">About</a></li>
 					
@@ -75,15 +73,152 @@
     <div id="container">
       <div id="main">
 
-  
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/news/2018/06/21/install-dell-omsa/" title="CentOS 7.x 安装 Dell OMSA 与监控" itemprop="url">CentOS 7.x 安装 Dell OMSA 与监控</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2018-06-21T06:44:44.000Z" itemprop="datePublished"> 发表于 2018-06-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>各大厂商的服务器都有配到的硬件管理及监控软件，本文主要针对Dell服务器，讲解它的管理与监控。</p>
+<p>Dell服务器的 OMSA （OpenManage Server Administrator ）是安装在操作系统中的一套软件，提供硬件监控、驱动程序的升级等操作。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li>配置仓库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl <span class="_">-s</span> http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装DSU(Dell EMC System Update)<blockquote>
+<p>DSU 是为操作更新驱动与软件的服务。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install dell-system-update</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装并启动OMSA</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install srvadmin-all -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机启动</span></span><br><span class="line">/opt/dell/srvadmin/sbin/srvadmin-services.sh <span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">/opt/dell/srvadmin/sbin/srvadmin-services.sh start</span><br><span class="line">Starting instsvcdrv (via systemctl):                       [  确定  ]</span><br><span class="line">Starting dataeng (via systemctl):                          [  确定  ]</span><br><span class="line">Starting dsm_om_connsvc (via systemctl):                   [  确定  ]</span><br></pre></td></tr></table></figure>
+<h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><p>安装完OMSA后，可以通过访问 https://&lt;本机IP&gt;:000 通过浏览器的方式查看硬件信息，如果机器成百上千台，这种方式的工作效率是非常低的，因此本文介绍通过<code>nagios</code>插件 <a href="http://folk.uio.no/trondham/software/check_openmanage.html" target="_blank" rel="noopener">check_openmanage</a> 的方式通过命令行检查，当然这个插件可以结合nagios和zabbix使用，有兴趣的同学可以深入学习一下。 下文只简单介绍使用方法</p>
+<h3 id="下载check-openmanage"><a href="#下载check-openmanage" class="headerlink" title="下载check_openmanage"></a>下载check_openmanage</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://folk.uio.no/trondham/software/files/check_openmanage-3.7.12.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="使用check-openmanage"><a href="#使用check-openmanage" class="headerlink" title="使用check_openmanage"></a>使用check_openmanage</h3><p>···bash<br>./check_openmanage -h<br>Usage: check_openmanage [OPTION]…</p>
+<p>GENERAL OPTIONS:</p>
+<p>   -f, –config         Specify configuration file<br>   -p, –perfdata       Output performance data [default=no]<br>   -t, –timeout        Plugin timeout in seconds [default=30]<br>   -c, –critical       Custom temperature critical limits<br>   -w, –warning        Custom temperature warning limits<br>   -F, –fahrenheit     Use Fahrenheit as temperature unit<br>   -d, –debug          Debug output, reports everything<br>   -h, –help           Display this help text<br>   -V, –version        Display version info</p>
+<p>SNMP OPTIONS:</p>
+<p>   -H, –hostname       Hostname or IP (required for SNMP)<br>   -C, –community      SNMP community string [default=public]<br>   -P, –protocol       SNMP protocol version [default=2c]<br>   –port               SNMP port number [default=161]<br>   -6, –ipv6           Use IPv6 instead of IPv4 [default=no]<br>   –tcp                Use TCP instead of UDP [default=no]</p>
+<p>OUTPUT OPTIONS:</p>
+<p>   -i, –info           Prefix any alerts with the service tag<br>   -e, –extinfo        Append system info to alerts<br>   -s, –state          Prefix alerts with alert state<br>   -S, –short-state    Prefix alerts with alert state abbreviated<br>   -o, –okinfo         Verbosity when check result is OK<br>   -B, –show-blacklist Show blacklistings in OK output<br>   -I, –htmlinfo       HTML output with clickable links</p>
+<p>CHECK CONTROL AND BLACKLISTING:</p>
+<p>   -a, –all            Check everything, even log content<br>   -b, –blacklist      Blacklist missing and/or failed components<br>   –only               Only check a certain component or alert type<br>   –check              Fine-tune which components are checked<br>   –no-storage         Don’t check storage<br>   –vdisk-critical     Make any alerts on virtual disks critical</p>
+<p>For more information and advanced options, see the manual page or URL:<br>  <a href="http://folk.uio.no/trondham/software/check_openmanage.html" target="_blank" rel="noopener">http://folk.uio.no/trondham/software/check_openmanage.html</a></p>
+<p>```</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="categories/linux/">linux</a>►<a class="article-category-link" href="categories/linux/monitor/">monitor</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hardware/">Hardware</a><a href="/tags/monitor/">monitor</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/news/2018/06/21/rainbond-install-s1/" title="开源PaaS Rainbond不完全评测01 —— 安装篇" itemprop="url">开源PaaS Rainbond不完全评测01 —— 安装篇</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2018-06-21T04:50:57.000Z" itemprop="datePublished"> 发表于 2018-06-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2016/11/02/mac-shadowsocks/" title="Mac 安装与使用Shadowsocks" itemprop="url">Mac 安装与使用Shadowsocks</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -93,10 +228,9 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>A secure socks5 proxy,designed to protect your Internet traffic.—— 来自 <a href="https://shadowsocks.org/en/index.html" target="_blank" rel="external">shadowsocks.org</a></p>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>A secure socks5 proxy,designed to protect your Internet traffic.—— 来自 <a href="https://shadowsocks.org/en/index.html" target="_blank" rel="noopener">shadowsocks.org</a></p>
 <h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
 <li><strong>速度快</strong> 程序基于异步I/O和事件驱动研发</li>
 <li><strong>灵活的加密方式</strong> 使用行业级加密算法加密。 灵活支持自定义算法。</li>
@@ -106,23 +240,23 @@
 <li><strong>易于开发</strong> 可以通过 pip, aur, freshports 和其他包管理系统实现简单开发</li>
 </ul>
 <h2 id="安装Shadowsocks-Server"><a href="#安装Shadowsocks-Server" class="headerlink" title="安装Shadowsocks-Server"></a>安装Shadowsocks-Server</h2><p>这里只介绍Ubuntu/Debian系统安装 Server 端程序</p>
-<p>先添加 GPG public key :<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ wget -O- http://shadowsocks.org/debian/1D27208A.gpg | sudo apt-key add -</div></pre></td></tr></table></figure></p>
+<p>先添加 GPG public key :<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget -O- http://shadowsocks.org/debian/1D27208A.gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure></p>
 <p>配置包仓库地址<br>Debian Wheezy, Ubuntu 12.04 系统 libssl &gt; 1.0.0 执行如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">echo</span> <span class="string">"deb http://shadowsocks.org/debian wheezy main"</span> &gt;&gt; /etc/apt/sources.list</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"deb http://shadowsocks.org/debian wheezy main"</span> &gt;&gt; /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
 <p>如果操作系统是 Debian Squeeze, Ubuntu 11.04, libssl &gt; 0.9.8, but &lt; 1.0.0 执行下面命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">echo</span> <span class="string">"deb http://shadowsocks.org/debian squeeze main"</span> &gt;&gt; /etc/apt/sources.list</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"deb http://shadowsocks.org/debian squeeze main"</span> &gt;&gt; /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
 <p>然后安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ apt-get update</div><div class="line">$ apt-get install shadowsocks-libev</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt-get update</span><br><span class="line">$ apt-get install shadowsocks-libev</span><br></pre></td></tr></table></figure>
 <h2 id="Mac系统安装-Shadowsocks-Client"><a href="#Mac系统安装-Shadowsocks-Client" class="headerlink" title="Mac系统安装 Shadowsocks-Client"></a>Mac系统安装 Shadowsocks-Client</h2><ul>
-<li><p>安装GUI 客户端<br>下载地址：<a href="https://github.com/shadowsocks/ShadowsocksX-NG/releases" target="_blank" rel="external">https://github.com/shadowsocks/ShadowsocksX-NG/releases</a></p>
+<li><p>安装GUI 客户端<br>下载地址：<a href="https://github.com/shadowsocks/ShadowsocksX-NG/releases" target="_blank" rel="noopener">https://github.com/shadowsocks/ShadowsocksX-NG/releases</a></p>
 </li>
 <li><p>通过命令行安装</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">brew install shadowsocks-libev</div><div class="line"></div><div class="line"><span class="comment"># 设置开机启动</span></div><div class="line">  brew services start shadowsocks-libev</div><div class="line"></div><div class="line"><span class="comment"># 或者先前台跑一次程序</span></div><div class="line">/usr/<span class="built_in">local</span>/opt/shadowsocks-libev/bin/ss-local -c /usr/<span class="built_in">local</span>/etc/shadowsocks-libev.json</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install shadowsocks-libev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机启动</span></span><br><span class="line">  brew services start shadowsocks-libev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者先前台跑一次程序</span></span><br><span class="line">/usr/<span class="built_in">local</span>/opt/shadowsocks-libev/bin/ss-local -c /usr/<span class="built_in">local</span>/etc/shadowsocks-libev.json</span><br></pre></td></tr></table></figure>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -143,9 +277,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2016/11/02/mac-shadowsocks/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2016/11/02/mac-shadowsocks/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -155,15 +286,17 @@
 
 
 
-  
+
+
+
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2016/09/06/nexo-seo/" title="Hexo网站优化之SEO" itemprop="url">Hexo网站优化之SEO</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -173,26 +306,25 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
         <p>SEO (Search Engine Optimization)，即搜索引擎优化。对网站做SEO优化，有利于提高搜索引擎的收录速度及网页排名。下面讲解一些简单的SEO优化方法，主要针对Hexo网站。</p>
-<h1 id="SEO优化之title"><a href="#SEO优化之title" class="headerlink" title="SEO优化之title"></a>SEO优化之title</h1><p>编辑站点目录下的<code>themes/layout/index.swig</code>文件，将下面的代码<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; &#123;% endlock %&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="SEO优化之title"><a href="#SEO优化之title" class="headerlink" title="SEO优化之title"></a>SEO优化之title</h1><p>编辑站点目录下的<code>themes/layout/index.swig</code>文件，将下面的代码<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; &#123;% endlock %&#125;</span><br></pre></td></tr></table></figure></p>
 <p>改成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; - &#123;&#123; theme.description &#125;&#125; &#123;% endlock %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; - &#123;&#123; theme.description &#125;&#125; &#123;% endlock %&#125;</span><br></pre></td></tr></table></figure>
 <p>这时将网站的描述及关键词加入了网站的title中，更有利于详细地描述网站。</p>
 <h1 id="添加robots-txt"><a href="#添加robots-txt" class="headerlink" title="添加robots.txt"></a>添加robots.txt</h1><p>robots.txt是一种存放于网站根目录下的ASCII编码的文本文件，它的作用是告诉搜索引擎此网站中哪些内容是可以被爬取的，哪些是禁止爬取的。robots.txt应该放在站点目录下的source文件中，网站生成后在网站的根目录(<code>站点目录/public/</code>)下。</p>
-<p>我的robots.txt文件内容如下<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">User-agent: *</div><div class="line">Allow: /</div><div class="line">Allow: /archives/</div><div class="line">Allow: /categories/</div><div class="line">Allow: /about/</div><div class="line"></div><div class="line">Disallow: /vendors/</div><div class="line">Disallow: /js/</div><div class="line">Disallow: /css/</div><div class="line">Disallow: /fonts/</div><div class="line">Disallow: /vendors/</div><div class="line">Disallow: /fancybox/</div></pre></td></tr></table></figure></p>
+<p>我的robots.txt文件内容如下<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Allow: /</span><br><span class="line">Allow: /archives/</span><br><span class="line">Allow: /categories/</span><br><span class="line">Allow: /about/</span><br><span class="line"></span><br><span class="line">Disallow: /vendors/</span><br><span class="line">Disallow: /js/</span><br><span class="line">Disallow: /css/</span><br><span class="line">Disallow: /fonts/</span><br><span class="line">Disallow: /vendors/</span><br><span class="line">Disallow: /fancybox/</span><br></pre></td></tr></table></figure></p>
 <h1 id="添加sitemap"><a href="#添加sitemap" class="headerlink" title="添加sitemap"></a>添加sitemap</h1><p>Sitemap即网站地图，它的作用在于便于搜索引擎更加智能地抓取网站。最简单和常见的sitemap形式，是XML文件，在其中列出网站中的网址以及关于每个网址的其他元数据（上次更新时间、更新的频率及相对其他网址重要程度等）。</p>
-<h2 id="Step-1-安装sitemap生成插件"><a href="#Step-1-安装sitemap生成插件" class="headerlink" title="Step 1: 安装sitemap生成插件"></a>Step 1: 安装sitemap生成插件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
-<h2 id="Step-2-编辑站点目录下的-config-yml，添加"><a href="#Step-2-编辑站点目录下的-config-yml，添加" class="headerlink" title="Step 2: 编辑站点目录下的_config.yml，添加"></a>Step 2: 编辑站点目录下的_config.yml，添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># hexo sitemap网站地图</div><div class="line">sitemap:</div><div class="line">path: sitemap.xml</div><div class="line">baidusitemap:</div><div class="line">path: baidusitemap.xml</div></pre></td></tr></table></figure>
-<h2 id="Step-3-在robots-txt文件中添加"><a href="#Step-3-在robots-txt文件中添加" class="headerlink" title="Step 3: 在robots.txt文件中添加"></a>Step 3: 在robots.txt文件中添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Sitemap: http://www.jeyzhang.com/sitemap.xml</div><div class="line">Sitemap: http://www.jeyzhang.com/baidusitemap.xml</div></pre></td></tr></table></figure>
+<h2 id="Step-1-安装sitemap生成插件"><a href="#Step-1-安装sitemap生成插件" class="headerlink" title="Step 1: 安装sitemap生成插件"></a>Step 1: 安装sitemap生成插件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+<h2 id="Step-2-编辑站点目录下的-config-yml，添加"><a href="#Step-2-编辑站点目录下的-config-yml，添加" class="headerlink" title="Step 2: 编辑站点目录下的_config.yml，添加"></a>Step 2: 编辑站点目录下的_config.yml，添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># hexo sitemap网站地图</span><br><span class="line">sitemap:</span><br><span class="line">path: sitemap.xml</span><br><span class="line">baidusitemap:</span><br><span class="line">path: baidusitemap.xml</span><br></pre></td></tr></table></figure>
+<h2 id="Step-3-在robots-txt文件中添加"><a href="#Step-3-在robots-txt文件中添加" class="headerlink" title="Step 3: 在robots.txt文件中添加"></a>Step 3: 在robots.txt文件中添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Sitemap: http://www.jeyzhang.com/sitemap.xml</span><br><span class="line">Sitemap: http://www.jeyzhang.com/baidusitemap.xml</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>本文转自：<a href="http://www.jeyzhang.com/hexo-website-seo.html" target="_blank" rel="external">http://www.jeyzhang.com/hexo-website-seo.html</a></p>
+<p>本文转自：<a href="http://www.jeyzhang.com/hexo-website-seo.html" target="_blank" rel="noopener">http://www.jeyzhang.com/hexo-website-seo.html</a></p>
 </blockquote>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -218,9 +350,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2016/09/06/nexo-seo/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2016/09/06/nexo-seo/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -230,15 +359,17 @@
 
 
 
-  
+
+
+
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2016/08/03/gitHub-gh-ost-online-change-schema-tool/" title="GitHub开源的MySQL在线更改Schema工具" itemprop="url">GitHub开源的MySQL在线更改Schema工具</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -248,16 +379,15 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
-        <p>MySQL在线更改schema的工具很多，如Percona的<a href="https://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html" target="_blank" rel="external">pt-online-schema-change</a>、 Facebook的 <a href="https://www.facebook.com/notes/mysql-at-facebook/online-schema-change-for-mysql/430801045932/" target="_blank" rel="external">OSC</a> 和 <a href="https://github.com/soundcloud/lhm" target="_blank" rel="external">LHM</a> 等，但这些都是基于触发器（Trigger）的，今天咱们介绍的 <code>gh-ost</code> 号称是不需要触发器（Triggerless）支持的在线更改表结构的工具。</p>
+        <p>MySQL在线更改schema的工具很多，如Percona的<a href="https://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html" target="_blank" rel="noopener">pt-online-schema-change</a>、 Facebook的 <a href="https://www.facebook.com/notes/mysql-at-facebook/online-schema-change-for-mysql/430801045932/" target="_blank" rel="noopener">OSC</a> 和 <a href="https://github.com/soundcloud/lhm" target="_blank" rel="noopener">LHM</a> 等，但这些都是基于触发器（Trigger）的，今天咱们介绍的 <code>gh-ost</code> 号称是不需要触发器（Triggerless）支持的在线更改表结构的工具。</p>
 <p><img src="/img/gh-ost.png" alt="gh-ost"></p>
-<p>原文地址：<a href="http://githubengineering.com/gh-ost-github-s-online-migration-tool-for-mysql/" target="_blank" rel="external">gh-ost: GitHub’s online schema migration tool for MySQL</a></p>
+<p>原文地址：<a href="http://githubengineering.com/gh-ost-github-s-online-migration-tool-for-mysql/" target="_blank" rel="noopener">gh-ost: GitHub’s online schema migration tool for MySQL</a></p>
 <blockquote>
 <p>本文先介绍一下当前业界已经存在的这些工具的使用场景和原理，然后再详细介绍  <code>gh-ost</code> 的工作原理和特性。</p>
 </blockquote>
-<p>今天我们开源了GitHub内部使用的一款 不需要触发器支持的 MySQL 在线更改表结构的工具 <a href="http://github.com/github/gh-ost" target="_blank" rel="external">gh-ost</a></p>
+<p>今天我们开源了GitHub内部使用的一款 不需要触发器支持的 MySQL 在线更改表结构的工具 <a href="http://github.com/github/gh-ost" target="_blank" rel="noopener">gh-ost</a></p>
 <p>开发 <code>gh-ost</code> 是为了应付GitHub在生产环境中面临的持续的、不断变化的在线修改表结构的需求。<code>gh-ost</code> 通过提供低影响、可控、可审计和操作友好的解决方案改变了现有的在线迁移表工具的工作模式。</p>
 <p>MySQL表迁移及结构更改操作是业界众所周知的问题，2009年以来已经可以通过在线（不停服务）变更的工具来解决。迅速增长，快速迭代的产品往往需要频繁的需改数据库的结构。增加/更改/删除/ 字段和索引等等，这些操作在MySQL中默认都会锁表，影响线上的服务。 向这种数据库结构层面的变更我们每天都会面临多次，当然这种操作不应该影响用户的正常服务。</p>
 <p>在开始介绍 <code>gh-ost</code> 工具之前，咱们先来看一下当前现有的这些工具的解决方案。</p>
@@ -265,7 +395,7 @@
 <ul>
 <li>在从库上修改表结构，操作会在其他的从库上生效，将结构变更了的从库设置为主库</li>
 <li>使用 MySQL  InnoDB 存储引擎提供的在线DDL特性</li>
-<li>使用在线修改表结构的工具。现在最流行的是 <a href="https://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html" target="_blank" rel="external">pt-online-schema-change</a> 和 Facebook 的 <a href="https://www.facebook.com/notes/mysql-at-facebook/online-schema-change-for-mysql/430801045932/" target="_blank" rel="external">OSC</a>；当然还有 <a href="https://github.com/soundcloud/lhm" target="_blank" rel="external">LHM</a> 和比较原始的  <a href="http://shlomi-noach.github.io/openarkkit/oak-online-alter-table.html" target="_blank" rel="external">oak-online-alter-table</a> 工具。 </li>
+<li>使用在线修改表结构的工具。现在最流行的是 <a href="https://www.percona.com/doc/percona-toolkit/2.2/pt-online-schema-change.html" target="_blank" rel="noopener">pt-online-schema-change</a> 和 Facebook 的 <a href="https://www.facebook.com/notes/mysql-at-facebook/online-schema-change-for-mysql/430801045932/" target="_blank" rel="noopener">OSC</a>；当然还有 <a href="https://github.com/soundcloud/lhm" target="_blank" rel="noopener">LHM</a> 和比较原始的  <a href="http://shlomi-noach.github.io/openarkkit/oak-online-alter-table.html" target="_blank" rel="noopener">oak-online-alter-table</a> 工具。 </li>
 </ul>
 <p>其他的还包括 Galera 集群的Schema滚动更新，以及一些其他的非InnoDB的存储引擎等待，在 GitHub 我们使用通用的 主-从 架构 和  InnoDB 存储引擎。</p>
 <p>为什么我们决定开始一个新的解决方案，而不是使用上面的提到的这些呢？现有的每种解决方案都有其局限性，下文会对这些方式的普遍问题简单的说明一下，但会对基于触发器的在线变更工具的问题进行详细说明。</p>
@@ -362,14 +492,14 @@
 <li><code>--migrate-on-replica</code> 表示 gh-ost 会直接在从库上进行迁移操作。即使在复制运行阶段也可以进行表的切换操作。</li>
 <li><code>--test-on-replica</code> 表示 迁移操作只是为了测试在切换之前复制会停止，然后会进行切换操作，然后在切换回来，你的原始表最终还是原始表。两个表都会保存下来，复制操作是停止的。你可以对这两个表进行一致性检查等测试操作。</li>
 </ul>
-<h1 id="gh-ost-at-GitHub"><a href="#gh-ost-at-GitHub" class="headerlink" title="gh-ost at GitHub"></a>gh-ost at GitHub</h1><p>我们已经在所有线上所有的数据库在线操作中使用了gh-ost ，我们每天都需要使用它，根据数据库修改需求，可能每天要运行多次。凭借其审计和控制功能我们已经将它集成到了<a href="https://www.pagerduty.com/blog/what-is-chatops/" target="_blank" rel="external">ChatOps</a>流程中。我们的工程师可以清醒的了解到迁移操作的进度，而且可以灵活的控制其行为。</p>
-<h1 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h1><p>gh-ost 在<a href="https://github.com/github/gh-ost/blob/master/LICENSE" target="_blank" rel="external">MIT的许可</a>下发布到了<a href="https://github.com/github/gh-ost" target="_blank" rel="external">开源社区</a>。</p>
+<h1 id="gh-ost-at-GitHub"><a href="#gh-ost-at-GitHub" class="headerlink" title="gh-ost at GitHub"></a>gh-ost at GitHub</h1><p>我们已经在所有线上所有的数据库在线操作中使用了gh-ost ，我们每天都需要使用它，根据数据库修改需求，可能每天要运行多次。凭借其审计和控制功能我们已经将它集成到了<a href="https://www.pagerduty.com/blog/what-is-chatops/" target="_blank" rel="noopener">ChatOps</a>流程中。我们的工程师可以清醒的了解到迁移操作的进度，而且可以灵活的控制其行为。</p>
+<h1 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h1><p>gh-ost 在<a href="https://github.com/github/gh-ost/blob/master/LICENSE" target="_blank" rel="noopener">MIT的许可</a>下发布到了<a href="https://github.com/github/gh-ost" target="_blank" rel="noopener">开源社区</a>。</p>
 <p>虽然gh-ost在使用中很稳定，我们还在不断的完善和改进。我们将其开源也欢迎社会各界的朋友能够参与和贡献。随后我们会发布 贡献和建议的页面。</p>
 <p>我们会积极的维护 gh-ost 项目，同时希望广大的用户可以尝试和测试这个工具，我们做了很大努力使之更值得信赖。</p>
 <h2 id="译者注"><a href="#译者注" class="headerlink" title="译者注"></a>译者注</h2><p>gh-ost 是MySQL业界在线修改表结构工具中的一名新秀，通常我们都是通过Percona的pt-online-schema-change工具来做这项工作，gh-ost的出现给我们带来了一种全新的方式。本文是翻译了一篇gh-ost的介绍文章，还没有尝试过这个工具。欢迎喜欢尝鲜网友谈谈使用感受。</p>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -395,9 +525,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2016/08/03/gitHub-gh-ost-online-change-schema-tool/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2016/08/03/gitHub-gh-ost-online-change-schema-tool/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -407,15 +534,17 @@
 
 
 
-  
+
+
+
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2015/08/20/configure-salt/" title="配置 salt" itemprop="url">配置 salt</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -425,13 +554,12 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
         <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 配置salt服务端地址</span></div><div class="line">vi /etc/salt/minion</div><div class="line"></div><div class="line"><span class="comment"># 这里也可以写主机名</span></div><div class="line">master: 192.168.1.100</div><div class="line"></div><div class="line"><span class="comment"># 修改完成后重启服务</span></div><div class="line">service salt-minion restart</div></pre></td></tr></table></figure>
-<h2 id="服务端操作"><a href="#服务端操作" class="headerlink" title="服务端操作"></a>服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></div><div class="line">salt-key list</div><div class="line"></div><div class="line">Accepted Keys:</div><div class="line">Denied Keys:</div><div class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></div><div class="line">host01</div><div class="line">host02</div><div class="line">Rejected Keys:</div><div class="line"></div><div class="line"><span class="comment"># 接受所有验证请求</span></div><div class="line">salt-key -A</div><div class="line">The following keys are going to be accepted:</div><div class="line">Unaccepted Keys:</div><div class="line">host01</div><div class="line">host02</div><div class="line">Proceed? [n/Y] Y</div><div class="line">Key <span class="keyword">for</span> minion host01 accepted.</div><div class="line">Key <span class="keyword">for</span> minion host02 accepted.</div><div class="line"></div><div class="line"><span class="comment"># 再查看一下</span></div><div class="line">salt-key list</div><div class="line">Accepted Keys:  <span class="comment"># 已经接受</span></div><div class="line">host01</div><div class="line">host02</div><div class="line">Denied Keys:</div><div class="line">Unaccepted Keys:</div><div class="line">Rejected Keys:</div></pre></td></tr></table></figure>
-<h1 id="简单验证执行命令"><a href="#简单验证执行命令" class="headerlink" title="简单验证执行命令"></a>简单验证执行命令</h1><h2 id="远程执行命令"><a href="#远程执行命令" class="headerlink" title="远程执行命令"></a>远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">salt aws-bj* cmd.run uptime</div><div class="line">host01:</div><div class="line">     09:42:13 up  2:02,  2 users,  load average: 0.05, 0.03, 0.05</div><div class="line">host02:</div><div class="line">     09:42:12 up  1:28,  1 user,  load average: 0.00, 0.01, 0.05</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置salt服务端地址</span></span><br><span class="line">vi /etc/salt/minion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里也可以写主机名</span></span><br><span class="line">master: 192.168.1.100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后重启服务</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
+<h2 id="服务端操作"><a href="#服务端操作" class="headerlink" title="服务端操作"></a>服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></span><br><span class="line">salt-key list</span><br><span class="line"></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Rejected Keys:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接受所有验证请求</span></span><br><span class="line">salt-key -A</span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion host01 accepted.</span><br><span class="line">Key <span class="keyword">for</span> minion host02 accepted.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再查看一下</span></span><br><span class="line">salt-key list</span><br><span class="line">Accepted Keys:  <span class="comment"># 已经接受</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
+<h1 id="简单验证执行命令"><a href="#简单验证执行命令" class="headerlink" title="简单验证执行命令"></a>简单验证执行命令</h1><h2 id="远程执行命令"><a href="#远程执行命令" class="headerlink" title="远程执行命令"></a>远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">salt aws-bj* cmd.run uptime</span><br><span class="line">host01:</span><br><span class="line">     09:42:13 up  2:02,  2 users,  load average: 0.05, 0.03, 0.05</span><br><span class="line">host02:</span><br><span class="line">     09:42:12 up  1:28,  1 user,  load average: 0.00, 0.01, 0.05</span><br></pre></td></tr></table></figure>
 <h1 id="下篇预告"><a href="#下篇预告" class="headerlink" title="下篇预告"></a>下篇预告</h1><ul>
 <li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
 </ul>
@@ -442,7 +570,7 @@
 </ul>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -468,9 +596,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2015/08/20/configure-salt/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2015/08/20/configure-salt/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -480,15 +605,17 @@
 
 
 
-  
+
+
+
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt" itemprop="url">Ubuntu 安装salt</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -498,25 +625,24 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
         <h1 id="添加仓库"><a href="#添加仓库" class="headerlink" title="添加仓库"></a>添加仓库</h1><p>最新的salt包会发布在 Ubuntu saltstack PPA。如果你的系统中有<code>add-apt-repository</code> 工具，可以通过一条命令添加仓库并导入PPA key：</p>
-<h2 id="通过add-apt-repository添加仓库及PPA-key"><a href="#通过add-apt-repository添加仓库及PPA-key" class="headerlink" title="通过add-apt-repository添加仓库及PPA key"></a>通过add-apt-repository添加仓库及PPA key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">add-apt-repository ppa:saltstack/salt</div><div class="line"></div><div class="line"> Salt, the remote execution and configuration management tool.</div><div class="line"> More info: https://launchpad.net/~saltstack/+archive/ubuntu/salt</div><div class="line">Press [ENTER] to <span class="built_in">continue</span> or ctrl-c to cancel adding it</div><div class="line"></div><div class="line">gpg: keyring `/tmp/tmpys0ah_nb/secring.gpg<span class="string">' created</span></div><div class="line">gpg: keyring `/tmp/tmpys0ah_nb/pubring.gpg' created</div><div class="line">gpg: requesting key 0E27C0A6 from hkp server keyserver.ubuntu.com</div><div class="line">gpg: /tmp/tmpys0ah_nb/trustdb.gpg: trustdb created</div><div class="line">gpg: key 0E27C0A6: public key <span class="string">"Launchpad PPA for Salt Stack"</span> imported</div><div class="line">gpg: Total number processed: 1</div><div class="line">gpg:               imported: 1  (RSA: 1)</div><div class="line">OK</div></pre></td></tr></table></figure>
+<h2 id="通过add-apt-repository添加仓库及PPA-key"><a href="#通过add-apt-repository添加仓库及PPA-key" class="headerlink" title="通过add-apt-repository添加仓库及PPA key"></a>通过add-apt-repository添加仓库及PPA key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">add-apt-repository ppa:saltstack/salt</span><br><span class="line"></span><br><span class="line"> Salt, the remote execution and configuration management tool.</span><br><span class="line"> More info: https://launchpad.net/~saltstack/+archive/ubuntu/salt</span><br><span class="line">Press [ENTER] to <span class="built_in">continue</span> or ctrl-c to cancel adding it</span><br><span class="line"></span><br><span class="line">gpg: keyring `/tmp/tmpys0ah_nb/secring.gpg<span class="string">' created</span></span><br><span class="line"><span class="string">gpg: keyring `/tmp/tmpys0ah_nb/pubring.gpg'</span> created</span><br><span class="line">gpg: requesting key 0E27C0A6 from hkp server keyserver.ubuntu.com</span><br><span class="line">gpg: /tmp/tmpys0ah_nb/trustdb.gpg: trustdb created</span><br><span class="line">gpg: key 0E27C0A6: public key <span class="string">"Launchpad PPA for Salt Stack"</span> imported</span><br><span class="line">gpg: Total number processed: 1</span><br><span class="line">gpg:               imported: 1  (RSA: 1)</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>如果没有找到add-apt-repository命令可以执行下面的命令进行安装</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install python-software-properties</div></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install python-software-properties</span><br></pre></td></tr></table></figure>
 <p>可能也需要安装下面的包</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install software-properties-common</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install software-properties-common</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="手动添加仓库及PPA-key"><a href="#手动添加仓库及PPA-key" class="headerlink" title="手动添加仓库及PPA  key"></a>手动添加仓库及PPA  key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">echo</span> deb http://ppa.launchpad.net/saltstack/salt/ubuntu `lsb_release -sc` main | sudo tee /etc/apt/sources.list.d/saltstack.list</div><div class="line">wget -q -O- <span class="string">"http://keyserver.ubuntu.com:11371/pks/lookup?op=get&amp;search=0x4759FA960E27C0A6"</span> |apt-key add -</div></pre></td></tr></table></figure>
-<h2 id="更新仓库元数据"><a href="#更新仓库元数据" class="headerlink" title="更新仓库元数据"></a>更新仓库元数据</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get update</div></pre></td></tr></table></figure>
-<h1 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install salt-master salt-minion salt-syndic</div></pre></td></tr></table></figure>
-<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install salt-minion</div></pre></td></tr></table></figure>
+<h2 id="手动添加仓库及PPA-key"><a href="#手动添加仓库及PPA-key" class="headerlink" title="手动添加仓库及PPA  key"></a>手动添加仓库及PPA  key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> deb http://ppa.launchpad.net/saltstack/salt/ubuntu `lsb_release -sc` main | sudo tee /etc/apt/sources.list.d/saltstack.list</span><br><span class="line">wget -q -O- <span class="string">"http://keyserver.ubuntu.com:11371/pks/lookup?op=get&amp;search=0x4759FA960E27C0A6"</span> |apt-key add -</span><br></pre></td></tr></table></figure>
+<h2 id="更新仓库元数据"><a href="#更新仓库元数据" class="headerlink" title="更新仓库元数据"></a>更新仓库元数据</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<h1 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-master salt-minion salt-syndic</span><br></pre></td></tr></table></figure>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-minion</span><br></pre></td></tr></table></figure>
 <h1 id="ZEROMQ-4"><a href="#ZEROMQ-4" class="headerlink" title="ZEROMQ 4"></a>ZEROMQ 4</h1><p>ZeroMQ 4 在 Ubuntu 14.04 以上版本已经与系统集成。因此Ubuntu 12.04 LTS 之前的版本需要升级到ZEROMQ 4</p>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -542,9 +668,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2015/08/20/ubuntu-install-salt/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2015/08/20/ubuntu-install-salt/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -554,15 +677,17 @@
 
 
 
-  
+
+
+
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2015/08/20/iptables-save/" title="保存iptable规则并开机自动加载" itemprop="url">保存iptable规则并开机自动加载</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -572,7 +697,6 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
         <h1 id="iptables-save"><a href="#iptables-save" class="headerlink" title="iptables-save"></a>iptables-save</h1><p>利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：</p>
@@ -585,14 +709,14 @@
 <p>Debian/Ubuntu: <code>ip6tables-save</code> &gt; /etc/iptables/rules.v6<br>RHEL/CentOS: <code>ip6tables-save</code> &gt; /etc/sysconfig/ip6tables</p>
 <p><strong>注意：</strong> 这种方式只是保存规则和恢复的一种方式，并不是说保存规则后下次启动就会自动加载。一定要记住这点，如果要想系统启动后自动加载请看下面的方式。</p>
 <h1 id="iptables-persistent-Debian-Ubuntu"><a href="#iptables-persistent-Debian-Ubuntu" class="headerlink" title="iptables-persistent (Debian/Ubuntu)"></a>iptables-persistent (Debian/Ubuntu)</h1><p>从 Ubuntu 10.04 LTS (Lucid) 和 Debian 6.0 (Squeeze) 版本开始，可以通过安装一个名为 “iptables-persistent” 的包，安装后它以守护进程的方式来运行，系统重启后可以自动将保存的内容加载到iptables中。当然前提也是需要先保存规则。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install iptables-persistent</div></pre></td></tr></table></figure>
-<h2 id="保存规则"><a href="#保存规则" class="headerlink" title="保存规则"></a>保存规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">service  iptables-persistent save</div><div class="line">* Saving rules...                                                                                                                                                                 *  IPv4...                                                                                                                                                                        *  IPv6...</div><div class="line"></div><div class="line">ls -1 /etc/iptables/</div><div class="line">rules.v4</div><div class="line">rules.v6</div><div class="line"></div><div class="line">cat  /etc/iptables/rules.v4</div><div class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></div><div class="line">*filter</div><div class="line">:INPUT ACCEPT [5726:774869]</div><div class="line">:FORWARD ACCEPT [170:27598]</div><div class="line">:OUTPUT ACCEPT [5467:789045]</div><div class="line">COMMIT</div><div class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></div><div class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></div><div class="line">*nat</div><div class="line">:PREROUTING ACCEPT [23:1596]</div><div class="line">:INPUT ACCEPT [0:0]</div><div class="line">:OUTPUT ACCEPT [9:540]</div><div class="line">:POSTROUTING ACCEPT [0:0]</div><div class="line">-A POSTROUTING <span class="_">-s</span> 10.0.0.0/16 -o eth0 -j MASQUERADE</div><div class="line">COMMIT</div><div class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></div></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install iptables-persistent</span><br></pre></td></tr></table></figure>
+<h2 id="保存规则"><a href="#保存规则" class="headerlink" title="保存规则"></a>保存规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service  iptables-persistent save</span><br><span class="line">* Saving rules...                                                                                                                                                                 *  IPv4...                                                                                                                                                                        *  IPv6...</span><br><span class="line"></span><br><span class="line">ls -1 /etc/iptables/</span><br><span class="line">rules.v4</span><br><span class="line">rules.v6</span><br><span class="line"></span><br><span class="line">cat  /etc/iptables/rules.v4</span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [5726:774869]</span><br><span class="line">:FORWARD ACCEPT [170:27598]</span><br><span class="line">:OUTPUT ACCEPT [5467:789045]</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*nat</span><br><span class="line">:PREROUTING ACCEPT [23:1596]</span><br><span class="line">:INPUT ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [9:540]</span><br><span class="line">:POSTROUTING ACCEPT [0:0]</span><br><span class="line">-A POSTROUTING <span class="_">-s</span> 10.0.0.0/16 -o eth0 -j MASQUERADE</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br></pre></td></tr></table></figure>
 <h1 id="RHEL-和-CentOS-保存规则"><a href="#RHEL-和-CentOS-保存规则" class="headerlink" title="RHEL 和 CentOS 保存规则"></a>RHEL 和 CentOS 保存规则</h1><p>RHEL/CentOS 提供了简单的方式来持久化存储iptables规则，可以直接通过iptables服务的命令来完成：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">chkconfig --list | grep iptables</div><div class="line">  iptables       	0:off	1:off	2:on	3:on	4:on	5:on	6:off</div><div class="line"></div><div class="line"><span class="comment"># 如果不是开机启动，需要执行下面命令</span></div><div class="line">chkconfig iptables on</div><div class="line"></div><div class="line"><span class="comment"># 保存规则</span></div><div class="line">service iptables save</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chkconfig --list | grep iptables</span><br><span class="line">  iptables       	0:off	1:off	2:on	3:on	4:on	5:on	6:off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不是开机启动，需要执行下面命令</span></span><br><span class="line">chkconfig iptables on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存规则</span></span><br><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
 <p>IPv4规则信息会保存到 /etc/sysconfig/iptables 文件中，IPv6 规则保存到 /etc/sysconfig/ip6tables 文件中。 必须执行<code>service iptables save</code> 命令才会保存，保存后系统重启后会自动加载。</p>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -618,9 +742,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2015/08/20/iptables-save/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2015/08/20/iptables-save/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -630,15 +751,17 @@
 
 
 
-  
+
+
+
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2015/08/17/database-backup-and-recovery/" title="MySQL备份与恢复" itemprop="url">MySQL备份与恢复</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -648,7 +771,6 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
         <h1 id="数据库备份与恢复"><a href="#数据库备份与恢复" class="headerlink" title="数据库备份与恢复"></a>数据库备份与恢复</h1><h2 id="当前数据库结构"><a href="#当前数据库结构" class="headerlink" title="当前数据库结构"></a>当前数据库结构</h2><p>db01 （主）</p>
@@ -686,15 +808,15 @@
 <p>随着数据量的增加，全量备份可以做成每周一次，每2~8小时一次增量备份</p>
 </blockquote>
 <h2 id="备份目录"><a href="#备份目录" class="headerlink" title="备份目录"></a>备份目录</h2><p>db{01,02}:/data/backup/{full,incremental}/</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">backup/</div><div class="line">├── full</div><div class="line">│   ├── 2015-08-16       <span class="comment"># 每日全量备份</span></div><div class="line">│   └── 2015-08-16.log   <span class="comment"># 全量备份日志</span></div><div class="line">└── incremental </div><div class="line">    ├── 2015-08-16_14        <span class="comment"># 每小时增量备份</span></div><div class="line">    ├── 2015-08-16_14.log    <span class="comment"># 每小时增量备份日志</span></div><div class="line">    ├── 2015-08-16_15</div><div class="line">    ├── 2015-08-16_15.log</div><div class="line">    ├── 2015-08-16_16</div><div class="line">    ├── 2015-08-16_16.log</div><div class="line">    ├── 2015-08-16_17</div><div class="line">    ├── 2015-08-16_17.log</div><div class="line">    ├── 2015-08-16_18</div><div class="line">    ├── 2015-08-16_18.log</div><div class="line">    ├── 2015-08-16_19</div><div class="line">    └── 2015-08-16_19.log</div></pre></td></tr></table></figure>
-<h2 id="备份计划任务"><a href="#备份计划任务" class="headerlink" title="备份计划任务"></a>备份计划任务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Info   : 数据库备份</span></div><div class="line"><span class="comment"># Author : zhouyq</span></div><div class="line"><span class="comment"># CTime  : 2015-08-16</span></div><div class="line"><span class="comment"># 全量备份</span></div><div class="line">1 0 * * *     /bin/bash /root/bin/bakdb.sh full</div><div class="line"><span class="comment"># 第一次增量备份</span></div><div class="line">1 1 * * *     /bin/bash /root/bin/bakdb.sh incremental first</div><div class="line"><span class="comment"># 其他时间段增量备份</span></div><div class="line">1 2-23 * * *  /bin/bash /root/bin/bakdb.sh incremental</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">backup/</span><br><span class="line">├── full</span><br><span class="line">│   ├── 2015-08-16       <span class="comment"># 每日全量备份</span></span><br><span class="line">│   └── 2015-08-16.log   <span class="comment"># 全量备份日志</span></span><br><span class="line">└── incremental </span><br><span class="line">    ├── 2015-08-16_14        <span class="comment"># 每小时增量备份</span></span><br><span class="line">    ├── 2015-08-16_14.log    <span class="comment"># 每小时增量备份日志</span></span><br><span class="line">    ├── 2015-08-16_15</span><br><span class="line">    ├── 2015-08-16_15.log</span><br><span class="line">    ├── 2015-08-16_16</span><br><span class="line">    ├── 2015-08-16_16.log</span><br><span class="line">    ├── 2015-08-16_17</span><br><span class="line">    ├── 2015-08-16_17.log</span><br><span class="line">    ├── 2015-08-16_18</span><br><span class="line">    ├── 2015-08-16_18.log</span><br><span class="line">    ├── 2015-08-16_19</span><br><span class="line">    └── 2015-08-16_19.log</span><br></pre></td></tr></table></figure>
+<h2 id="备份计划任务"><a href="#备份计划任务" class="headerlink" title="备份计划任务"></a>备份计划任务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Info   : 数据库备份</span></span><br><span class="line"><span class="comment"># Author : zhouyq</span></span><br><span class="line"><span class="comment"># CTime  : 2015-08-16</span></span><br><span class="line"><span class="comment"># 全量备份</span></span><br><span class="line">1 0 * * *     /bin/bash /root/bin/bakdb.sh full</span><br><span class="line"><span class="comment"># 第一次增量备份</span></span><br><span class="line">1 1 * * *     /bin/bash /root/bin/bakdb.sh incremental first</span><br><span class="line"><span class="comment"># 其他时间段增量备份</span></span><br><span class="line">1 2-23 * * *  /bin/bash /root/bin/bakdb.sh incremental</span><br></pre></td></tr></table></figure>
 <h2 id="备份脚本"><a href="#备份脚本" class="headerlink" title="备份脚本"></a>备份脚本</h2><p>/root/bin/bakdb.sh</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line">fullPath=<span class="string">"/data/backup/full"</span></div><div class="line">incrPath=<span class="string">"/data/backup/incremental"</span></div><div class="line">bakdate=`date +<span class="string">'%F'</span>`</div><div class="line">bakhour=`date +<span class="string">'%H'</span>`</div><div class="line"></div><div class="line">oneHourAgo=`date <span class="_">-d</span> <span class="string">'1 hours ago'</span> +<span class="string">'%F_%H'</span>`</div><div class="line"></div><div class="line">BakB<span class="keyword">in</span>=<span class="string">"/usr/bin/innobackupex --no-timestamp --user=root --socket /data/db/tmp/mysql.sock  --defaults-file=/usr/local/mysql/my.cnf --sleep 100"</span></div><div class="line"></div><div class="line"><span class="comment"># backup function</span></div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">hotbackup</span></span>()&#123;</div><div class="line"></div><div class="line">  baktype=<span class="variable">$1</span></div><div class="line">  logfile=<span class="variable">$2</span></div><div class="line">  incrpath=<span class="variable">$3</span></div><div class="line">  bakpath=<span class="variable">$4</span></div><div class="line"></div><div class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></div><div class="line">    <span class="variable">$BakBin</span>  <span class="variable">$bakpath</span>   &gt; <span class="variable">$logfile</span> 2&gt;&amp;1</div><div class="line">  <span class="keyword">elif</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></div><div class="line">    <span class="variable">$BakBin</span> --incremental <span class="variable">$incrpath</span> --incremental-basedir <span class="variable">$bakpath</span> &gt; <span class="variable">$logfile</span> 2&gt;&amp;1</div><div class="line">  <span class="keyword">fi</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># ============= Main =============</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></div><div class="line">   <span class="comment"># 全量备份</span></div><div class="line">   hotbackup <span class="string">"full"</span> <span class="string">"<span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>.log"</span> <span class="string">"none"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></div><div class="line">   /usr/bin/scp -P 9922 -rp  <span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>* db02:<span class="variable">$&#123;fullPath&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></div><div class="line">  <span class="comment"># 判断是否为第一次增量备份，只有第一次增量备份目录指向全量备份</span></div><div class="line">  <span class="comment"># 第二次开始增量备份的上一次目录指向第一次增量目录即可</span></div><div class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$2</span>"</span> == <span class="string">"first"</span> ];<span class="keyword">then</span></div><div class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></div><div class="line">     /usr/bin/scp -P 9922 -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></div><div class="line">  <span class="keyword">else</span></div><div class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;oneHourAgo&#125;</span>"</span></div><div class="line">     /usr/bin/scp -P 9922 -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></div><div class="line">  <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
-<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="全量备份恢复"><a href="#全量备份恢复" class="headerlink" title="全量备份恢复"></a>全量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --apply-log /data/backup/full/2015-08-16</div><div class="line"></div><div class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --move-back /data/backup/full/2015-08-16</div></pre></td></tr></table></figure>
-<h3 id="增量备份恢复"><a href="#增量备份恢复" class="headerlink" title="增量备份恢复"></a>增量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 </div><div class="line">  </div><div class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 --incremental-dir=/data/backup/incremental/2015-08-16_14  </div><div class="line">  </div><div class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 --incremental-dir=/data/backup/incremental/2015-08-16_15</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">fullPath=<span class="string">"/data/backup/full"</span></span><br><span class="line">incrPath=<span class="string">"/data/backup/incremental"</span></span><br><span class="line">bakdate=`date +<span class="string">'%F'</span>`</span><br><span class="line">bakhour=`date +<span class="string">'%H'</span>`</span><br><span class="line"></span><br><span class="line">oneHourAgo=`date <span class="_">-d</span> <span class="string">'1 hours ago'</span> +<span class="string">'%F_%H'</span>`</span><br><span class="line"></span><br><span class="line">BakB<span class="keyword">in</span>=<span class="string">"/usr/bin/innobackupex --no-timestamp --user=root --socket /data/db/tmp/mysql.sock  --defaults-file=/usr/local/mysql/my.cnf --sleep 100"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># backup function</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">hotbackup</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">  baktype=<span class="variable">$1</span></span><br><span class="line">  logfile=<span class="variable">$2</span></span><br><span class="line">  incrpath=<span class="variable">$3</span></span><br><span class="line">  bakpath=<span class="variable">$4</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="variable">$BakBin</span>  <span class="variable">$bakpath</span>   &gt; <span class="variable">$logfile</span> 2&gt;&amp;1</span><br><span class="line">  <span class="keyword">elif</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="variable">$BakBin</span> --incremental <span class="variable">$incrpath</span> --incremental-basedir <span class="variable">$bakpath</span> &gt; <span class="variable">$logfile</span> 2&gt;&amp;1</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============= Main =============</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></span><br><span class="line">   <span class="comment"># 全量备份</span></span><br><span class="line">   hotbackup <span class="string">"full"</span> <span class="string">"<span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>.log"</span> <span class="string">"none"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></span><br><span class="line">   /usr/bin/scp -P 9922 -rp  <span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>* db02:<span class="variable">$&#123;fullPath&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></span><br><span class="line">  <span class="comment"># 判断是否为第一次增量备份，只有第一次增量备份目录指向全量备份</span></span><br><span class="line">  <span class="comment"># 第二次开始增量备份的上一次目录指向第一次增量目录即可</span></span><br><span class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$2</span>"</span> == <span class="string">"first"</span> ];<span class="keyword">then</span></span><br><span class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></span><br><span class="line">     /usr/bin/scp -P 9922 -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;oneHourAgo&#125;</span>"</span></span><br><span class="line">     /usr/bin/scp -P 9922 -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="全量备份恢复"><a href="#全量备份恢复" class="headerlink" title="全量备份恢复"></a>全量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --apply-log /data/backup/full/2015-08-16</span><br><span class="line"></span><br><span class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --move-back /data/backup/full/2015-08-16</span><br></pre></td></tr></table></figure>
+<h3 id="增量备份恢复"><a href="#增量备份恢复" class="headerlink" title="增量备份恢复"></a>增量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 </span><br><span class="line">  </span><br><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 --incremental-dir=/data/backup/incremental/2015-08-16_14  </span><br><span class="line">  </span><br><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 --incremental-dir=/data/backup/incremental/2015-08-16_15</span><br></pre></td></tr></table></figure>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -720,9 +842,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2015/08/17/database-backup-and-recovery/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2015/08/17/database-backup-and-recovery/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -732,15 +851,17 @@
 
 
 
-  
+
+
+
+   
     
-    <article class="post-expand post" itemprop="articleBody">
+    <article class="post-expand post" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/news/2015/08/04/ten-go-best-practice/" title="【转】十条有用的 GO 技术" itemprop="url">【转】十条有用的 GO 技术</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -750,95 +871,94 @@
     
   </p>
 </header>
-
     <div class="article-content">
         
-        <p>原文<a href="http://mikespook.com/2014/07/%e5%8d%81%e6%9d%a1%e6%9c%89%e7%94%a8%e7%9a%84-go-%e6%8a%80%e6%9c%af/" target="_blank" rel="external">在此</a>，实用总结。</p>
+        <p>原文<a href="http://mikespook.com/2014/07/%e5%8d%81%e6%9d%a1%e6%9c%89%e7%94%a8%e7%9a%84-go-%e6%8a%80%e6%9c%af/" target="_blank" rel="noopener">在此</a>，实用总结。</p>
 <hr>
 <h1 id="十条有用的-Go-技术"><a href="#十条有用的-Go-技术" class="headerlink" title="十条有用的 Go 技术"></a>十条有用的 Go 技术</h1><p>这里是我过去几年中编写的大量 Go 代码的经验总结而来的自己的最佳实践。我相信它们具有弹性的。这里的弹性是指：<br>某个应用需要适配一个灵活的环境。你不希望每过 3 到 4 个月就不得不将它们全部重构一遍。添加新的特性应当很容易。许多人参与开发该应用，它应当可以被理解，且维护简单。许多人使用该应用，bug 应该容易被发现并且可以快速的修复。我用了很长的时间学到了这些事情。其中的一些很微小，但对于许多事情都会有影响。所有这些都仅仅是建议，具体情况具体对待，并且如果有帮助的话务必告诉我。随时留言:)</p>
 <h1 id="1-使用单一的-GOPATH"><a href="#1-使用单一的-GOPATH" class="headerlink" title="1. 使用单一的 GOPATH"></a>1. 使用单一的 GOPATH</h1><p>多个 GOPATH 的情况并不具有弹性。GOPATH 本身就是高度自我完备的（通过导入路径）。有多个 GOPATH 会导致某些副作用，例如可能使用了给定的库的不同的版本。你可能在某个地方升级了它，但是其他地方却没有升级。而且，我还没遇到过任何一个需要使用多个 GOPATH 的情况。所以只使用单一的 GOPATH，这会提升你 Go 的开发进度。</p>
-<p>许多人不同意这一观点，接下来我会做一些澄清。像 <a href="https://github.com/coreos/etcd" target="_blank" rel="external">etcd</a> 或 <a href="https://camlistore.org/" target="_blank" rel="external">camlistore</a> 这样的大项目使用了像 <a href="https://github.com/tools/godep" target="_blank" rel="external">godep</a> 这样的工具，将所有依赖保存到某个目录中。也就是说，这些项目自身有一个单一的 GOPATH。它们只能在这个目录里找到对应的版本。除非你的项目很大并且极为重要，否则不要为每个项目使用不同的 GOPATH。如果你认为项目需要一个自己的 GOPATH 目录，那么就创建它，否则不要尝试使用多个 GOPATH。它只会拖慢你的进度。</p>
+<p>许多人不同意这一观点，接下来我会做一些澄清。像 <a href="https://github.com/coreos/etcd" target="_blank" rel="noopener">etcd</a> 或 <a href="https://camlistore.org/" target="_blank" rel="noopener">camlistore</a> 这样的大项目使用了像 <a href="https://github.com/tools/godep" target="_blank" rel="noopener">godep</a> 这样的工具，将所有依赖保存到某个目录中。也就是说，这些项目自身有一个单一的 GOPATH。它们只能在这个目录里找到对应的版本。除非你的项目很大并且极为重要，否则不要为每个项目使用不同的 GOPATH。如果你认为项目需要一个自己的 GOPATH 目录，那么就创建它，否则不要尝试使用多个 GOPATH。它只会拖慢你的进度。</p>
 <h1 id="2-将-for-select-封装到函数中"><a href="#2-将-for-select-封装到函数中" class="headerlink" title="2. 将 for-select 封装到函数中"></a>2. 将 for-select 封装到函数中</h1><p>如果在某个条件下，你需要从 for-select 中退出，就需要使用标签。例如：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line"> </div><div class="line">L:</div><div class="line">    <span class="keyword">for</span> &#123;</div><div class="line">        <span class="keyword">select</span> &#123;</div><div class="line">        <span class="keyword">case</span> &lt;-time.After(time.Second):</div><div class="line">            fmt.Println(<span class="string">"hello"</span>)</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">break</span> L</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    fmt.Println(<span class="string">"ending"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> </span><br><span class="line">L:</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-time.After(time.Second):</span><br><span class="line">            fmt.Println(<span class="string">"hello"</span>)</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span> L</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    fmt.Println(<span class="string">"ending"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如你所见，需要联合break使用标签。这有其用途，不过我不喜欢。这个例子中的 for 循环看起来很小，但是通常它们会更大，而判断break的条件也更为冗长。</p>
 <p>如果需要退出循环，我会将 for-select 封装到函数中：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    foo()</div><div class="line">    fmt.Println(<span class="string">"ending"</span>)</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">for</span> &#123;</div><div class="line">        <span class="keyword">select</span> &#123;</div><div class="line">        <span class="keyword">case</span> &lt;-time.After(time.Second):</div><div class="line">            fmt.Println(<span class="string">"hello"</span>)</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">return</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    foo()</span><br><span class="line">    fmt.Println(<span class="string">"ending"</span>)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="keyword">select</span> &#123;</span><br><span class="line">        <span class="keyword">case</span> &lt;-time.After(time.Second):</span><br><span class="line">            fmt.Println(<span class="string">"hello"</span>)</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>你还可以返回一个错误（或任何其他值），也是同样漂亮的，只需要：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">// 阻塞</div><div class="line"><span class="keyword">if</span> err := foo(); err != nil &#123;</div><div class="line">    // 处理 err</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 阻塞</span><br><span class="line"><span class="keyword">if</span> err := foo(); err != nil &#123;</span><br><span class="line">    // 处理 err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="3-在初始化结构体时使用带有标签的语法"><a href="#3-在初始化结构体时使用带有标签的语法" class="headerlink" title="3. 在初始化结构体时使用带有标签的语法"></a>3. 在初始化结构体时使用带有标签的语法</h1><p>这是一个无标签语法的例子：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</div><div class="line">    Foo <span class="keyword">string</span></div><div class="line">    Bar <span class="keyword">int</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    t := T&#123;<span class="string">"example"</span>, <span class="number">123</span>&#125; <span class="comment">// 无标签语法</span></div><div class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</span><br><span class="line">    Foo <span class="keyword">string</span></span><br><span class="line">    Bar <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    t := T&#123;<span class="string">"example"</span>, <span class="number">123</span>&#125; <span class="comment">// 无标签语法</span></span><br><span class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那么如果你添加一个新的字段到T结构体，代码会编译失败：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</div><div class="line">    Foo <span class="keyword">string</span></div><div class="line">    Bar <span class="keyword">int</span></div><div class="line">    Qux <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    t := T&#123;<span class="string">"example"</span>, <span class="number">123</span>&#125; <span class="comment">// 无法编译</span></div><div class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果使用了标签语法，Go 的兼容性规则（<a href="http://golang.org/doc/go1compat" target="_blank" rel="external">http://golang.org/doc/go1compat</a>）会处理代码。例如在向net包的类型添加叫做Zone的字段，参见：<a href="http://golang.org/doc/go1.1#library" target="_blank" rel="external">http://golang.org/doc/go1.1#library</a>。回到我们的例子，使用标签语法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">type</span> T struct &#123;</div><div class="line">    Foo string</div><div class="line">    Bar int</div><div class="line">    Qux string</div><div class="line">&#125;</div><div class="line"> </div><div class="line">func <span class="function"><span class="title">main</span></span>() &#123;</div><div class="line">    t := T&#123;Foo: <span class="string">"example"</span>, Qux: 123&#125;</div><div class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</span><br><span class="line">    Foo <span class="keyword">string</span></span><br><span class="line">    Bar <span class="keyword">int</span></span><br><span class="line">    Qux <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    t := T&#123;<span class="string">"example"</span>, <span class="number">123</span>&#125; <span class="comment">// 无法编译</span></span><br><span class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用了标签语法，Go 的兼容性规则（<a href="http://golang.org/doc/go1compat" target="_blank" rel="noopener">http://golang.org/doc/go1compat</a>）会处理代码。例如在向net包的类型添加叫做Zone的字段，参见：<a href="http://golang.org/doc/go1.1#library" target="_blank" rel="noopener">http://golang.org/doc/go1.1#library</a>。回到我们的例子，使用标签语法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span> T struct &#123;</span><br><span class="line">    Foo string</span><br><span class="line">    Bar int</span><br><span class="line">    Qux string</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">func <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    t := T&#123;Foo: <span class="string">"example"</span>, Qux: 123&#125;</span><br><span class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个编译起来没问题，而且弹性也好。不论你如何添加其他字段到T结构体。你的代码总是能编译，并且在以后的 Go 的版本也可以保证这一点。只要在代码集中执行go vet，就可以发现所有的无标签的语法。</p>
 <h1 id="4-将结构体的初始化拆分到多行"><a href="#4-将结构体的初始化拆分到多行" class="headerlink" title="4. 将结构体的初始化拆分到多行"></a>4. 将结构体的初始化拆分到多行</h1><p>如果有两个以上的字段，那么就用多行。它会让你的代码更加容易阅读，也就是说不要：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line">T&#123;Foo: <span class="string">"example"</span>, Bar:someLongVariable, Qux:anotherLongVariable, B: forgetToAddThisToo&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">T&#123;Foo: <span class="string">"example"</span>, Bar:someLongVariable, Qux:anotherLongVariable, B: forgetToAddThisToo&#125;</span><br></pre></td></tr></table></figure>
 <p>而是：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line">T&#123;</div><div class="line">    Foo: <span class="string">"example"</span>,</div><div class="line">    Bar: someLongVariable,</div><div class="line">    Qux: anotherLongVariable,</div><div class="line">    B: forgetToAddThisToo,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">T&#123;</span><br><span class="line">    Foo: <span class="string">"example"</span>,</span><br><span class="line">    Bar: someLongVariable,</span><br><span class="line">    Qux: anotherLongVariable,</span><br><span class="line">    B: forgetToAddThisToo,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这有许多好处，首先它容易阅读，其次它使得允许或屏蔽字段初始化变得容易（只要注释或删除它们），最后添加其他字段也更容易（只要添加一行）。</p>
 <h1 id="5-为整数常量添加-String-方法"><a href="#5-为整数常量添加-String-方法" class="headerlink" title="5. 为整数常量添加 String() 方法"></a>5. 为整数常量添加 String() 方法</h1><p>如果你利用 iota 来使用自定义的整数枚举类型，务必要为其添加 String() 方法。例如，像这样：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">type</span> State <span class="keyword">int</span></div><div class="line"> </div><div class="line"><span class="keyword">const</span> (</div><div class="line">    Running State = <span class="literal">iota</span></div><div class="line">    Stopped</div><div class="line">    Rebooting</div><div class="line">    Terminated</div><div class="line">)</div></pre></td></tr></table></figure>
-<p>如果你创建了这个类型的一个变量，然后输出，会得到一个整数（<a href="http://play.golang.org/p/V5VVFB05HB" target="_blank" rel="external">http://play.golang.org/p/V5VVFB05HB</a>）：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    state := Running</div><div class="line"> </div><div class="line">    <span class="comment">// print: "state 0"</span></div><div class="line">    fmt.Println(<span class="string">"state "</span>, state)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>除非你回顾常量定义，否则这里的0看起来毫无意义。只需要为State类型添加String()方法就可以修复这个问题（<a href="http://play.golang.org/p/ewMKl6K302" target="_blank" rel="external">http://play.golang.org/p/ewMKl6K302</a>）：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s State)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span> &#123;</div><div class="line">    <span class="keyword">switch</span> s &#123;</div><div class="line">    <span class="keyword">case</span> Running:</div><div class="line">        <span class="keyword">return</span> <span class="string">"Running"</span></div><div class="line">    <span class="keyword">case</span> Stopped:</div><div class="line">        <span class="keyword">return</span> <span class="string">"Stopped"</span></div><div class="line">    <span class="keyword">case</span> Rebooting:</div><div class="line">        <span class="keyword">return</span> <span class="string">"Rebooting"</span></div><div class="line">    <span class="keyword">case</span> Terminated:</div><div class="line">        <span class="keyword">return</span> <span class="string">"Terminated"</span></div><div class="line">    <span class="keyword">default</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">"Unknown"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> State <span class="keyword">int</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    Running State = <span class="literal">iota</span></span><br><span class="line">    Stopped</span><br><span class="line">    Rebooting</span><br><span class="line">    Terminated</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>如果你创建了这个类型的一个变量，然后输出，会得到一个整数（<a href="http://play.golang.org/p/V5VVFB05HB" target="_blank" rel="noopener">http://play.golang.org/p/V5VVFB05HB</a>）：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    state := Running</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// print: "state 0"</span></span><br><span class="line">    fmt.Println(<span class="string">"state "</span>, state)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除非你回顾常量定义，否则这里的0看起来毫无意义。只需要为State类型添加String()方法就可以修复这个问题（<a href="http://play.golang.org/p/ewMKl6K302" target="_blank" rel="noopener">http://play.golang.org/p/ewMKl6K302</a>）：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s State)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> s &#123;</span><br><span class="line">    <span class="keyword">case</span> Running:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Running"</span></span><br><span class="line">    <span class="keyword">case</span> Stopped:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Stopped"</span></span><br><span class="line">    <span class="keyword">case</span> Rebooting:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Rebooting"</span></span><br><span class="line">    <span class="keyword">case</span> Terminated:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Terminated"</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Unknown"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>新的输出是：state: Running。显然现在看起来可读性好了很多。在你调试程序的时候，这会带来更多的便利。同时还可以在实现 MarshalJSON()、UnmarshalJSON() 这类方法的时候使用同样的手段。</p>
 <h1 id="6-让-iota-从-a-1-开始增量"><a href="#6-让-iota-从-a-1-开始增量" class="headerlink" title="6. 让 iota 从 a +1 开始增量"></a>6. 让 iota 从 a +1 开始增量</h1><p>在前面的例子中同时也产生了一个我已经遇到过许多次的 bug。假设你有一个新的结构体，有一个State字段：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</div><div class="line">    Name  <span class="keyword">string</span></div><div class="line">    Port  <span class="keyword">int</span></div><div class="line">    State State</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>现在如果基于 T 创建一个新的变量，然后输出，你会得到奇怪的结果（<a href="http://play.golang.org/p/LPG2RF3y39" target="_blank" rel="external">http://play.golang.org/p/LPG2RF3y39</a>）：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    t := T&#123;Name: <span class="string">"example"</span>, Port: <span class="number">6666</span>&#125;</div><div class="line"> </div><div class="line">    <span class="comment">// prints: "t &#123;Name:example Port:6666 State:Running&#125;"</span></div><div class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> T <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name  <span class="keyword">string</span></span><br><span class="line">    Port  <span class="keyword">int</span></span><br><span class="line">    State State</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在如果基于 T 创建一个新的变量，然后输出，你会得到奇怪的结果（<a href="http://play.golang.org/p/LPG2RF3y39" target="_blank" rel="noopener">http://play.golang.org/p/LPG2RF3y39</a>）：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    t := T&#123;Name: <span class="string">"example"</span>, Port: <span class="number">6666</span>&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// prints: "t &#123;Name:example Port:6666 State:Running&#125;"</span></span><br><span class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>看到 bug 了吗？State字段没有初始化，Go 默认使用对应类型的零值进行填充。由于State是一个整数，零值也就是0，但在我们的例子中它表示Running。</p>
-<p>那么如何知道 State 被初始化了？还是它真得是在Running模式？没有办法区分它们，那么这就会产生未知的、不可预测的 bug。不过，修复这个很容易，只要让 iota 从 +1 开始（<a href="http://play.golang.org/p/VyAq-3OItv" target="_blank" rel="external">http://play.golang.org/p/VyAq-3OItv</a>）：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> (</div><div class="line">    Running State = <span class="literal">iota</span> + <span class="number">1</span></div><div class="line">    Stopped</div><div class="line">    Rebooting</div><div class="line">    Terminated</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>那么如何知道 State 被初始化了？还是它真得是在Running模式？没有办法区分它们，那么这就会产生未知的、不可预测的 bug。不过，修复这个很容易，只要让 iota 从 +1 开始（<a href="http://play.golang.org/p/VyAq-3OItv" target="_blank" rel="noopener">http://play.golang.org/p/VyAq-3OItv</a>）：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    Running State = <span class="literal">iota</span> + <span class="number">1</span></span><br><span class="line">    Stopped</span><br><span class="line">    Rebooting</span><br><span class="line">    Terminated</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>现在t变量将默认输出Unknown，不是吗？ :) </p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    t := T&#123;Name: <span class="string">"example"</span>, Port: <span class="number">6666</span>&#125;</div><div class="line"> </div><div class="line">    <span class="comment">// 输出： "t &#123;Name:example Port:6666 State:Unknown&#125;"</span></div><div class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    t := T&#123;Name: <span class="string">"example"</span>, Port: <span class="number">6666</span>&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 输出： "t &#123;Name:example Port:6666 State:Unknown&#125;"</span></span><br><span class="line">    fmt.Printf(<span class="string">"t %+v\n"</span>, t)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>不过让 iota 从零值开始也是一种解决办法。例如，你可以引入一个新的状态叫做Unknown，将其修改为：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> (</div><div class="line">    Unknown State = <span class="literal">iota</span></div><div class="line">    Running</div><div class="line">    Stopped</div><div class="line">    Rebooting</div><div class="line">    Terminated</div><div class="line">)</div></pre></td></tr></table></figure>
-<h1 id="7-返回函数调用"><a href="#7-返回函数调用" class="headerlink" title="7. 返回函数调用"></a>7. 返回函数调用</h1><p>我已经看过很多代码例如（<a href="http://play.golang.org/p/8Rz1EJwFTZ" target="_blank" rel="external">http://play.golang.org/p/8Rz1EJwFTZ</a>）：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</div><div class="line">    v, err := foo()</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">""</span>, err</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> v, <span class="literal">nil</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    Unknown State = <span class="literal">iota</span></span><br><span class="line">    Running</span><br><span class="line">    Stopped</span><br><span class="line">    Rebooting</span><br><span class="line">    Terminated</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="7-返回函数调用"><a href="#7-返回函数调用" class="headerlink" title="7. 返回函数调用"></a>7. 返回函数调用</h1><p>我已经看过很多代码例如（<a href="http://play.golang.org/p/8Rz1EJwFTZ" target="_blank" rel="noopener">http://play.golang.org/p/8Rz1EJwFTZ</a>）：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line">    v, err := foo()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>, err</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> v, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然而，你只需要：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> foo()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> foo()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>更简单也更容易阅读（当然，除非你要对某些内部的值做一些记录）。</p>
 <h1 id="8-把-slice、map-等定义为自定义类型"><a href="#8-把-slice、map-等定义为自定义类型" class="headerlink" title="8. 把 slice、map 等定义为自定义类型"></a>8. 把 slice、map 等定义为自定义类型</h1><p>将 slice 或 map 定义成自定义类型可以让代码维护起来更加容易。假设有一个Server类型和一个返回服务器列表的函数：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">type</span> Server <span class="keyword">struct</span> &#123;</div><div class="line">    Name <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListServers</span><span class="params">()</span> []<span class="title">Server</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> []Server&#123;</div><div class="line">        &#123;Name: <span class="string">"Server1"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Server2"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Foo1"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Foo2"</span>&#125;,</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Server <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListServers</span><span class="params">()</span> []<span class="title">Server</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> []Server&#123;</span><br><span class="line">        &#123;Name: <span class="string">"Server1"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Server2"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Foo1"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Foo2"</span>&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>现在假设需要获取某些特定名字的服务器。需要对 ListServers() 做一些改动，增加筛选条件：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="comment">// ListServers 返回服务器列表。只会返回包含 name 的服务器。空的 name 将会返回所有服务器。</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListServers</span><span class="params">(name <span class="keyword">string</span>)</span> []<span class="title">Server</span></span> &#123;</div><div class="line">    servers := []Server&#123;</div><div class="line">        &#123;Name: <span class="string">"Server1"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Server2"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Foo1"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Foo2"</span>&#125;,</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="comment">// 返回所有服务器</span></div><div class="line">    <span class="keyword">if</span> name == <span class="string">""</span> &#123;</div><div class="line">        <span class="keyword">return</span> servers</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="comment">// 返回过滤后的结果</span></div><div class="line">    filtered := <span class="built_in">make</span>([]Server, <span class="number">0</span>)</div><div class="line"> </div><div class="line">    <span class="keyword">for</span> _, server := <span class="keyword">range</span> servers &#123;</div><div class="line">        <span class="keyword">if</span> strings.Contains(server.Name, name) &#123;</div><div class="line">            filtered = <span class="built_in">append</span>(filtered, server)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> filtered</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ListServers 返回服务器列表。只会返回包含 name 的服务器。空的 name 将会返回所有服务器。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListServers</span><span class="params">(name <span class="keyword">string</span>)</span> []<span class="title">Server</span></span> &#123;</span><br><span class="line">    servers := []Server&#123;</span><br><span class="line">        &#123;Name: <span class="string">"Server1"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Server2"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Foo1"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Foo2"</span>&#125;,</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 返回所有服务器</span></span><br><span class="line">    <span class="keyword">if</span> name == <span class="string">""</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> servers</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 返回过滤后的结果</span></span><br><span class="line">    filtered := <span class="built_in">make</span>([]Server, <span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> _, server := <span class="keyword">range</span> servers &#123;</span><br><span class="line">        <span class="keyword">if</span> strings.Contains(server.Name, name) &#123;</span><br><span class="line">            filtered = <span class="built_in">append</span>(filtered, server)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> filtered</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>现在可以用这个来筛选有字符串Foo的服务器：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    servers := ListServers(<span class="string">"Foo"</span>)</div><div class="line"> </div><div class="line">    <span class="comment">// 输出：“servers [&#123;Name:Foo1&#125; &#123;Name:Foo2&#125;]”</span></div><div class="line">    fmt.Printf(<span class="string">"servers %+v\n"</span>, servers)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    servers := ListServers(<span class="string">"Foo"</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 输出：“servers [&#123;Name:Foo1&#125; &#123;Name:Foo2&#125;]”</span></span><br><span class="line">    fmt.Printf(<span class="string">"servers %+v\n"</span>, servers)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>显然这个函数能够正常工作。不过它的弹性并不好。如果你想对服务器集合引入其他逻辑的话会如何呢？例如检查所有服务器的状态，为每个服务器创建一个数据库记录，用其他字段进行筛选等等……</p>
 <p>现在引入一个叫做Servers的新类型，并且修改原始版本的 ListServers() 返回这个新类型：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">type</span> Servers []Server</div><div class="line"> </div><div class="line"><span class="comment">// ListServers 返回服务器列表</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListServers</span><span class="params">()</span> <span class="title">Servers</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> []Server&#123;</div><div class="line">        &#123;Name: <span class="string">"Server1"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Server2"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Foo1"</span>&#125;,</div><div class="line">        &#123;Name: <span class="string">"Foo2"</span>&#125;,</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Servers []Server</span><br><span class="line"> </span><br><span class="line"><span class="comment">// ListServers 返回服务器列表</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListServers</span><span class="params">()</span> <span class="title">Servers</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> []Server&#123;</span><br><span class="line">        &#123;Name: <span class="string">"Server1"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Server2"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Foo1"</span>&#125;,</span><br><span class="line">        &#123;Name: <span class="string">"Foo2"</span>&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>现在需要做的是只要为Servers类型添加一个新的Filter()方法：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Filter 返回包含 name 的服务器。空的 name 将会返回所有服务器。</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s Servers)</span> <span class="title">Filter</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="title">Servers</span></span> &#123;</div><div class="line">    filtered := <span class="built_in">make</span>(Servers, <span class="number">0</span>)</div><div class="line"> </div><div class="line">    <span class="keyword">for</span> _, server := <span class="keyword">range</span> s &#123;</div><div class="line">        <span class="keyword">if</span> strings.Contains(server.Name, name) &#123;</div><div class="line">            filtered = <span class="built_in">append</span>(filtered, server)</div><div class="line">        &#125;</div><div class="line"> </div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> filtered</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Filter 返回包含 name 的服务器。空的 name 将会返回所有服务器。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s Servers)</span> <span class="title">Filter</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="title">Servers</span></span> &#123;</span><br><span class="line">    filtered := <span class="built_in">make</span>(Servers, <span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> _, server := <span class="keyword">range</span> s &#123;</span><br><span class="line">        <span class="keyword">if</span> strings.Contains(server.Name, name) &#123;</span><br><span class="line">            filtered = <span class="built_in">append</span>(filtered, server)</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> filtered</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>现在可以针对字符串Foo筛选服务器：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    servers := ListServers()</div><div class="line">    servers = servers.Filter(<span class="string">"Foo"</span>)</div><div class="line">    fmt.Printf(<span class="string">"servers %+v\n"</span>, servers)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    servers := ListServers()</span><br><span class="line">    servers = servers.Filter(<span class="string">"Foo"</span>)</span><br><span class="line">    fmt.Printf(<span class="string">"servers %+v\n"</span>, servers)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>哈！看到你的代码是多么的简单了吗？还想对服务器的状态进行检查？或者为每个服务器添加一条数据库记录？没问题，添加以下新方法即可：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s Servers)</span> <span class="title">Check</span><span class="params">()</span></span></div><div class="line"><span class="title">func</span> <span class="params">(s Servers)</span> <span class="title">AddRecord</span><span class="params">()</span></div><div class="line"><span class="title">func</span> <span class="params">(s Servers)</span> <span class="title">Len</span><span class="params">()</span></div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s Servers)</span> <span class="title">Check</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(s Servers)</span> <span class="title">AddRecord</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(s Servers)</span> <span class="title">Len</span><span class="params">()</span></span></span><br><span class="line"><span class="function">...</span></span><br></pre></td></tr></table></figure>
 <h1 id="9-withContext-封装函数"><a href="#9-withContext-封装函数" class="headerlink" title="9. withContext 封装函数"></a>9. withContext 封装函数</h1><p>有时对于函数会有一些重复劳动，例如锁/解锁，初始化一个新的局部上下文，准备初始化变量等等……这里有一个例子：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">    mu.Lock()</div><div class="line">    <span class="keyword">defer</span> mu.Unlock()</div><div class="line"> </div><div class="line">    <span class="comment">// foo 相关的工作</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span></span> &#123;</div><div class="line">    mu.Lock()</div><div class="line">    <span class="keyword">defer</span> mu.Unlock()</div><div class="line"> </div><div class="line">    <span class="comment">// bar 相关的工作</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">qux</span><span class="params">()</span></span> &#123;</div><div class="line">    mu.Lock()</div><div class="line">    <span class="keyword">defer</span> mu.Unlock()</div><div class="line"> </div><div class="line">    <span class="comment">// qux 相关的工作</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</span><br><span class="line">    mu.Lock()</span><br><span class="line">    <span class="keyword">defer</span> mu.Unlock()</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// foo 相关的工作</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span></span> &#123;</span><br><span class="line">    mu.Lock()</span><br><span class="line">    <span class="keyword">defer</span> mu.Unlock()</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// bar 相关的工作</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">qux</span><span class="params">()</span></span> &#123;</span><br><span class="line">    mu.Lock()</span><br><span class="line">    <span class="keyword">defer</span> mu.Unlock()</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// qux 相关的工作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果你想要修改某个内容，你需要对所有的都进行修改。如果它是一个常见的任务，那么最好创建一个叫做withContext的函数。这个函数的输入参数是另一个函数，并用调用者提供的上下文来调用它：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">withLockContext</span><span class="params">(fn <span class="keyword">func</span>()</span>)</span> &#123;</div><div class="line">    mu.Lock</div><div class="line">    <span class="keyword">defer</span> mu.Unlock()</div><div class="line"> </div><div class="line">    fn()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">withLockContext</span><span class="params">(fn <span class="keyword">func</span>()</span>)</span> &#123;</span><br><span class="line">    mu.Lock</span><br><span class="line">    <span class="keyword">defer</span> mu.Unlock()</span><br><span class="line"> </span><br><span class="line">    fn()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>只需要将之前的函数用这个进行封装：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">    withLockContext(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">// foo 相关工作</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span></span> &#123;</div><div class="line">    withLockContext(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">// bar 相关工作</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">qux</span><span class="params">()</span></span> &#123;</div><div class="line">    withLockContext(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">// qux 相关工作</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</span><br><span class="line">    withLockContext(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// foo 相关工作</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span></span> &#123;</span><br><span class="line">    withLockContext(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// bar 相关工作</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">qux</span><span class="params">()</span></span> &#123;</span><br><span class="line">    withLockContext(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// qux 相关工作</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>不要光想着加锁的情形。对此来说最好的用例是数据库链接。现在对 withContext 函数作一些小小的改动：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">withDBContext</span><span class="params">(fn <span class="keyword">func</span>(db DB)</span> <span class="title">error</span>) <span class="title">error</span></span> &#123;</div><div class="line">    <span class="comment">// 从连接池获取一个数据库连接</span></div><div class="line">    dbConn := NewDB()</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> fn(dbConn)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">withDBContext</span><span class="params">(fn <span class="keyword">func</span>(db DB)</span> <span class="title">error</span>) <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// 从连接池获取一个数据库连接</span></span><br><span class="line">    dbConn := NewDB()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> fn(dbConn)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如你所见，它获取一个连接，然后传递给提供的参数，并且在调用函数的时候返回错误。你需要做的只是：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">    withDBContext(<span class="function"><span class="keyword">func</span><span class="params">(db *DB)</span> <span class="title">error</span></span> &#123;</div><div class="line">        <span class="comment">// foo 相关工作</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span></span> &#123;</div><div class="line">    withDBContext(<span class="function"><span class="keyword">func</span><span class="params">(db *DB)</span> <span class="title">error</span></span> &#123;</div><div class="line">        <span class="comment">// bar 相关工作</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">qux</span><span class="params">()</span></span> &#123;</div><div class="line">    withDBContext(<span class="function"><span class="keyword">func</span><span class="params">(db *DB)</span> <span class="title">error</span></span> &#123;</div><div class="line">        <span class="comment">// qux 相关工作</span></div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span> &#123;</span><br><span class="line">    withDBContext(<span class="function"><span class="keyword">func</span><span class="params">(db *DB)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">        <span class="comment">// foo 相关工作</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bar</span><span class="params">()</span></span> &#123;</span><br><span class="line">    withDBContext(<span class="function"><span class="keyword">func</span><span class="params">(db *DB)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">        <span class="comment">// bar 相关工作</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">qux</span><span class="params">()</span></span> &#123;</span><br><span class="line">    withDBContext(<span class="function"><span class="keyword">func</span><span class="params">(db *DB)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">        <span class="comment">// qux 相关工作</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>你在考虑一个不同的场景，例如作一些预初始化？没问题，只需要将它们加到withDBContext就可以了。这对于测试也同样有效。</p>
 <p>这个方法有个缺陷，它增加了缩进并且更难阅读。再次提示，永远寻找最简单的解决方案。</p>
 <h1 id="10-为访问-map-增加-setter，getters"><a href="#10-为访问-map-增加-setter，getters" class="headerlink" title="10. 为访问 map 增加 setter，getters"></a>10. 为访问 map 增加 setter，getters</h1><p>如果你重度使用 map 读写数据，那么就为其添加 getter 和 setter 吧。通过 getter 和 setter 你可以将逻辑封分别装到函数里。这里最常见的错误就是并发访问。如果你在某个 goroutein 里有这样的代码：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line">m[<span class="string">"foo"</span>] = bar</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">m[<span class="string">"foo"</span>] = bar</span><br></pre></td></tr></table></figure>
 <p>还有这个：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="built_in">delete</span>(m, <span class="string">"foo"</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="built_in">delete</span>(m, <span class="string">"foo"</span>)</span><br></pre></td></tr></table></figure>
 <p>会发生什么？你们中的大多数应当已经非常熟悉这样的竞态了。简单来说这个竞态是由于 map 默认并非线程安全。不过你可以用互斥量来保护它们：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line">mu.Lock()</div><div class="line">m[<span class="string">"foo"</span>] = <span class="string">"bar"</span></div><div class="line">mu.Unlock()</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mu.Lock()</span><br><span class="line">m[<span class="string">"foo"</span>] = <span class="string">"bar"</span></span><br><span class="line">mu.Unlock()</span><br></pre></td></tr></table></figure>
 <p>以及：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line">mu.Lock()</div><div class="line"><span class="built_in">delete</span>(m, <span class="string">"foo"</span>)</div><div class="line">mu.Unlock()</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mu.Lock()</span><br><span class="line"><span class="built_in">delete</span>(m, <span class="string">"foo"</span>)</span><br><span class="line">mu.Unlock()</span><br></pre></td></tr></table></figure>
 <p>假设你在其他地方也使用这个 map。你必须把互斥量放得到处都是！然而通过 getter 和 setter 函数就可以很容易的避免这个问题：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">Put</span><span class="params">(key, value <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">    mu.Lock()</div><div class="line">    m[key] = value</div><div class="line">    mu.Unlock()</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">Delete</span><span class="params">(key <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">    mu.Lock()</div><div class="line">    <span class="built_in">delete</span>(m, key)</div><div class="line">    mu.Unlock()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Put</span><span class="params">(key, value <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    mu.Lock()</span><br><span class="line">    m[key] = value</span><br><span class="line">    mu.Unlock()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Delete</span><span class="params">(key <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    mu.Lock()</span><br><span class="line">    <span class="built_in">delete</span>(m, key)</span><br><span class="line">    mu.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用接口可以对这一过程做进一步的改进。你可以将实现完全隐藏起来。只使用一个简单的、设计良好的接口，然后让包的用户使用它们：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><div class="line"><span class="keyword">type</span> Storage <span class="keyword">interface</span> &#123;</div><div class="line">    Delete(key <span class="keyword">string</span>)</div><div class="line">    Get(key <span class="keyword">string</span>) <span class="keyword">string</span></div><div class="line">    Put(key, value <span class="keyword">string</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Storage <span class="keyword">interface</span> &#123;</span><br><span class="line">    Delete(key <span class="keyword">string</span>)</span><br><span class="line">    Get(key <span class="keyword">string</span>) <span class="keyword">string</span></span><br><span class="line">    Put(key, value <span class="keyword">string</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这只是个例子，不过你应该能体会到。对于底层的实现使用什么都没关系。不光是使用接口本身很简单，而且还解决了暴露内部数据结构带来的大量的问题。</p>
 <p>但是得承认，有时只是为了同时对若干个变量加锁就使用接口会有些过分。理解你的程序，并且在你需要的时候使用这些改进。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>抽象永远都不是容易的事情。有时，最简单的就是你已经实现的方法。要知道，不要让你的代码看起来很聪明。Go 天生就是个简单的语言，在大多数情况下只会有一种方法来作某事。简单是力量的源泉，也是为什么在人的层面它表现的如此有弹性。</p>
@@ -846,7 +966,7 @@
 <p>特别感谢 Cihangir Savas、Andrew Gerrand、Ben Johnson 和 Damian Gryski 提供的极具价值的反馈和建议。</p>
 
         
-
+        
         <p class="article-more-link">
           
        </p>
@@ -872,9 +992,6 @@
 
 <div class="comments-count">
 	
-	  	<span></span>
-		<a href="/news/2015/08/04/ten-go-best-practice/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2015/08/04/ten-go-best-practice/" data-count-type="comments">&nbsp;</a>
-	
 </div>
 
 </footer>
@@ -884,158 +1001,6 @@
 
 
 
-  
-    
-    <article class="post-expand post" itemprop="articleBody">
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/news/2015/08/02/aliyun-vpc-snat-md/" title="阿里云VPC网络无EIP的主机上网问题" itemprop="url">阿里云VPC网络无EIP的主机上网问题</a>
-  </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
-  <p class="article-author">By
-       
-		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-02T13:38:58.000Z" itemprop="datePublished"> 发表于 2015-08-02</time>
-    
-  </p>
-</header>
-
-    <div class="article-content">
-        
-        <h1 id="问题由来"><a href="#问题由来" class="headerlink" title="问题由来"></a>问题由来</h1><p>阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。</p>
-<h1 id="VPC结构图"><a href="#VPC结构图" class="headerlink" title="VPC结构图"></a>VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
-<h1 id="虚拟路由器配置"><a href="#虚拟路由器配置" class="headerlink" title="虚拟路由器配置"></a>虚拟路由器配置</h1><h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
-<p><img src="/img/aliyun-vpc-snat-2.jpg" alt=""></p>
-<h1 id="绑定EIP的主机配置"><a href="#绑定EIP的主机配置" class="headerlink" title="绑定EIP的主机配置"></a>绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则"><a href="#iptables添加SNAT规则" class="headerlink" title="iptables添加SNAT规则"></a>iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">iptables -t nat -A POSTROUTING <span class="_">-s</span> 192.168.2.0/24 -o eth0 -j MASQUERADE</div></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>注意：</strong> ubuntu 14.04 系统保存iptables设置需要安装iptables-persistent包，然后通过 <code>service iptables-persistent save</code> 的方式保存配置，安装完iptables-persistent后该服务随系统一起启动并会把保存的配置应用</p>
-</blockquote>
-<h2 id="开启IP转发"><a href="#开启IP转发" class="headerlink" title="开启IP转发"></a>开启IP转发</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.ip_forward=1"</span> &gt;&gt;  /etc/sysctl.conf &amp;&amp; sysctl -p</div></pre></td></tr></table></figure>
-        
-
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="categories/经验分享/">经验分享</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/route/">route</a><a href="/tags/IaaS/">IaaS</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/news/2015/08/02/aliyun-vpc-snat-md/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2015/08/02/aliyun-vpc-snat-md/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-  
-    
-    <article class="post-expand post" itemprop="articleBody">
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/news/2015/08/02/shell-array-demo/" title="shell 数组应用实例" itemprop="url">shell 数组应用实例</a>
-  </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
-  <p class="article-author">By
-       
-		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-02T10:01:37.000Z" itemprop="datePublished"> 发表于 2015-08-02</time>
-    
-  </p>
-</header>
-
-    <div class="article-content">
-        
-        <h1 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h1><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 定义一个空数组</span></div><div class="line">Result=()</div><div class="line"></div><div class="line"><span class="comment"># 定义并给数组赋值</span></div><div class="line">arr=(a b c d e)</div></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>说明：</strong>  </p>
-<ul>
-<li><p>默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来</p>
-</li>
-<li><p>shell中的默认分隔符可以通过修改 $IFS变量来设置</p>
-</li>
-</ul>
-</blockquote>
-<h1 id="数组读取-删除"><a href="#数组读取-删除" class="headerlink" title="数组读取/删除"></a>数组读取/删除</h1><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 初始化并赋值数组</span></div><div class="line">arr=(a b c d e)</div><div class="line"></div><div class="line"><span class="comment"># 计算长度</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[@]&#125;</span>  <span class="comment"># 结果: 5</span></div><div class="line"><span class="comment"># 或</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[*]&#125;</span>  <span class="comment"># 结果: 5</span></div><div class="line"></div><div class="line"><span class="comment"># 取出所有数据</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]&#125;</span>  <span class="comment"># 结果: a b c d e</span></div><div class="line"><span class="comment"># 或</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a b c d e</span></div><div class="line"></div><div class="line"><span class="comment"># 取出第二个元素的数据</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[1]&#125;</span>  <span class="comment"># 结果: b</span></div><div class="line"></div><div class="line"><span class="comment"># 遍历数组</span></div><div class="line">filelist=(`ls`)</div><div class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$&#123;filelist[@]&#125;</span>;<span class="keyword">do</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$file</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="comment"># 删除第二个元素</span></div><div class="line"><span class="built_in">unset</span> arr[1]</div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a c d e</span></div></pre></td></tr></table></figure>
-<h1 id="切片-元素替换"><a href="#切片-元素替换" class="headerlink" title="切片/元素替换"></a>切片/元素替换</h1><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 切片</span></div><div class="line"></div><div class="line"><span class="comment"># 初始化并赋值数组</span></div><div class="line">arr=(a b c d e)</div><div class="line"></div><div class="line">arr2=(<span class="variable">$&#123;arr[@]:0:3&#125;</span>)</div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr2[@]&#125;</span>  <span class="comment"># 结果 a b c</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 替换</span></div><div class="line"><span class="comment"># 初始化并赋值数组</span></div><div class="line">arr=(a b c d e)</div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]/a/aaa&#125;</span></div></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li><strong>切片(分片):</strong> 直接通过 ${数组名[@或*]:起始位置:长度} 切片原先数组，返回是字符串，中间用“空格”分开，因此如果加上”()”，将得到切片数组，上面例子：c 就是一个新数据。</li>
-</ul>
-<ul>
-<li><strong>替换:</strong> ${数组名[@或*]/查找字符/替换字符} 该操作不会改变原先数组内容，如果需要修改，请重新定义变量并赋值。</li>
-</ul>
-</blockquote>
-<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><blockquote>
-<p>在一个多域名的web server环境中，通过分析访问日志，统计最近8小时有用户访问的域名（去重），并显示。</p>
-<p>日志格式：X-Forworld-IP User-IP YYYY-MM-DD HH:mm:ss method “URL” HTTP响应码 服务器处理时间 返回大小 “Refer” “浏览器信息” “虚拟主机域名” 真实处理请求的主机</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line">AWKB<span class="keyword">in</span>=<span class="string">"/usr/bin/awk"</span></div><div class="line">EGREPB<span class="keyword">in</span>=<span class="string">"/bin/egrep"</span></div><div class="line">SORTB<span class="keyword">in</span>=<span class="string">"/usr/bin/sort"</span></div><div class="line">SEDB<span class="keyword">in</span>=<span class="string">"/bin/sed"</span></div><div class="line"></div><div class="line"><span class="comment"># 虚拟主机</span></div><div class="line">VSName=<span class="variable">$1</span></div><div class="line"></div><div class="line"><span class="comment"># 时间段</span></div><div class="line">TimePeriod=<span class="variable">$2</span></div><div class="line"></div><div class="line"><span class="comment"># 过滤字符串</span></div><div class="line">FilterKeys=<span class="string">''</span><span class="string">'DNSPod-Monitor|JianKongBao'</span><span class="string">''</span></div><div class="line"><span class="comment"># 日志目录</span></div><div class="line">LOGPath=<span class="string">"/logs/nginx"</span></div><div class="line"></div><div class="line"><span class="comment"># 定义最终输出的数组变量</span></div><div class="line">Result=()</div><div class="line"></div><div class="line"><span class="keyword">while</span> (( TimePeriod &gt; 0 ))</div><div class="line"><span class="keyword">do</span></div><div class="line">  LogTime=`date <span class="_">-d</span> <span class="string">"- <span class="variable">$&#123;TimePeriod&#125;</span>hours"</span> +%Y-%m-%d-%H`</div><div class="line">  LogFile=<span class="variable">$&#123;VSName&#125;</span>_<span class="variable">$&#123;LogTime&#125;</span>.log</div><div class="line"></div><div class="line">  Result=(<span class="variable">$&#123;Result[@]&#125;</span> `<span class="variable">$AWKBin</span> <span class="string">'&#123;if($5!~/HEAD/ &amp;&amp; $5!~/\"\"/ ) print $0&#125;'</span> <span class="variable">$&#123;LOGPath&#125;</span>/<span class="variable">$&#123;LogFile&#125;</span> | \</div><div class="line">         <span class="variable">$EGREPBin</span> -v <span class="variable">$FilterKeys</span> | <span class="variable">$AWKBin</span> <span class="string">'&#123;print $NF&#125;'</span> | <span class="variable">$AWKBin</span> -F <span class="string">'@'</span> <span class="string">'&#123;print $1&#125;'</span> |\</div><div class="line">         <span class="variable">$SORTBin</span> -u`)</div><div class="line"></div><div class="line">  <span class="built_in">echo</span> <span class="string">"第<span class="variable">$TimePeriod</span> 个日志:<span class="variable">$&#123;Result[*]&#125;</span>"</span></div><div class="line"></div><div class="line"></div><div class="line"> ((TimePeriod--))</div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"未去重：<span class="variable">$&#123;Result[*]&#125;</span>"</span></div><div class="line"></div><div class="line">Result=($(awk -vRS=<span class="string">' '</span> <span class="string">'!a[$1]++'</span> &lt;&lt;&lt; <span class="variable">$&#123;Result[@]&#125;</span>))</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"去重以后:<span class="variable">$&#123;Result[*]&#125;</span>"</span></div></pre></td></tr></table></figure>
-
-        
-
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="categories/linux/">linux</a>►<a class="article-category-link" href="categories/linux/script/">script</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/shell/">shell</a><a href="/tags/script/">script</a><a href="/tags/array/">array</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/news/2015/08/02/shell-array-demo/#comments" class="ds-thread-count comments-count-link" data-thread-key="news/2015/08/02/shell-array-demo/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
 
 
 
@@ -1054,10 +1019,9 @@
   
 <div class="github-card">
 <p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="zhouyq" data-width="220" data-height="119" data-theme="medium">
+<div class="github-card" data-github="zhouyq" data-theme="medium"></div>
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
-  </div>
 
 
 
@@ -1079,7 +1043,11 @@
 		  
 		
 		  
-			<li><a href="/categories/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 		  
 		
 		  
@@ -1136,11 +1104,15 @@
 			
 		
 			
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
@@ -1148,7 +1120,7 @@
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -1160,7 +1132,11 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Hardware/" title="Hardware">Hardware<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -1173,19 +1149,19 @@
         
           <li>
             
-            	<a href="http://goodrain.com" target="_blank" title="会给你带来惊喜的云平台">好雨云</a>
+            	<a href="https://www.rainbond.com" target="_blank" title="Rainbond 开源PaaS">Rainbond 开源PaaS</a>
             
           </li>
         
           <li>
             
-            	<a href="http://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
+            	<a href="https://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
             
           </li>
         
           <li>
             
-            	<a href="http://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
+            	<a href="https://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
             
           </li>
         
@@ -1201,7 +1177,7 @@
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
-    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
 </div>
 
 
@@ -1223,7 +1199,7 @@
 	 
 	<div class="social-font" class="clearfix">
 		
-		<a href="http://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
+		<a href="https://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
 		
 		
 		<a href="https://github.com/zhouyq" target="_blank" class="icon-github" title="github"></a>
@@ -1238,15 +1214,12 @@
 		
 		
 		
-		<a href="mailto:zyq916@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		<a href="mailto:root@yunop.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 			
 		
-    		<p class="copyright" style="display: inline;font-family: &quot;Microsoft YaHei&quot;,Arial,STHeiti,sans-serif;">
-		<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-		<span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
-		</p>
+
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
@@ -1305,6 +1278,8 @@ $(document).ready(function(){
   });
 });
 </script>
+
+
 
 
 

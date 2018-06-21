@@ -4,25 +4,21 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>shell 数组应用实例 | SA-Logs</title>
+    <title>开源PaaS Rainbond不完全评测01 —— 安装篇 | SA-Logs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zhouyq">
     
 
     
-    <meta name="description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)  说明：    默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来  shell中的默认分隔符可以通过修改 $IFS变量来设置    数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
-<meta name="keywords" content="shell,script,array">
-<meta property="og:type" content="article">
-<meta property="og:title" content="shell 数组应用实例">
-<meta property="og:url" content="https://salogs.com/news/2015/08/02/shell-array-demo/index.html">
+    <meta property="og:type" content="article">
+<meta property="og:title" content="开源PaaS Rainbond不完全评测01 —— 安装篇">
+<meta property="og:url" content="https://salogs.com/news/2018/06/21/rainbond-install-s1/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)  说明：    默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来  shell中的默认分隔符可以通过修改 $IFS变量来设置    数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2015-08-02T10:50:47.000Z">
+<meta property="og:updated_time" content="2018-06-21T06:53:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell 数组应用实例">
-<meta name="twitter:description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)  说明：    默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来  shell中的默认分隔符可以通过修改 $IFS变量来设置    数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
+<meta name="twitter:title" content="开源PaaS Rainbond不完全评测01 —— 安装篇">
 <meta name="twitter:creator" content="@ZhouYueqiu">
 
     
@@ -82,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/news/2015/08/02/shell-array-demo/" title="shell 数组应用实例" itemprop="url">shell 数组应用实例</a>
+      <a href="/news/2018/06/21/rainbond-install-s1/" title="开源PaaS Rainbond不完全评测01 —— 安装篇" itemprop="url">开源PaaS Rainbond不完全评测01 —— 安装篇</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-02T10:01:37.000Z" itemprop="datePublished"> 发表于 2015-08-02</time>
+    <time datetime="2018-06-21T04:50:57.000Z" itemprop="datePublished"> 发表于 2018-06-21</time>
     
   </p>
 </header>
@@ -98,50 +94,15 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数组定义"><span class="toc-number">1.</span> <span class="toc-text">数组定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组读取-删除"><span class="toc-number">2.</span> <span class="toc-text">数组读取/删除</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切片-元素替换"><span class="toc-number">3.</span> <span class="toc-text">切片/元素替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">4.</span> <span class="toc-text">实例</span></a></li></ol>
+			
 		
 		</div>
 		
-		<h1 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空数组</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义并给数组赋值</span></span><br><span class="line">arr=(a b c d e)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>说明：</strong>  </p>
-<ul>
-<li><p>默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来</p>
-</li>
-<li><p>shell中的默认分隔符可以通过修改 $IFS变量来设置</p>
-</li>
-</ul>
-</blockquote>
-<h1 id="数组读取-删除"><a href="#数组读取-删除" class="headerlink" title="数组读取/删除"></a>数组读取/删除</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算长度</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[@]&#125;</span>  <span class="comment"># 结果: 5</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[*]&#125;</span>  <span class="comment"># 结果: 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取出所有数据</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]&#125;</span>  <span class="comment"># 结果: a b c d e</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a b c d e</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取出第二个元素的数据</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[1]&#125;</span>  <span class="comment"># 结果: b</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历数组</span></span><br><span class="line">filelist=(`ls`)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$&#123;filelist[@]&#125;</span>;<span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$file</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除第二个元素</span></span><br><span class="line"><span class="built_in">unset</span> arr[1]</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a c d e</span></span><br></pre></td></tr></table></figure>
-<h1 id="切片-元素替换"><a href="#切片-元素替换" class="headerlink" title="切片/元素替换"></a>切片/元素替换</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切片</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"></span><br><span class="line">arr2=(<span class="variable">$&#123;arr[@]:0:3&#125;</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr2[@]&#125;</span>  <span class="comment"># 结果 a b c</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换</span></span><br><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]/a/aaa&#125;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li><strong>切片(分片):</strong> 直接通过 ${数组名[@或*]:起始位置:长度} 切片原先数组，返回是字符串，中间用“空格”分开，因此如果加上”()”，将得到切片数组，上面例子：c 就是一个新数据。</li>
-</ul>
-<ul>
-<li><strong>替换:</strong> ${数组名[@或*]/查找字符/替换字符} 该操作不会改变原先数组内容，如果需要修改，请重新定义变量并赋值。</li>
-</ul>
-</blockquote>
-<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><blockquote>
-<p>在一个多域名的web server环境中，通过分析访问日志，统计最近8小时有用户访问的域名（去重），并显示。</p>
-<p>日志格式：X-Forworld-IP User-IP YYYY-MM-DD HH:mm:ss method “URL” HTTP响应码 服务器处理时间 返回大小 “Refer” “浏览器信息” “虚拟主机域名” 真实处理请求的主机</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">AWKB<span class="keyword">in</span>=<span class="string">"/usr/bin/awk"</span></span><br><span class="line">EGREPB<span class="keyword">in</span>=<span class="string">"/bin/egrep"</span></span><br><span class="line">SORTB<span class="keyword">in</span>=<span class="string">"/usr/bin/sort"</span></span><br><span class="line">SEDB<span class="keyword">in</span>=<span class="string">"/bin/sed"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 虚拟主机</span></span><br><span class="line">VSName=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时间段</span></span><br><span class="line">TimePeriod=<span class="variable">$2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤字符串</span></span><br><span class="line">FilterKeys=<span class="string">''</span><span class="string">'DNSPod-Monitor|JianKongBao'</span><span class="string">''</span></span><br><span class="line"><span class="comment"># 日志目录</span></span><br><span class="line">LOGPath=<span class="string">"/logs/nginx"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义最终输出的数组变量</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (( TimePeriod &gt; 0 ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  LogTime=`date <span class="_">-d</span> <span class="string">"- <span class="variable">$&#123;TimePeriod&#125;</span>hours"</span> +%Y-%m-%d-%H`</span><br><span class="line">  LogFile=<span class="variable">$&#123;VSName&#125;</span>_<span class="variable">$&#123;LogTime&#125;</span>.log</span><br><span class="line"></span><br><span class="line">  Result=(<span class="variable">$&#123;Result[@]&#125;</span> `<span class="variable">$AWKBin</span> <span class="string">'&#123;if($5!~/HEAD/ &amp;&amp; $5!~/\"\"/ ) print $0&#125;'</span> <span class="variable">$&#123;LOGPath&#125;</span>/<span class="variable">$&#123;LogFile&#125;</span> | \</span><br><span class="line">         <span class="variable">$EGREPBin</span> -v <span class="variable">$FilterKeys</span> | <span class="variable">$AWKBin</span> <span class="string">'&#123;print $NF&#125;'</span> | <span class="variable">$AWKBin</span> -F <span class="string">'@'</span> <span class="string">'&#123;print $1&#125;'</span> |\</span><br><span class="line">         <span class="variable">$SORTBin</span> -u`)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"第<span class="variable">$TimePeriod</span> 个日志:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ((TimePeriod--))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"未去重：<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">Result=($(awk -vRS=<span class="string">' '</span> <span class="string">'!a[$1]++'</span> &lt;&lt;&lt; <span class="variable">$&#123;Result[@]&#125;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"去重以后:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br></pre></td></tr></table></figure>
-  
+		  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="../../../../../categories/linux/">linux</a>►<a class="article-category-link" href="../../../../../categories/linux/script/">script</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/shell/">shell</a><a href="/tags/script/">script</a><a href="/tags/array/">array</a>
-  </div>
 
 </div>
 
@@ -149,7 +110,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://salogs.com/news/2015/08/02/shell-array-demo/" data-title="shell 数组应用实例 | SA-Logs" data-tsina="1576292750" class="share clearfix">
+	  <div data-url="https://salogs.com/news/2018/06/21/rainbond-install-s1/" data-title="开源PaaS Rainbond不完全评测01 —— 安装篇 | SA-Logs" data-tsina="1576292750" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -163,18 +124,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/news/2015/08/02/aliyun-vpc-snat-md/" title="阿里云VPC网络无EIP的主机上网问题">
+ <a href="/news/2018/06/21/install-dell-omsa/" title="CentOS 7.x 安装 Dell OMSA 与监控">
   <strong>上一篇：</strong><br/>
   <span>
-  阿里云VPC网络无EIP的主机上网问题</span>
+  CentOS 7.x 安装 Dell OMSA 与监控</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/news/2015/08/02/migration-to-github/"  title="salogs正式迁移到github">
+<a href="/news/2016/11/02/mac-shadowsocks/"  title="Mac 安装与使用Shadowsocks">
  <strong>下一篇：</strong><br/> 
- <span>salogs正式迁移到github
+ <span>Mac 安装与使用Shadowsocks
 </span>
 </a>
 </div>
@@ -191,7 +152,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数组定义"><span class="toc-number">1.</span> <span class="toc-text">数组定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组读取-删除"><span class="toc-number">2.</span> <span class="toc-text">数组读取/删除</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切片-元素替换"><span class="toc-number">3.</span> <span class="toc-text">切片/元素替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">4.</span> <span class="toc-text">实例</span></a></li></ol>
+ 
  
   </div>
 

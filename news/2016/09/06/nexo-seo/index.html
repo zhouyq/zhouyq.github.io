@@ -1,8 +1,6 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
 <head>
   <meta charset="UTF-8">
   
@@ -17,7 +15,7 @@
 <meta name="keywords" content="hexo,seo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo网站优化之SEO">
-<meta property="og:url" content="http://salogs.com/news/2016/09/06/nexo-seo/index.html">
+<meta property="og:url" content="https://salogs.com/news/2016/09/06/nexo-seo/index.html">
 <meta property="og:site_name" content="SA-Logs">
 <meta property="og:description" content="SEO (Search Engine Optimization)，即搜索引擎优化。对网站做SEO优化，有利于提高搜索引擎的收录速度及网页排名。下面讲解一些简单的SEO优化方法，主要针对Hexo网站。 SEO优化之title编辑站点目录下的themes/layout/index.swig文件，将下面的代码&amp;#123;% block title %&amp;#125; &amp;#123;&amp;#123; config.">
 <meta property="og:locale" content="zh-CN">
@@ -61,7 +59,7 @@
 					 
 						<li><a href="/">Home</a></li>
 					
-						<li><a href="/history">Archives</a></li>
+						<li><a href="/archives">Archives</a></li>
 					
 						<li><a href="/about">About</a></li>
 					
@@ -86,7 +84,6 @@
     
       <a href="/news/2016/09/06/nexo-seo/" title="Hexo网站优化之SEO" itemprop="url">Hexo网站优化之SEO</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -96,7 +93,6 @@
     
   </p>
 </header>
-
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
@@ -107,18 +103,18 @@
 		</div>
 		
 		<p>SEO (Search Engine Optimization)，即搜索引擎优化。对网站做SEO优化，有利于提高搜索引擎的收录速度及网页排名。下面讲解一些简单的SEO优化方法，主要针对Hexo网站。</p>
-<h1 id="SEO优化之title"><a href="#SEO优化之title" class="headerlink" title="SEO优化之title"></a>SEO优化之title</h1><p>编辑站点目录下的<code>themes/layout/index.swig</code>文件，将下面的代码<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; &#123;% endlock %&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="SEO优化之title"><a href="#SEO优化之title" class="headerlink" title="SEO优化之title"></a>SEO优化之title</h1><p>编辑站点目录下的<code>themes/layout/index.swig</code>文件，将下面的代码<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; &#123;% endlock %&#125;</span><br></pre></td></tr></table></figure></p>
 <p>改成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; - &#123;&#123; theme.description &#125;&#125; &#123;% endlock %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% block title %&#125; &#123;&#123; config.title &#125;&#125; - &#123;&#123; theme.description &#125;&#125; &#123;% endlock %&#125;</span><br></pre></td></tr></table></figure>
 <p>这时将网站的描述及关键词加入了网站的title中，更有利于详细地描述网站。</p>
 <h1 id="添加robots-txt"><a href="#添加robots-txt" class="headerlink" title="添加robots.txt"></a>添加robots.txt</h1><p>robots.txt是一种存放于网站根目录下的ASCII编码的文本文件，它的作用是告诉搜索引擎此网站中哪些内容是可以被爬取的，哪些是禁止爬取的。robots.txt应该放在站点目录下的source文件中，网站生成后在网站的根目录(<code>站点目录/public/</code>)下。</p>
-<p>我的robots.txt文件内容如下<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">User-agent: *</div><div class="line">Allow: /</div><div class="line">Allow: /archives/</div><div class="line">Allow: /categories/</div><div class="line">Allow: /about/</div><div class="line"></div><div class="line">Disallow: /vendors/</div><div class="line">Disallow: /js/</div><div class="line">Disallow: /css/</div><div class="line">Disallow: /fonts/</div><div class="line">Disallow: /vendors/</div><div class="line">Disallow: /fancybox/</div></pre></td></tr></table></figure></p>
+<p>我的robots.txt文件内容如下<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Allow: /</span><br><span class="line">Allow: /archives/</span><br><span class="line">Allow: /categories/</span><br><span class="line">Allow: /about/</span><br><span class="line"></span><br><span class="line">Disallow: /vendors/</span><br><span class="line">Disallow: /js/</span><br><span class="line">Disallow: /css/</span><br><span class="line">Disallow: /fonts/</span><br><span class="line">Disallow: /vendors/</span><br><span class="line">Disallow: /fancybox/</span><br></pre></td></tr></table></figure></p>
 <h1 id="添加sitemap"><a href="#添加sitemap" class="headerlink" title="添加sitemap"></a>添加sitemap</h1><p>Sitemap即网站地图，它的作用在于便于搜索引擎更加智能地抓取网站。最简单和常见的sitemap形式，是XML文件，在其中列出网站中的网址以及关于每个网址的其他元数据（上次更新时间、更新的频率及相对其他网址重要程度等）。</p>
-<h2 id="Step-1-安装sitemap生成插件"><a href="#Step-1-安装sitemap生成插件" class="headerlink" title="Step 1: 安装sitemap生成插件"></a>Step 1: 安装sitemap生成插件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
-<h2 id="Step-2-编辑站点目录下的-config-yml，添加"><a href="#Step-2-编辑站点目录下的-config-yml，添加" class="headerlink" title="Step 2: 编辑站点目录下的_config.yml，添加"></a>Step 2: 编辑站点目录下的_config.yml，添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># hexo sitemap网站地图</div><div class="line">sitemap:</div><div class="line">path: sitemap.xml</div><div class="line">baidusitemap:</div><div class="line">path: baidusitemap.xml</div></pre></td></tr></table></figure>
-<h2 id="Step-3-在robots-txt文件中添加"><a href="#Step-3-在robots-txt文件中添加" class="headerlink" title="Step 3: 在robots.txt文件中添加"></a>Step 3: 在robots.txt文件中添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Sitemap: http://www.jeyzhang.com/sitemap.xml</div><div class="line">Sitemap: http://www.jeyzhang.com/baidusitemap.xml</div></pre></td></tr></table></figure>
+<h2 id="Step-1-安装sitemap生成插件"><a href="#Step-1-安装sitemap生成插件" class="headerlink" title="Step 1: 安装sitemap生成插件"></a>Step 1: 安装sitemap生成插件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+<h2 id="Step-2-编辑站点目录下的-config-yml，添加"><a href="#Step-2-编辑站点目录下的-config-yml，添加" class="headerlink" title="Step 2: 编辑站点目录下的_config.yml，添加"></a>Step 2: 编辑站点目录下的_config.yml，添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># hexo sitemap网站地图</span><br><span class="line">sitemap:</span><br><span class="line">path: sitemap.xml</span><br><span class="line">baidusitemap:</span><br><span class="line">path: baidusitemap.xml</span><br></pre></td></tr></table></figure>
+<h2 id="Step-3-在robots-txt文件中添加"><a href="#Step-3-在robots-txt文件中添加" class="headerlink" title="Step 3: 在robots.txt文件中添加"></a>Step 3: 在robots.txt文件中添加</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Sitemap: http://www.jeyzhang.com/sitemap.xml</span><br><span class="line">Sitemap: http://www.jeyzhang.com/baidusitemap.xml</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>本文转自：<a href="http://www.jeyzhang.com/hexo-website-seo.html" target="_blank" rel="external">http://www.jeyzhang.com/hexo-website-seo.html</a></p>
+<p>本文转自：<a href="http://www.jeyzhang.com/hexo-website-seo.html" target="_blank" rel="noopener">http://www.jeyzhang.com/hexo-website-seo.html</a></p>
 </blockquote>
   
 	</div>
@@ -142,31 +138,8 @@
 
 	<div class="article-share" id="share">
 	
-	<div class="share-jiathis">
-	  
-<div class="jiathis_style_24x24">
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_weixin"></a>
-	<a class="jiathis_button_renren"></a>
-	<a class="jiathis_button_qzone"></a>
-	<a class="jiathis_button_googleplus"></a>
-	<a class="jiathis_button_douban"></a>
-	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-    var jiathis_config={
-    data_track_clickback:true,
-    sm:"copy,renren,cqq",
-    pic:"",
-    summary:"",
-     ralateuid:{"tsina":"1576292750"},hideMore:false}
-    
-  </script> 
-<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
-899457" charset="utf-8"></script>      
-
-	 </div>
+	  <div data-url="https://salogs.com/news/2016/09/06/nexo-seo/" data-title="Hexo网站优化之SEO | SA-Logs" data-tsina="1576292750" class="share clearfix">
+	  </div>
 	
 	</div>
 
@@ -198,9 +171,7 @@
 </nav>
 
 	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="news/2016/09/06/nexo-seo/" data-title="Hexo网站优化之SEO" data-url="http://salogs.com/news/2016/09/06/nexo-seo/"></div>
-</section>
+
 
 
 </div>  
@@ -220,10 +191,9 @@
   
 <div class="github-card">
 <p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="zhouyq" data-width="220" data-height="119" data-theme="medium">
+<div class="github-card" data-github="zhouyq" data-theme="medium"></div>
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
-  </div>
 
 
 
@@ -245,7 +215,11 @@
 		  
 		
 		  
-			<li><a href="/categories/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 		  
 		
 		  
@@ -302,11 +276,15 @@
 			
 		
 			
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
@@ -314,7 +292,7 @@
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -326,7 +304,11 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Hardware/" title="Hardware">Hardware<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -339,19 +321,19 @@
         
           <li>
             
-            	<a href="http://goodrain.com" target="_blank" title="会给你带来惊喜的云平台">好雨云</a>
+            	<a href="https://www.rainbond.com" target="_blank" title="Rainbond 开源PaaS">Rainbond 开源PaaS</a>
             
           </li>
         
           <li>
             
-            	<a href="http://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
+            	<a href="https://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
             
           </li>
         
           <li>
             
-            	<a href="http://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
+            	<a href="https://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
             
           </li>
         
@@ -367,7 +349,7 @@
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
-    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
 </div>
 
 
@@ -389,7 +371,7 @@
 	 
 	<div class="social-font" class="clearfix">
 		
-		<a href="http://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
+		<a href="https://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
 		
 		
 		<a href="https://github.com/zhouyq" target="_blank" class="icon-github" title="github"></a>
@@ -404,15 +386,12 @@
 		
 		
 		
-		<a href="mailto:zyq916@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		<a href="mailto:root@yunop.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 			
 		
-    		<p class="copyright" style="display: inline;font-family: &quot;Microsoft YaHei&quot;,Arial,STHeiti,sans-serif;">
-		<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-		<span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
-		</p>
+
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
@@ -458,11 +437,6 @@ $(document).ready(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
   
-        getSize();
-        if (myWidth >= 1024) {
-          c.click();
-        }
-  
   $(window).resize(function(){
     getSize(); 
     if (myWidth >= 1024) {
@@ -506,19 +480,58 @@ $(document).ready(function(){
 </script>
 
 
-
-
 <script type="text/javascript">
-  var duoshuoQuery = {short_name:"salogs"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="https://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="https://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
 
 
 

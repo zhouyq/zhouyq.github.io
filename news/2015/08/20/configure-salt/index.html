@@ -1,8 +1,6 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
 <head>
   <meta charset="UTF-8">
   
@@ -17,7 +15,7 @@
 <meta name="keywords" content="salt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置 salt">
-<meta property="og:url" content="http://salogs.com/news/2015/08/20/configure-salt/index.html">
+<meta property="og:url" content="https://salogs.com/news/2015/08/20/configure-salt/index.html">
 <meta property="og:site_name" content="SA-Logs">
 <meta property="og:description" content="配置客户端配置客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍 # 配置salt服务端地址vi /etc/salt/minion# 这里也可以写主机名master: 192.168.1.100# 修改完成后重启服务service salt-minion restart 服务端操作# 查看有哪些client发起了验证请求 salt-key list">
 <meta property="og:locale" content="zh-CN">
@@ -61,7 +59,7 @@
 					 
 						<li><a href="/">Home</a></li>
 					
-						<li><a href="/history">Archives</a></li>
+						<li><a href="/archives">Archives</a></li>
 					
 						<li><a href="/about">About</a></li>
 					
@@ -86,7 +84,6 @@
     
       <a href="/news/2015/08/20/configure-salt/" title="配置 salt" itemprop="url">配置 salt</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -96,7 +93,6 @@
     
   </p>
 </header>
-
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
@@ -107,9 +103,9 @@
 		</div>
 		
 		<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 配置salt服务端地址</span></div><div class="line">vi /etc/salt/minion</div><div class="line"></div><div class="line"><span class="comment"># 这里也可以写主机名</span></div><div class="line">master: 192.168.1.100</div><div class="line"></div><div class="line"><span class="comment"># 修改完成后重启服务</span></div><div class="line">service salt-minion restart</div></pre></td></tr></table></figure>
-<h2 id="服务端操作"><a href="#服务端操作" class="headerlink" title="服务端操作"></a>服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></div><div class="line">salt-key list</div><div class="line"></div><div class="line">Accepted Keys:</div><div class="line">Denied Keys:</div><div class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></div><div class="line">host01</div><div class="line">host02</div><div class="line">Rejected Keys:</div><div class="line"></div><div class="line"><span class="comment"># 接受所有验证请求</span></div><div class="line">salt-key -A</div><div class="line">The following keys are going to be accepted:</div><div class="line">Unaccepted Keys:</div><div class="line">host01</div><div class="line">host02</div><div class="line">Proceed? [n/Y] Y</div><div class="line">Key <span class="keyword">for</span> minion host01 accepted.</div><div class="line">Key <span class="keyword">for</span> minion host02 accepted.</div><div class="line"></div><div class="line"><span class="comment"># 再查看一下</span></div><div class="line">salt-key list</div><div class="line">Accepted Keys:  <span class="comment"># 已经接受</span></div><div class="line">host01</div><div class="line">host02</div><div class="line">Denied Keys:</div><div class="line">Unaccepted Keys:</div><div class="line">Rejected Keys:</div></pre></td></tr></table></figure>
-<h1 id="简单验证执行命令"><a href="#简单验证执行命令" class="headerlink" title="简单验证执行命令"></a>简单验证执行命令</h1><h2 id="远程执行命令"><a href="#远程执行命令" class="headerlink" title="远程执行命令"></a>远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">salt aws-bj* cmd.run uptime</div><div class="line">host01:</div><div class="line">     09:42:13 up  2:02,  2 users,  load average: 0.05, 0.03, 0.05</div><div class="line">host02:</div><div class="line">     09:42:12 up  1:28,  1 user,  load average: 0.00, 0.01, 0.05</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置salt服务端地址</span></span><br><span class="line">vi /etc/salt/minion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里也可以写主机名</span></span><br><span class="line">master: 192.168.1.100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后重启服务</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
+<h2 id="服务端操作"><a href="#服务端操作" class="headerlink" title="服务端操作"></a>服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></span><br><span class="line">salt-key list</span><br><span class="line"></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Rejected Keys:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接受所有验证请求</span></span><br><span class="line">salt-key -A</span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion host01 accepted.</span><br><span class="line">Key <span class="keyword">for</span> minion host02 accepted.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再查看一下</span></span><br><span class="line">salt-key list</span><br><span class="line">Accepted Keys:  <span class="comment"># 已经接受</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
+<h1 id="简单验证执行命令"><a href="#简单验证执行命令" class="headerlink" title="简单验证执行命令"></a>简单验证执行命令</h1><h2 id="远程执行命令"><a href="#远程执行命令" class="headerlink" title="远程执行命令"></a>远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">salt aws-bj* cmd.run uptime</span><br><span class="line">host01:</span><br><span class="line">     09:42:13 up  2:02,  2 users,  load average: 0.05, 0.03, 0.05</span><br><span class="line">host02:</span><br><span class="line">     09:42:12 up  1:28,  1 user,  load average: 0.00, 0.01, 0.05</span><br></pre></td></tr></table></figure>
 <h1 id="下篇预告"><a href="#下篇预告" class="headerlink" title="下篇预告"></a>下篇预告</h1><ul>
 <li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
 </ul>
@@ -140,31 +136,8 @@
 
 	<div class="article-share" id="share">
 	
-	<div class="share-jiathis">
-	  
-<div class="jiathis_style_24x24">
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_weixin"></a>
-	<a class="jiathis_button_renren"></a>
-	<a class="jiathis_button_qzone"></a>
-	<a class="jiathis_button_googleplus"></a>
-	<a class="jiathis_button_douban"></a>
-	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-    var jiathis_config={
-    data_track_clickback:true,
-    sm:"copy,renren,cqq",
-    pic:"",
-    summary:"",
-     ralateuid:{"tsina":"1576292750"},hideMore:false}
-    
-  </script> 
-<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
-899457" charset="utf-8"></script>      
-
-	 </div>
+	  <div data-url="https://salogs.com/news/2015/08/20/configure-salt/" data-title="配置 salt | SA-Logs" data-tsina="1576292750" class="share clearfix">
+	  </div>
 	
 	</div>
 
@@ -196,9 +169,7 @@
 </nav>
 
 	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="news/2015/08/20/configure-salt/" data-title="配置 salt" data-url="http://salogs.com/news/2015/08/20/configure-salt/"></div>
-</section>
+
 
 
 </div>  
@@ -218,10 +189,9 @@
   
 <div class="github-card">
 <p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="zhouyq" data-width="220" data-height="119" data-theme="medium">
+<div class="github-card" data-github="zhouyq" data-theme="medium"></div>
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
-  </div>
 
 
 
@@ -243,7 +213,11 @@
 		  
 		
 		  
-			<li><a href="/categories/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 		  
 		
 		  
@@ -300,11 +274,15 @@
 			
 		
 			
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
@@ -312,7 +290,7 @@
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -324,7 +302,11 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Hardware/" title="Hardware">Hardware<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -337,19 +319,19 @@
         
           <li>
             
-            	<a href="http://goodrain.com" target="_blank" title="会给你带来惊喜的云平台">好雨云</a>
+            	<a href="https://www.rainbond.com" target="_blank" title="Rainbond 开源PaaS">Rainbond 开源PaaS</a>
             
           </li>
         
           <li>
             
-            	<a href="http://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
+            	<a href="https://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
             
           </li>
         
           <li>
             
-            	<a href="http://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
+            	<a href="https://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
             
           </li>
         
@@ -365,7 +347,7 @@
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
-    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
 </div>
 
 
@@ -387,7 +369,7 @@
 	 
 	<div class="social-font" class="clearfix">
 		
-		<a href="http://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
+		<a href="https://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
 		
 		
 		<a href="https://github.com/zhouyq" target="_blank" class="icon-github" title="github"></a>
@@ -402,15 +384,12 @@
 		
 		
 		
-		<a href="mailto:zyq916@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		<a href="mailto:root@yunop.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 			
 		
-    		<p class="copyright" style="display: inline;font-family: &quot;Microsoft YaHei&quot;,Arial,STHeiti,sans-serif;">
-		<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-		<span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
-		</p>
+
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
@@ -456,11 +435,6 @@ $(document).ready(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
   
-        getSize();
-        if (myWidth >= 1024) {
-          c.click();
-        }
-  
   $(window).resize(function(){
     getSize(); 
     if (myWidth >= 1024) {
@@ -504,19 +478,58 @@ $(document).ready(function(){
 </script>
 
 
-
-
 <script type="text/javascript">
-  var duoshuoQuery = {short_name:"salogs"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="https://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="https://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
 
 
 

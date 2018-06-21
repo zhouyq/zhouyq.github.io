@@ -1,8 +1,6 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
 <head>
   <meta charset="UTF-8">
   
@@ -17,17 +15,17 @@
 <meta name="keywords" content="route,IaaS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阿里云VPC网络无EIP的主机上网问题">
-<meta property="og:url" content="http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/index.html">
+<meta property="og:url" content="https://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/index.html">
 <meta property="og:site_name" content="SA-Logs">
 <meta property="og:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。 VPC结构图 虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://salogs.com/img/aliyun-vpc-snat.jpg">
-<meta property="og:image" content="http://salogs.com/img/aliyun-vpc-snat-2.jpg">
+<meta property="og:image" content="https://salogs.com/img/aliyun-vpc-snat.jpg">
+<meta property="og:image" content="https://salogs.com/img/aliyun-vpc-snat-2.jpg">
 <meta property="og:updated_time" content="2018-06-19T02:48:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里云VPC网络无EIP的主机上网问题">
 <meta name="twitter:description" content="问题由来阿里云的VPC与其他基于OpenStack的IaaS不同，他的路由只是作为多网段的路由交换，不提供内到外的路由，因此在VPC内的主机除非绑定EIP，否则是无法连接公网的。通过工单询问客服，得到的结论是通过在路由器上添加一个路由，通过一个绑定EIP的主机做NAT上网，通过设置iptables的方式来实现。 VPC结构图 虚拟路由器配置添加路由为了让内网服务器借助EIP访问公网，所以设置所有目">
-<meta name="twitter:image" content="http://salogs.com/img/aliyun-vpc-snat.jpg">
+<meta name="twitter:image" content="https://salogs.com/img/aliyun-vpc-snat.jpg">
 <meta name="twitter:creator" content="@ZhouYueqiu">
 
     
@@ -64,7 +62,7 @@
 					 
 						<li><a href="/">Home</a></li>
 					
-						<li><a href="/history">Archives</a></li>
+						<li><a href="/archives">Archives</a></li>
 					
 						<li><a href="/about">About</a></li>
 					
@@ -89,7 +87,6 @@
     
       <a href="/news/2015/08/02/aliyun-vpc-snat-md/" title="阿里云VPC网络无EIP的主机上网问题" itemprop="url">阿里云VPC网络无EIP的主机上网问题</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -99,7 +96,6 @@
     
   </p>
 </header>
-
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
@@ -113,11 +109,11 @@
 <h1 id="VPC结构图"><a href="#VPC结构图" class="headerlink" title="VPC结构图"></a>VPC结构图</h1><p><img src="/img/aliyun-vpc-snat.jpg" alt=""></p>
 <h1 id="虚拟路由器配置"><a href="#虚拟路由器配置" class="headerlink" title="虚拟路由器配置"></a>虚拟路由器配置</h1><h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2><p>为了让内网服务器借助EIP访问公网，所以设置所有目标地址0.0.0.0/0下一跳都转发到绑定了公网IP的ECS实例上。这里的下一跳ECS不支持搜索，需要提前记号名称：</p>
 <p><img src="/img/aliyun-vpc-snat-2.jpg" alt=""></p>
-<h1 id="绑定EIP的主机配置"><a href="#绑定EIP的主机配置" class="headerlink" title="绑定EIP的主机配置"></a>绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则"><a href="#iptables添加SNAT规则" class="headerlink" title="iptables添加SNAT规则"></a>iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">iptables -t nat -A POSTROUTING <span class="_">-s</span> 192.168.2.0/24 -o eth0 -j MASQUERADE</div></pre></td></tr></table></figure>
+<h1 id="绑定EIP的主机配置"><a href="#绑定EIP的主机配置" class="headerlink" title="绑定EIP的主机配置"></a>绑定EIP的主机配置</h1><h2 id="iptables添加SNAT规则"><a href="#iptables添加SNAT规则" class="headerlink" title="iptables添加SNAT规则"></a>iptables添加SNAT规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING <span class="_">-s</span> 192.168.2.0/24 -o eth0 -j MASQUERADE</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>注意：</strong> ubuntu 14.04 系统保存iptables设置需要安装iptables-persistent包，然后通过 <code>service iptables-persistent save</code> 的方式保存配置，安装完iptables-persistent后该服务随系统一起启动并会把保存的配置应用</p>
 </blockquote>
-<h2 id="开启IP转发"><a href="#开启IP转发" class="headerlink" title="开启IP转发"></a>开启IP转发</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.ip_forward=1"</span> &gt;&gt;  /etc/sysctl.conf &amp;&amp; sysctl -p</div></pre></td></tr></table></figure>  
+<h2 id="开启IP转发"><a href="#开启IP转发" class="headerlink" title="开启IP转发"></a>开启IP转发</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.ip_forward=1"</span> &gt;&gt;  /etc/sysctl.conf &amp;&amp; sysctl -p</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -139,31 +135,8 @@
 
 	<div class="article-share" id="share">
 	
-	<div class="share-jiathis">
-	  
-<div class="jiathis_style_24x24">
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_weixin"></a>
-	<a class="jiathis_button_renren"></a>
-	<a class="jiathis_button_qzone"></a>
-	<a class="jiathis_button_googleplus"></a>
-	<a class="jiathis_button_douban"></a>
-	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-    var jiathis_config={
-    data_track_clickback:true,
-    sm:"copy,renren,cqq",
-    pic:"",
-    summary:"",
-     ralateuid:{"tsina":"1576292750"},hideMore:false}
-    
-  </script> 
-<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
-899457" charset="utf-8"></script>      
-
-	 </div>
+	  <div data-url="https://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/" data-title="阿里云VPC网络无EIP的主机上网问题 | SA-Logs" data-tsina="1576292750" class="share clearfix">
+	  </div>
 	
 	</div>
 
@@ -195,9 +168,7 @@
 </nav>
 
 	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="news/2015/08/02/aliyun-vpc-snat-md/" data-title="阿里云VPC网络无EIP的主机上网问题" data-url="http://salogs.com/news/2015/08/02/aliyun-vpc-snat-md/"></div>
-</section>
+
 
 
 </div>  
@@ -217,10 +188,9 @@
   
 <div class="github-card">
 <p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="zhouyq" data-width="220" data-height="119" data-theme="medium">
+<div class="github-card" data-github="zhouyq" data-theme="medium"></div>
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
-  </div>
 
 
 
@@ -242,7 +212,11 @@
 		  
 		
 		  
-			<li><a href="/categories/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 		  
 		
 		  
@@ -299,11 +273,15 @@
 			
 		
 			
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
@@ -311,7 +289,7 @@
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -323,7 +301,11 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Hardware/" title="Hardware">Hardware<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -336,19 +318,19 @@
         
           <li>
             
-            	<a href="http://goodrain.com" target="_blank" title="会给你带来惊喜的云平台">好雨云</a>
+            	<a href="https://www.rainbond.com" target="_blank" title="Rainbond 开源PaaS">Rainbond 开源PaaS</a>
             
           </li>
         
           <li>
             
-            	<a href="http://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
+            	<a href="https://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
             
           </li>
         
           <li>
             
-            	<a href="http://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
+            	<a href="https://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
             
           </li>
         
@@ -364,7 +346,7 @@
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
-    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
 </div>
 
 
@@ -386,7 +368,7 @@
 	 
 	<div class="social-font" class="clearfix">
 		
-		<a href="http://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
+		<a href="https://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
 		
 		
 		<a href="https://github.com/zhouyq" target="_blank" class="icon-github" title="github"></a>
@@ -401,15 +383,12 @@
 		
 		
 		
-		<a href="mailto:zyq916@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		<a href="mailto:root@yunop.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 			
 		
-    		<p class="copyright" style="display: inline;font-family: &quot;Microsoft YaHei&quot;,Arial,STHeiti,sans-serif;">
-		<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-		<span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
-		</p>
+
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
@@ -455,11 +434,6 @@ $(document).ready(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
   
-        getSize();
-        if (myWidth >= 1024) {
-          c.click();
-        }
-  
   $(window).resize(function(){
     getSize(); 
     if (myWidth >= 1024) {
@@ -503,19 +477,58 @@ $(document).ready(function(){
 </script>
 
 
-
-
 <script type="text/javascript">
-  var duoshuoQuery = {short_name:"salogs"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="https://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="https://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
 
 
 

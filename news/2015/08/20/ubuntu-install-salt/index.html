@@ -1,8 +1,6 @@
 
  <!DOCTYPE HTML>
 <html lang="zh-CN">
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
 <head>
   <meta charset="UTF-8">
   
@@ -17,7 +15,7 @@
 <meta name="keywords" content="salt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu 安装salt">
-<meta property="og:url" content="http://salogs.com/news/2015/08/20/ubuntu-install-salt/index.html">
+<meta property="og:url" content="https://salogs.com/news/2015/08/20/ubuntu-install-salt/index.html">
 <meta property="og:site_name" content="SA-Logs">
 <meta property="og:description" content="添加仓库最新的salt包会发布在 Ubuntu saltstack PPA。如果你的系统中有add-apt-repository 工具，可以通过一条命令添加仓库并导入PPA key： 通过add-apt-repository添加仓库及PPA keyadd-apt-repository ppa:saltstack/salt Salt, the remote execution and configu">
 <meta property="og:locale" content="zh-CN">
@@ -61,7 +59,7 @@
 					 
 						<li><a href="/">Home</a></li>
 					
-						<li><a href="/history">Archives</a></li>
+						<li><a href="/archives">Archives</a></li>
 					
 						<li><a href="/about">About</a></li>
 					
@@ -86,7 +84,6 @@
     
       <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt" itemprop="url">Ubuntu 安装salt</a>
   </h1>
-  <p class="article-author"><span id="busuanzi_container_page_pv">阅读 <span id="busuanzi_value_page_pv"></span></span></p>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
@@ -96,7 +93,6 @@
     
   </p>
 </header>
-
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
@@ -107,17 +103,17 @@
 		</div>
 		
 		<h1 id="添加仓库"><a href="#添加仓库" class="headerlink" title="添加仓库"></a>添加仓库</h1><p>最新的salt包会发布在 Ubuntu saltstack PPA。如果你的系统中有<code>add-apt-repository</code> 工具，可以通过一条命令添加仓库并导入PPA key：</p>
-<h2 id="通过add-apt-repository添加仓库及PPA-key"><a href="#通过add-apt-repository添加仓库及PPA-key" class="headerlink" title="通过add-apt-repository添加仓库及PPA key"></a>通过add-apt-repository添加仓库及PPA key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">add-apt-repository ppa:saltstack/salt</div><div class="line"></div><div class="line"> Salt, the remote execution and configuration management tool.</div><div class="line"> More info: https://launchpad.net/~saltstack/+archive/ubuntu/salt</div><div class="line">Press [ENTER] to <span class="built_in">continue</span> or ctrl-c to cancel adding it</div><div class="line"></div><div class="line">gpg: keyring `/tmp/tmpys0ah_nb/secring.gpg<span class="string">' created</span></div><div class="line">gpg: keyring `/tmp/tmpys0ah_nb/pubring.gpg' created</div><div class="line">gpg: requesting key 0E27C0A6 from hkp server keyserver.ubuntu.com</div><div class="line">gpg: /tmp/tmpys0ah_nb/trustdb.gpg: trustdb created</div><div class="line">gpg: key 0E27C0A6: public key <span class="string">"Launchpad PPA for Salt Stack"</span> imported</div><div class="line">gpg: Total number processed: 1</div><div class="line">gpg:               imported: 1  (RSA: 1)</div><div class="line">OK</div></pre></td></tr></table></figure>
+<h2 id="通过add-apt-repository添加仓库及PPA-key"><a href="#通过add-apt-repository添加仓库及PPA-key" class="headerlink" title="通过add-apt-repository添加仓库及PPA key"></a>通过add-apt-repository添加仓库及PPA key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">add-apt-repository ppa:saltstack/salt</span><br><span class="line"></span><br><span class="line"> Salt, the remote execution and configuration management tool.</span><br><span class="line"> More info: https://launchpad.net/~saltstack/+archive/ubuntu/salt</span><br><span class="line">Press [ENTER] to <span class="built_in">continue</span> or ctrl-c to cancel adding it</span><br><span class="line"></span><br><span class="line">gpg: keyring `/tmp/tmpys0ah_nb/secring.gpg<span class="string">' created</span></span><br><span class="line"><span class="string">gpg: keyring `/tmp/tmpys0ah_nb/pubring.gpg'</span> created</span><br><span class="line">gpg: requesting key 0E27C0A6 from hkp server keyserver.ubuntu.com</span><br><span class="line">gpg: /tmp/tmpys0ah_nb/trustdb.gpg: trustdb created</span><br><span class="line">gpg: key 0E27C0A6: public key <span class="string">"Launchpad PPA for Salt Stack"</span> imported</span><br><span class="line">gpg: Total number processed: 1</span><br><span class="line">gpg:               imported: 1  (RSA: 1)</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>如果没有找到add-apt-repository命令可以执行下面的命令进行安装</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install python-software-properties</div></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install python-software-properties</span><br></pre></td></tr></table></figure>
 <p>可能也需要安装下面的包</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install software-properties-common</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install software-properties-common</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="手动添加仓库及PPA-key"><a href="#手动添加仓库及PPA-key" class="headerlink" title="手动添加仓库及PPA  key"></a>手动添加仓库及PPA  key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">echo</span> deb http://ppa.launchpad.net/saltstack/salt/ubuntu `lsb_release -sc` main | sudo tee /etc/apt/sources.list.d/saltstack.list</div><div class="line">wget -q -O- <span class="string">"http://keyserver.ubuntu.com:11371/pks/lookup?op=get&amp;search=0x4759FA960E27C0A6"</span> |apt-key add -</div></pre></td></tr></table></figure>
-<h2 id="更新仓库元数据"><a href="#更新仓库元数据" class="headerlink" title="更新仓库元数据"></a>更新仓库元数据</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get update</div></pre></td></tr></table></figure>
-<h1 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install salt-master salt-minion salt-syndic</div></pre></td></tr></table></figure>
-<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install salt-minion</div></pre></td></tr></table></figure>
+<h2 id="手动添加仓库及PPA-key"><a href="#手动添加仓库及PPA-key" class="headerlink" title="手动添加仓库及PPA  key"></a>手动添加仓库及PPA  key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> deb http://ppa.launchpad.net/saltstack/salt/ubuntu `lsb_release -sc` main | sudo tee /etc/apt/sources.list.d/saltstack.list</span><br><span class="line">wget -q -O- <span class="string">"http://keyserver.ubuntu.com:11371/pks/lookup?op=get&amp;search=0x4759FA960E27C0A6"</span> |apt-key add -</span><br></pre></td></tr></table></figure>
+<h2 id="更新仓库元数据"><a href="#更新仓库元数据" class="headerlink" title="更新仓库元数据"></a>更新仓库元数据</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<h1 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-master salt-minion salt-syndic</span><br></pre></td></tr></table></figure>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-minion</span><br></pre></td></tr></table></figure>
 <h1 id="ZEROMQ-4"><a href="#ZEROMQ-4" class="headerlink" title="ZEROMQ 4"></a>ZEROMQ 4</h1><p>ZeroMQ 4 在 Ubuntu 14.04 以上版本已经与系统集成。因此Ubuntu 12.04 LTS 之前的版本需要升级到ZEROMQ 4</p>
   
 	</div>
@@ -141,31 +137,8 @@
 
 	<div class="article-share" id="share">
 	
-	<div class="share-jiathis">
-	  
-<div class="jiathis_style_24x24">
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_weixin"></a>
-	<a class="jiathis_button_renren"></a>
-	<a class="jiathis_button_qzone"></a>
-	<a class="jiathis_button_googleplus"></a>
-	<a class="jiathis_button_douban"></a>
-	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-    var jiathis_config={
-    data_track_clickback:true,
-    sm:"copy,renren,cqq",
-    pic:"",
-    summary:"",
-     ralateuid:{"tsina":"1576292750"},hideMore:false}
-    
-  </script> 
-<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
-899457" charset="utf-8"></script>      
-
-	 </div>
+	  <div data-url="https://salogs.com/news/2015/08/20/ubuntu-install-salt/" data-title="Ubuntu 安装salt | SA-Logs" data-tsina="1576292750" class="share clearfix">
+	  </div>
 	
 	</div>
 
@@ -197,9 +170,7 @@
 </nav>
 
 	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="news/2015/08/20/ubuntu-install-salt/" data-title="Ubuntu 安装salt" data-url="http://salogs.com/news/2015/08/20/ubuntu-install-salt/"></div>
-</section>
+
 
 
 </div>  
@@ -219,10 +190,9 @@
   
 <div class="github-card">
 <p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="zhouyq" data-width="220" data-height="119" data-theme="medium">
+<div class="github-card" data-github="zhouyq" data-theme="medium"></div>
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
-  </div>
 
 
 
@@ -244,7 +214,11 @@
 		  
 		
 		  
-			<li><a href="/categories/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 		  
 		
 		  
@@ -301,11 +275,15 @@
 			
 		
 			
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
@@ -313,7 +291,7 @@
 			
 		
 			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -325,7 +303,11 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/Hardware/" title="Hardware">Hardware<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/monitor/" title="monitor">monitor<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -338,19 +320,19 @@
         
           <li>
             
-            	<a href="http://goodrain.com" target="_blank" title="会给你带来惊喜的云平台">好雨云</a>
+            	<a href="https://www.rainbond.com" target="_blank" title="Rainbond 开源PaaS">Rainbond 开源PaaS</a>
             
           </li>
         
           <li>
             
-            	<a href="http://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
+            	<a href="https://www.blogdaren.com/" target="_blank" title="爱自由，爱分享，亦爱PHP">IT博客达人网</a>
             
           </li>
         
           <li>
             
-            	<a href="http://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
+            	<a href="https://ihongqiqu.com" target="_blank" title="Stay hungry">爱红旗渠</a>
             
           </li>
         
@@ -366,7 +348,7 @@
 
   <div class="weiboshow">
   <p class="asidetitle">新浪微博</p>
-    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1576292750&verifier=8ef712fb&dpc=1"></iframe>
 </div>
 
 
@@ -388,7 +370,7 @@
 	 
 	<div class="social-font" class="clearfix">
 		
-		<a href="http://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
+		<a href="https://weibo.com/cooperx" target="_blank" class="icon-weibo" title="微博"></a>
 		
 		
 		<a href="https://github.com/zhouyq" target="_blank" class="icon-github" title="github"></a>
@@ -403,15 +385,12 @@
 		
 		
 		
-		<a href="mailto:zyq916@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		<a href="mailto:root@yunop.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 			
 		
-    		<p class="copyright" style="display: inline;font-family: &quot;Microsoft YaHei&quot;,Arial,STHeiti,sans-serif;">
-		<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-		<span id="busuanzi_container_site_uv">访客数<span id="busuanzi_value_site_uv"></span>人次</span>
-		</p>
+
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
 		
@@ -457,11 +436,6 @@ $(document).ready(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
   
-        getSize();
-        if (myWidth >= 1024) {
-          c.click();
-        }
-  
   $(window).resize(function(){
     getSize(); 
     if (myWidth >= 1024) {
@@ -505,19 +479,58 @@ $(document).ready(function(){
 </script>
 
 
-
-
 <script type="text/javascript">
-  var duoshuoQuery = {short_name:"salogs"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="https://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="https://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
 
 
 

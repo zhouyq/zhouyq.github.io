@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>shell 数组应用实例 | SA-Logs</title>
+    <title>CentOS 7.x 安装 Dell OMSA 与监控 | SA-Logs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zhouyq">
     
 
     
-    <meta name="description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)  说明：    默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来  shell中的默认分隔符可以通过修改 $IFS变量来设置    数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
-<meta name="keywords" content="shell,script,array">
+    <meta name="description" content="各大厂商的服务器都有配到的硬件管理及监控软件，本文主要针对Dell服务器，讲解它的管理与监控。 Dell服务器的 OMSA （OpenManage Server Administrator ）是安装在操作系统中的一套软件，提供硬件监控、驱动程序的升级等操作。 安装 配置仓库  curl -s http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi">
+<meta name="keywords" content="Hardware,monitor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell 数组应用实例">
-<meta property="og:url" content="https://salogs.com/news/2015/08/02/shell-array-demo/index.html">
+<meta property="og:title" content="CentOS 7.x 安装 Dell OMSA 与监控">
+<meta property="og:url" content="https://salogs.com/news/2018/06/21/install-dell-omsa/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)  说明：    默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来  shell中的默认分隔符可以通过修改 $IFS变量来设置    数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
+<meta property="og:description" content="各大厂商的服务器都有配到的硬件管理及监控软件，本文主要针对Dell服务器，讲解它的管理与监控。 Dell服务器的 OMSA （OpenManage Server Administrator ）是安装在操作系统中的一套软件，提供硬件监控、驱动程序的升级等操作。 安装 配置仓库  curl -s http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2015-08-02T10:50:47.000Z">
+<meta property="og:updated_time" content="2018-06-21T07:52:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell 数组应用实例">
-<meta name="twitter:description" content="数组定义# 定义一个空数组Result=()# 定义并给数组赋值arr=(a b c d e)  说明：    默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来  shell中的默认分隔符可以通过修改 $IFS变量来设置    数组读取/删除# 初始化并赋值数组arr=(a b c d e)# 计算长度echo $&amp;#123;#arr[@]&amp;#125;  # 结果:">
+<meta name="twitter:title" content="CentOS 7.x 安装 Dell OMSA 与监控">
+<meta name="twitter:description" content="各大厂商的服务器都有配到的硬件管理及监控软件，本文主要针对Dell服务器，讲解它的管理与监控。 Dell服务器的 OMSA （OpenManage Server Administrator ）是安装在操作系统中的一套软件，提供硬件监控、驱动程序的升级等操作。 安装 配置仓库  curl -s http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi">
 <meta name="twitter:creator" content="@ZhouYueqiu">
 
     
@@ -82,14 +82,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/news/2015/08/02/shell-array-demo/" title="shell 数组应用实例" itemprop="url">shell 数组应用实例</a>
+      <a href="/news/2018/06/21/install-dell-omsa/" title="CentOS 7.x 安装 Dell OMSA 与监控" itemprop="url">CentOS 7.x 安装 Dell OMSA 与监控</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-02T10:01:37.000Z" itemprop="datePublished"> 发表于 2015-08-02</time>
+    <time datetime="2018-06-21T06:44:44.000Z" itemprop="datePublished"> 发表于 2018-06-21</time>
     
   </p>
 </header>
@@ -98,35 +98,40 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数组定义"><span class="toc-number">1.</span> <span class="toc-text">数组定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组读取-删除"><span class="toc-number">2.</span> <span class="toc-text">数组读取/删除</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切片-元素替换"><span class="toc-number">3.</span> <span class="toc-text">切片/元素替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">4.</span> <span class="toc-text">实例</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监控"><span class="toc-number">2.</span> <span class="toc-text">监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载check-openmanage"><span class="toc-number">2.1.</span> <span class="toc-text">下载check_openmanage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用check-openmanage"><span class="toc-number">2.2.</span> <span class="toc-text">使用check_openmanage</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h1 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空数组</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义并给数组赋值</span></span><br><span class="line">arr=(a b c d e)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>说明：</strong>  </p>
+		<p>各大厂商的服务器都有配到的硬件管理及监控软件，本文主要针对Dell服务器，讲解它的管理与监控。</p>
+<p>Dell服务器的 OMSA （OpenManage Server Administrator ）是安装在操作系统中的一套软件，提供硬件监控、驱动程序的升级等操作。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li>配置仓库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl <span class="_">-s</span> http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>默认数组中的元素是以空格分隔的，如果元素是包含空格的字符串，最好用双引号括起来</p>
+<li>安装DSU(Dell EMC System Update)<blockquote>
+<p>DSU 是为操作更新驱动与软件的服务。</p>
+</blockquote>
 </li>
-<li><p>shell中的默认分隔符可以通过修改 $IFS变量来设置</p>
-</li>
 </ul>
-</blockquote>
-<h1 id="数组读取-删除"><a href="#数组读取-删除" class="headerlink" title="数组读取/删除"></a>数组读取/删除</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算长度</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[@]&#125;</span>  <span class="comment"># 结果: 5</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#arr[*]&#125;</span>  <span class="comment"># 结果: 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取出所有数据</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]&#125;</span>  <span class="comment"># 结果: a b c d e</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a b c d e</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取出第二个元素的数据</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[1]&#125;</span>  <span class="comment"># 结果: b</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历数组</span></span><br><span class="line">filelist=(`ls`)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$&#123;filelist[@]&#125;</span>;<span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$file</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除第二个元素</span></span><br><span class="line"><span class="built_in">unset</span> arr[1]</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[*]&#125;</span>  <span class="comment"># 结果: a c d e</span></span><br></pre></td></tr></table></figure>
-<h1 id="切片-元素替换"><a href="#切片-元素替换" class="headerlink" title="切片/元素替换"></a>切片/元素替换</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切片</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"></span><br><span class="line">arr2=(<span class="variable">$&#123;arr[@]:0:3&#125;</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr2[@]&#125;</span>  <span class="comment"># 结果 a b c</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换</span></span><br><span class="line"><span class="comment"># 初始化并赋值数组</span></span><br><span class="line">arr=(a b c d e)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr[@]/a/aaa&#125;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install dell-system-update</span><br></pre></td></tr></table></figure>
 <ul>
-<li><strong>切片(分片):</strong> 直接通过 ${数组名[@或*]:起始位置:长度} 切片原先数组，返回是字符串，中间用“空格”分开，因此如果加上”()”，将得到切片数组，上面例子：c 就是一个新数据。</li>
+<li>安装并启动OMSA</li>
 </ul>
-<ul>
-<li><strong>替换:</strong> ${数组名[@或*]/查找字符/替换字符} 该操作不会改变原先数组内容，如果需要修改，请重新定义变量并赋值。</li>
-</ul>
-</blockquote>
-<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><blockquote>
-<p>在一个多域名的web server环境中，通过分析访问日志，统计最近8小时有用户访问的域名（去重），并显示。</p>
-<p>日志格式：X-Forworld-IP User-IP YYYY-MM-DD HH:mm:ss method “URL” HTTP响应码 服务器处理时间 返回大小 “Refer” “浏览器信息” “虚拟主机域名” 真实处理请求的主机</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">AWKB<span class="keyword">in</span>=<span class="string">"/usr/bin/awk"</span></span><br><span class="line">EGREPB<span class="keyword">in</span>=<span class="string">"/bin/egrep"</span></span><br><span class="line">SORTB<span class="keyword">in</span>=<span class="string">"/usr/bin/sort"</span></span><br><span class="line">SEDB<span class="keyword">in</span>=<span class="string">"/bin/sed"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 虚拟主机</span></span><br><span class="line">VSName=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时间段</span></span><br><span class="line">TimePeriod=<span class="variable">$2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤字符串</span></span><br><span class="line">FilterKeys=<span class="string">''</span><span class="string">'DNSPod-Monitor|JianKongBao'</span><span class="string">''</span></span><br><span class="line"><span class="comment"># 日志目录</span></span><br><span class="line">LOGPath=<span class="string">"/logs/nginx"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义最终输出的数组变量</span></span><br><span class="line">Result=()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (( TimePeriod &gt; 0 ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  LogTime=`date <span class="_">-d</span> <span class="string">"- <span class="variable">$&#123;TimePeriod&#125;</span>hours"</span> +%Y-%m-%d-%H`</span><br><span class="line">  LogFile=<span class="variable">$&#123;VSName&#125;</span>_<span class="variable">$&#123;LogTime&#125;</span>.log</span><br><span class="line"></span><br><span class="line">  Result=(<span class="variable">$&#123;Result[@]&#125;</span> `<span class="variable">$AWKBin</span> <span class="string">'&#123;if($5!~/HEAD/ &amp;&amp; $5!~/\"\"/ ) print $0&#125;'</span> <span class="variable">$&#123;LOGPath&#125;</span>/<span class="variable">$&#123;LogFile&#125;</span> | \</span><br><span class="line">         <span class="variable">$EGREPBin</span> -v <span class="variable">$FilterKeys</span> | <span class="variable">$AWKBin</span> <span class="string">'&#123;print $NF&#125;'</span> | <span class="variable">$AWKBin</span> -F <span class="string">'@'</span> <span class="string">'&#123;print $1&#125;'</span> |\</span><br><span class="line">         <span class="variable">$SORTBin</span> -u`)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"第<span class="variable">$TimePeriod</span> 个日志:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ((TimePeriod--))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"未去重：<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">Result=($(awk -vRS=<span class="string">' '</span> <span class="string">'!a[$1]++'</span> &lt;&lt;&lt; <span class="variable">$&#123;Result[@]&#125;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"去重以后:<span class="variable">$&#123;Result[*]&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install srvadmin-all -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机启动</span></span><br><span class="line">/opt/dell/srvadmin/sbin/srvadmin-services.sh <span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">/opt/dell/srvadmin/sbin/srvadmin-services.sh start</span><br><span class="line">Starting instsvcdrv (via systemctl):                       [  确定  ]</span><br><span class="line">Starting dataeng (via systemctl):                          [  确定  ]</span><br><span class="line">Starting dsm_om_connsvc (via systemctl):                   [  确定  ]</span><br></pre></td></tr></table></figure>
+<h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><p>安装完OMSA后，可以通过访问 https://&lt;本机IP&gt;:000 通过浏览器的方式查看硬件信息，如果机器成百上千台，这种方式的工作效率是非常低的，因此本文介绍通过<code>nagios</code>插件 <a href="http://folk.uio.no/trondham/software/check_openmanage.html" target="_blank" rel="noopener">check_openmanage</a> 的方式通过命令行检查，当然这个插件可以结合nagios和zabbix使用，有兴趣的同学可以深入学习一下。 下文只简单介绍使用方法</p>
+<h3 id="下载check-openmanage"><a href="#下载check-openmanage" class="headerlink" title="下载check_openmanage"></a>下载check_openmanage</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://folk.uio.no/trondham/software/files/check_openmanage-3.7.12.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="使用check-openmanage"><a href="#使用check-openmanage" class="headerlink" title="使用check_openmanage"></a>使用check_openmanage</h3><p>···bash<br>./check_openmanage -h<br>Usage: check_openmanage [OPTION]…</p>
+<p>GENERAL OPTIONS:</p>
+<p>   -f, –config         Specify configuration file<br>   -p, –perfdata       Output performance data [default=no]<br>   -t, –timeout        Plugin timeout in seconds [default=30]<br>   -c, –critical       Custom temperature critical limits<br>   -w, –warning        Custom temperature warning limits<br>   -F, –fahrenheit     Use Fahrenheit as temperature unit<br>   -d, –debug          Debug output, reports everything<br>   -h, –help           Display this help text<br>   -V, –version        Display version info</p>
+<p>SNMP OPTIONS:</p>
+<p>   -H, –hostname       Hostname or IP (required for SNMP)<br>   -C, –community      SNMP community string [default=public]<br>   -P, –protocol       SNMP protocol version [default=2c]<br>   –port               SNMP port number [default=161]<br>   -6, –ipv6           Use IPv6 instead of IPv4 [default=no]<br>   –tcp                Use TCP instead of UDP [default=no]</p>
+<p>OUTPUT OPTIONS:</p>
+<p>   -i, –info           Prefix any alerts with the service tag<br>   -e, –extinfo        Append system info to alerts<br>   -s, –state          Prefix alerts with alert state<br>   -S, –short-state    Prefix alerts with alert state abbreviated<br>   -o, –okinfo         Verbosity when check result is OK<br>   -B, –show-blacklist Show blacklistings in OK output<br>   -I, –htmlinfo       HTML output with clickable links</p>
+<p>CHECK CONTROL AND BLACKLISTING:</p>
+<p>   -a, –all            Check everything, even log content<br>   -b, –blacklist      Blacklist missing and/or failed components<br>   –only               Only check a certain component or alert type<br>   –check              Fine-tune which components are checked<br>   –no-storage         Don’t check storage<br>   –vdisk-critical     Make any alerts on virtual disks critical</p>
+<p>For more information and advanced options, see the manual page or URL:<br>  <a href="http://folk.uio.no/trondham/software/check_openmanage.html" target="_blank" rel="noopener">http://folk.uio.no/trondham/software/check_openmanage.html</a></p>
+<p>```</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -134,13 +139,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="../../../../../categories/linux/">linux</a>►<a class="article-category-link" href="../../../../../categories/linux/script/">script</a>
+  <a class="article-category-link" href="../../../../../categories/linux/">linux</a>►<a class="article-category-link" href="../../../../../categories/linux/monitor/">monitor</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/shell/">shell</a><a href="/tags/script/">script</a><a href="/tags/array/">array</a>
+  <span></span> <a href="/tags/Hardware/">Hardware</a><a href="/tags/monitor/">monitor</a>
   </div>
 
 </div>
@@ -149,7 +154,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://salogs.com/news/2015/08/02/shell-array-demo/" data-title="shell 数组应用实例 | SA-Logs" data-tsina="1576292750" class="share clearfix">
+	  <div data-url="https://salogs.com/news/2018/06/21/install-dell-omsa/" data-title="CentOS 7.x 安装 Dell OMSA 与监控 | SA-Logs" data-tsina="1576292750" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -162,19 +167,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/news/2015/08/02/aliyun-vpc-snat-md/" title="阿里云VPC网络无EIP的主机上网问题">
-  <strong>上一篇：</strong><br/>
-  <span>
-  阿里云VPC网络无EIP的主机上网问题</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/news/2015/08/02/migration-to-github/"  title="salogs正式迁移到github">
+<a href="/news/2018/06/21/rainbond-install-s1/"  title="开源PaaS Rainbond不完全评测01 —— 安装篇">
  <strong>下一篇：</strong><br/> 
- <span>salogs正式迁移到github
+ <span>开源PaaS Rainbond不完全评测01 —— 安装篇
 </span>
 </a>
 </div>
@@ -191,7 +188,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数组定义"><span class="toc-number">1.</span> <span class="toc-text">数组定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组读取-删除"><span class="toc-number">2.</span> <span class="toc-text">数组读取/删除</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切片-元素替换"><span class="toc-number">3.</span> <span class="toc-text">切片/元素替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">4.</span> <span class="toc-text">实例</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监控"><span class="toc-number">2.</span> <span class="toc-text">监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载check-openmanage"><span class="toc-number">2.1.</span> <span class="toc-text">下载check_openmanage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用check-openmanage"><span class="toc-number">2.2.</span> <span class="toc-text">使用check_openmanage</span></a></li></ol></li></ol>
  
   </div>
 
