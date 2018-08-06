@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://salogs.com/"/>
-  <updated>2018-08-06T07:01:05.000Z</updated>
+  <updated>2018-08-06T07:02:57.000Z</updated>
   <id>https://salogs.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>What to Know Before Making the Leap</title>
+    <title>迁移到Serverless之前应该想清楚的几件事</title>
     <link href="https://salogs.com/news/2018/08/06/What-to-Know-Before-Making-the-Leap/"/>
     <id>https://salogs.com/news/2018/08/06/What-to-Know-Before-Making-the-Leap/</id>
     <published>2018-08-06T06:48:53.000Z</published>
-    <updated>2018-08-06T07:01:05.000Z</updated>
+    <updated>2018-08-06T07:02:57.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="3337e40d-organic-1280537_640.jpg" alt=""></p>
 <p>这篇文章是Serverless系列的第三篇文章，这一系列文章是为了探索Serverless的本质。</p>
