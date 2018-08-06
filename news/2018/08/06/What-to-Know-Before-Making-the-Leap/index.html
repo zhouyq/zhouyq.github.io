@@ -4,25 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>保存iptable规则并开机自动加载 | SA-Logs</title>
+    <title>What to Know Before Making the Leap | SA-Logs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zhouyq">
     
 
     
-    <meta name="description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）： Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4 RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables 保存之后，可以">
-<meta name="keywords" content="iptables">
+    <meta name="description" content="这篇文章是Serverless系列的第三篇文章，这一系列文章是为了探索Serverless的本质。 第一篇：Serverless的本质是什么？ 第二篇：Serverless 对商业、流程及文化的影响 Serverless技术承诺说可以消除IT运维相关的大部分繁重工作，第三方服务商会承担起更多服务器维护相关的管理工作，而不像企业组织为容器编排和微服务平台所做的那样。使用Serverless平台可以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="保存iptable规则并开机自动加载">
-<meta property="og:url" content="https://salogs.com/news/2015/08/20/iptables-save/index.html">
+<meta property="og:title" content="What to Know Before Making the Leap">
+<meta property="og:url" content="https://salogs.com/news/2018/08/06/What-to-Know-Before-Making-the-Leap/index.html">
 <meta property="og:site_name" content="SA-Logs">
-<meta property="og:description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）： Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4 RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables 保存之后，可以">
+<meta property="og:description" content="这篇文章是Serverless系列的第三篇文章，这一系列文章是为了探索Serverless的本质。 第一篇：Serverless的本质是什么？ 第二篇：Serverless 对商业、流程及文化的影响 Serverless技术承诺说可以消除IT运维相关的大部分繁重工作，第三方服务商会承担起更多服务器维护相关的管理工作，而不像企业组织为容器编排和微服务平台所做的那样。使用Serverless平台可以">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2015-08-20T09:07:36.000Z">
+<meta property="og:image" content="https://salogs.com/news/2018/08/06/What-to-Know-Before-Making-the-Leap/3337e40d-organic-1280537_640.jpg">
+<meta property="og:updated_time" content="2018-08-06T07:01:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="保存iptable规则并开机自动加载">
-<meta name="twitter:description" content="iptables-save利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）： Debian/Ubuntu: iptables-save &amp;gt; /etc/iptables/rules.v4 RHEL/CentOS: iptables-save &amp;gt; /etc/sysconfig/iptables 保存之后，可以">
+<meta name="twitter:title" content="What to Know Before Making the Leap">
+<meta name="twitter:description" content="这篇文章是Serverless系列的第三篇文章，这一系列文章是为了探索Serverless的本质。 第一篇：Serverless的本质是什么？ 第二篇：Serverless 对商业、流程及文化的影响 Serverless技术承诺说可以消除IT运维相关的大部分繁重工作，第三方服务商会承担起更多服务器维护相关的管理工作，而不像企业组织为容器编排和微服务平台所做的那样。使用Serverless平台可以">
+<meta name="twitter:image" content="https://salogs.com/news/2018/08/06/What-to-Know-Before-Making-the-Leap/3337e40d-organic-1280537_640.jpg">
 <meta name="twitter:creator" content="@ZhouYueqiu">
 
     
@@ -82,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/news/2015/08/20/iptables-save/" title="保存iptable规则并开机自动加载" itemprop="url">保存iptable规则并开机自动加载</a>
+      <a href="/news/2018/08/06/What-to-Know-Before-Making-the-Leap/" title="What to Know Before Making the Leap" itemprop="url">What to Know Before Making the Leap</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-20T08:46:27.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
+    <time datetime="2018-08-06T06:48:53.000Z" itemprop="datePublished"> 发表于 2018-08-06</time>
     
   </p>
 </header>
@@ -99,25 +100,38 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-save"><span class="toc-number">1.</span> <span class="toc-text">iptables-save</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-persistent-Debian-Ubuntu"><span class="toc-number">2.</span> <span class="toc-text">iptables-persistent (Debian/Ubuntu)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存规则"><span class="toc-number">2.2.</span> <span class="toc-text">保存规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL-和-CentOS-保存规则"><span class="toc-number">3.</span> <span class="toc-text">RHEL 和 CentOS 保存规则</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#不要被Serverless这个词迷惑"><span class="toc-number">1.</span> <span class="toc-text">不要被Serverless这个词迷惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#了解Serverless的优缺点"><span class="toc-number">2.</span> <span class="toc-text">了解Serverless的优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全清单"><span class="toc-number">3.</span> <span class="toc-text">安全清单</span></a></li></ol>
 		
 		</div>
 		
-		<h1 id="iptables-save"><a href="#iptables-save" class="headerlink" title="iptables-save"></a>iptables-save</h1><p>利用iptables-save命令可以将iptable规则保存到一个持久化存储的目录中，不同的系统保存的目录也有所不同（IPv4）：</p>
-<p>Debian/Ubuntu: <code>iptables-save</code> &gt; /etc/iptables/rules.v4</p>
-<p>RHEL/CentOS: <code>iptables-save</code> &gt; /etc/sysconfig/iptables</p>
-<p>保存之后，可以通过iptables-restore命令载入（IPv4）：</p>
-<p>Debian/Ubuntu: <code>iptables-restore</code> &lt; /etc/iptables/rules.v4</p>
-<p>RHEL/CentOS: <code>iptables-restore</code> &lt; /etc/sysconfig/iptables</p>
-<p>上面是针对IPv5的规则，如果你有使用IPv6的规则，通常需要执行下面对应的IPv6保存和恢复的命令（IPv4：</p>
-<p>Debian/Ubuntu: <code>ip6tables-save</code> &gt; /etc/iptables/rules.v6<br>RHEL/CentOS: <code>ip6tables-save</code> &gt; /etc/sysconfig/ip6tables</p>
-<p><strong>注意：</strong> 这种方式只是保存规则和恢复的一种方式，并不是说保存规则后下次启动就会自动加载。一定要记住这点，如果要想系统启动后自动加载请看下面的方式。</p>
-<h1 id="iptables-persistent-Debian-Ubuntu"><a href="#iptables-persistent-Debian-Ubuntu" class="headerlink" title="iptables-persistent (Debian/Ubuntu)"></a>iptables-persistent (Debian/Ubuntu)</h1><p>从 Ubuntu 10.04 LTS (Lucid) 和 Debian 6.0 (Squeeze) 版本开始，可以通过安装一个名为 “iptables-persistent” 的包，安装后它以守护进程的方式来运行，系统重启后可以自动将保存的内容加载到iptables中。当然前提也是需要先保存规则。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install iptables-persistent</span><br></pre></td></tr></table></figure>
-<h2 id="保存规则"><a href="#保存规则" class="headerlink" title="保存规则"></a>保存规则</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service  iptables-persistent save</span><br><span class="line">* Saving rules...                                                                                                                                                                 *  IPv4...                                                                                                                                                                        *  IPv6...</span><br><span class="line"></span><br><span class="line">ls -1 /etc/iptables/</span><br><span class="line">rules.v4</span><br><span class="line">rules.v6</span><br><span class="line"></span><br><span class="line">cat  /etc/iptables/rules.v4</span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [5726:774869]</span><br><span class="line">:FORWARD ACCEPT [170:27598]</span><br><span class="line">:OUTPUT ACCEPT [5467:789045]</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br><span class="line"><span class="comment"># Generated by iptables-save v1.4.21 on Thu Aug 20 08:59:52 2015</span></span><br><span class="line">*nat</span><br><span class="line">:PREROUTING ACCEPT [23:1596]</span><br><span class="line">:INPUT ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [9:540]</span><br><span class="line">:POSTROUTING ACCEPT [0:0]</span><br><span class="line">-A POSTROUTING <span class="_">-s</span> 10.0.0.0/16 -o eth0 -j MASQUERADE</span><br><span class="line">COMMIT</span><br><span class="line"><span class="comment"># Completed on Thu Aug 20 08:59:52 2015</span></span><br></pre></td></tr></table></figure>
-<h1 id="RHEL-和-CentOS-保存规则"><a href="#RHEL-和-CentOS-保存规则" class="headerlink" title="RHEL 和 CentOS 保存规则"></a>RHEL 和 CentOS 保存规则</h1><p>RHEL/CentOS 提供了简单的方式来持久化存储iptables规则，可以直接通过iptables服务的命令来完成：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chkconfig --list | grep iptables</span><br><span class="line">  iptables       	0:off	1:off	2:on	3:on	4:on	5:on	6:off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不是开机启动，需要执行下面命令</span></span><br><span class="line">chkconfig iptables on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存规则</span></span><br><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
-<p>IPv4规则信息会保存到 /etc/sysconfig/iptables 文件中，IPv6 规则保存到 /etc/sysconfig/ip6tables 文件中。 必须执行<code>service iptables save</code> 命令才会保存，保存后系统重启后会自动加载。</p>
+		<p><img src="3337e40d-organic-1280537_640.jpg" alt=""></p>
+<p>这篇文章是Serverless系列的第三篇文章，这一系列文章是为了探索Serverless的本质。</p>
+<p>第一篇：<a href="https://salogs.com/news/2018/08/06/What-is-the-essence-of-Serverless/">Serverless的本质是什么？</a></p>
+<p>第二篇：<a href="https://salogs.com/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/">Serverless 对商业、流程及文化的影响</a></p>
+<p>Serverless技术承诺说可以消除IT运维相关的大部分繁重工作，第三方服务商会承担起更多服务器维护相关的管理工作，而不像企业组织为容器编排和微服务平台所做的那样。使用Serverless平台可以节省资源，其中部分原因是因为Serverless允许组织通过 “按使用量付费” 的模式来使用服务器。</p>
+<p>迁移到Serverless资源有许多方法，有对的也有错的。在迁移之前，请记住以下几点。</p>
+<h2 id="不要被Serverless这个词迷惑"><a href="#不要被Serverless这个词迷惑" class="headerlink" title="不要被Serverless这个词迷惑"></a>不要被Serverless这个词迷惑</h2><p>DevOps的团队成员可能已经听说过Serverless，并希望知道迁移后这个平台可能为他们的组织提供哪些功能，但他们可能一开始就会对Serverless这个词产生疑惑，Serverless意思是无服务器的。但实际上，”Serverless” 应用程序仍在服务器上运行。</p>
+<p>“Serverless” 这个词的使用可以追溯到至少2012年，当时Ken Fromm在一篇ReadWrite论文 “<a href="https://readwrite.com/2012/10/15/why-the-future-of-software-and-apps-is-serverless/" target="_blank" rel="noopener">为什么软件和应用程序的未来是无服务器</a>” 中使用了这个术语。一个更精确，合适的定义出现在2016年一篇开创性的博客文章中，由Symphonia的合作伙伴兼联合创始人Mike Roberts在Martin Fowler的网站上提出。他写到Serverless架构是 “<strong>将第三方 <code>后端即服务</code>（BaaS，Backend as a Service）服务，和包含自定义的服务代码的容器整合在一起的应用，并将应用运行在 ‘功能即服务（Function as a Service，FaaS）’平台上。</strong>”</p>
+<p>Roberts写道：“通过整合实践这些想法以及相关的类似于单页面应用程序（SPA）的想法，这种架构消除了传统的对永远在线服务器组件的大部分需求。Serverless架构帮助企业降低运营成本，复杂性和工程准备时间，但代价是增加了对供应商的依赖和相对不成熟的支持服务的依赖。”</p>
+<p>以上定义概括了许多供应商提供的Serverless产品，包括亚马逊网络服务（AWS）的<a href="https://aws.amazon.com/lambda/" target="_blank" rel="noopener">Lambda</a>，它被广泛使用并提供BaaS（Backend as a Service）和FaaS（Function as a Service）服务。其他Serverless产品包括 <a href="https://cloud.google.com/functions/" target="_blank" rel="noopener">Cloud Functions</a>（Google），<a href="https://www.iron.io/platform/ironworker/" target="_blank" rel="noopener">IronWorker</a>（Iron.io），Manta Functions（Joyent），<a href="https://new-console.ng.bluemix.net/openwhisk/" target="_blank" rel="noopener">OpenWhisk</a>（IBM），<a href="https://www.pubnub.com/" target="_blank" rel="noopener">PubNub BLOCKS</a>（PubNub）以及<a href="https://github.com/bfirsh/serverless-docker" target="_blank" rel="noopener">Serverless Docker</a>（Docker）。</p>
+<h2 id="了解Serverless的优缺点"><a href="#了解Serverless的优缺点" class="headerlink" title="了解Serverless的优缺点"></a>了解Serverless的优缺点</h2><p>Serverless的优点在于它能够通过将服务器和相关的基础架构管理任务外包给第三方来帮助公司节省资源。例如，开发人员团队只需要开发应用程序，而Serverless提供商则在异地服务器上完成所有数据维护工作。</p>
+<p>Cloud Academy的产品营销经理Albert Qian表示： “Serverless的易用性可以提高开发人员的效率，Serverless计算使开发人员不用接触基础设施，他们可以完全只专注开发单一功能”。</p>
+<p>Serverless供应商允许组织根据他们的需求进行扩展或缩小，不再担心冗余的服务器容量。 </p>
+<p>“Serverless架构让云服务供应商管理服务器以及服务器的扩展以满足需求。将Serverless视为平台即服务（PaaS）的抽象，您需要做的就是上传代码，当您需要向上或向下扩展某个功能时，您只需扩展这个单一功能，”Qian说。 “因此，您无需扩展整个系统，容器或应用程序。另一个好处是无服务器具有内置的容错能力和设计的的高可用性。”</p>
+<p>因此，企业可以通过依赖第三方执行操作和数据管理任务来节省资金。 “Serverless的最大优势之一是它可以降低成本。使用FaaS作为您的计算层，您只需为正在运行的功能付费，”Qian说。 “尤其是对于利用率较低的工作负载，您会节省很多支出。因为您只需支付处理请求所需的计算资源，而不是为等待请求进入的空闲服务器付费。”</p>
+<p>但是，通过将服务器管理移交给第三方，您的组织也失去了对服务器的大部分控制权， 这一点在您确定是否以及何时迁移到Serverless时是需要慎重考虑的。</p>
+<p>“由于Serverless解决了资源管理问题，它正在迅速发展。对于不想维护服务器的小公司来说，这是完美的解决方案，”Raygun的高级开发人员Jeremy Scott说。 “您可以在几乎完全不用关心运维问题的前提下将工作完成，并且比使用自己搭建的服务器架构更便宜。但是Serverless也有其局限性，当你交出责任时，你同时也交出控制权和访问权，这样一来，对你的服务的监控和分析会变得非常困难。”</p>
+<p>通过这种方式，对在Serverless平台上运行的微服务和容器进行分析可能成为一个问题。 “你必须了解你的软件，否则就有可能在没有数据支持的情况下做出商业决策，”Scott说。 “因此，如果您使用Serverless，那么在某些情况下您可能需要在客户端（例如App或者浏览器）添加监控，或者您可以尝试为Serverless Function添加异常处理。”</p>
+<p>虽然具有挑战性，但将分析软件应用于Serverless部署仍然是可行的。如果为Serverless Function添加了异常处理，可以将Function包装在try-catch中然后发送https API请求，那么错误信息就会被记录在错误报告客户端（例如：Raygun[2]）。然而，如果是基于API的服务，将无法被监控，另一种解决办法就是观察API的行为方式”，Scott说。</p>
+<p>在决定哪些功能可以移植到Serverless架构时，需要考虑到Serverless部署的缺点——不太强大的计算性能。 “Serverless Function有很多限制。任何需要超过3GB内存的功能都必须重新设计否则无法运行，”Cloud Academy的Qian说。 “要确保团队了解这些限制，并确保他们有足够的知识，经验和培训，来决定适合特定工作负载的最佳技术，这一点非常重要。Serverless或任何新技术的‘酷’因素在架构方面有时会笼罩批判性思维，结果可能导致的松散的Function的组合，而不是整体一致的应用程序。”</p>
+<h2 id="安全清单"><a href="#安全清单" class="headerlink" title="安全清单"></a>安全清单</h2><p>就像监控和分析一样，在Serverless架构上保护你的数据也十分困难。毕竟服务器的管理和控制都被转移给了第三方。</p>
+<p>“例如，Serverless运行时环境不是标准化的，并且被运行的云服务隐藏起来，这使得我们更难以保护云上的数据”，Aqua Security营销副总裁Rani Osnat表示。“对于无服务器，我觉得有几个关键的安全问题，”Osnat说。在进行迁移时，某些安全检查尤其重要。 例如，如果在Serverless Functions中使用了潜在的易被攻击的代码，那么需要在使用之前解决这个问题”，同时对于那些违反政策的FaaS Functions， 我们必须使用强制控制来阻止这些功能的部署。</p>
+<p>Osnat说道：“尽管Serverless架构如此具有挑战性，企业组织们仍需要确保他们的Serverless平台在运行时会被监控，以便监测异常。”</p>
+<p>Cloud Academy的Qian表示，当迁移到无服务器时，同时也会面对多用户的挑战。 “即使客户的工作负载在虚拟机或容器中是被隔离的，也可能存在安全问题，特别是如果应用程序使用敏感数据。 一个客户代码中的潜在的bug可能会影响另一个应用程序的性能，从而影响客户服务和应用程序的质量。”</p>
+<blockquote>
+<p>译者：Grace Linktime Cloud公司全栈工程师</p>
+<p>原文链接：<a href="https://thenewstack.io/serverless-migration-strategies-what-to-know-before-making-the-leap/" target="_blank" rel="noopener">https://thenewstack.io/serverless-migration-strategies-what-to-know-before-making-the-leap/</a></p>
+</blockquote>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -125,14 +139,9 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="../../../../../categories/经验分享/">经验分享</a>►<a class="article-category-link" href="../../../../../categories/经验分享/Iptables/">Iptables</a>
+  <a class="article-category-link" href="../../../../../categories/serverless/">serverless</a>
 </div>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/iptables/">iptables</a>
-  </div>
 
 </div>
 
@@ -140,7 +149,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://salogs.com/news/2015/08/20/iptables-save/" data-title="保存iptable规则并开机自动加载 | SA-Logs" data-tsina="1576292750" class="share clearfix">
+	  <div data-url="https://salogs.com/news/2018/08/06/What-to-Know-Before-Making-the-Leap/" data-title="What to Know Before Making the Leap | SA-Logs" data-tsina="1576292750" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -153,19 +162,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Ubuntu 安装salt</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/news/2015/08/17/database-backup-and-recovery/"  title="MySQL备份与恢复">
+<a href="/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/"  title="Serverless 对商业、流程及文化的影响">
  <strong>下一篇：</strong><br/> 
- <span>MySQL备份与恢复
+ <span>Serverless 对商业、流程及文化的影响
 </span>
 </a>
 </div>
@@ -182,7 +183,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-save"><span class="toc-number">1.</span> <span class="toc-text">iptables-save</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-persistent-Debian-Ubuntu"><span class="toc-number">2.</span> <span class="toc-text">iptables-persistent (Debian/Ubuntu)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存规则"><span class="toc-number">2.2.</span> <span class="toc-text">保存规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL-和-CentOS-保存规则"><span class="toc-number">3.</span> <span class="toc-text">RHEL 和 CentOS 保存规则</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#不要被Serverless这个词迷惑"><span class="toc-number">1.</span> <span class="toc-text">不要被Serverless这个词迷惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#了解Serverless的优缺点"><span class="toc-number">2.</span> <span class="toc-text">了解Serverless的优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全清单"><span class="toc-number">3.</span> <span class="toc-text">安全清单</span></a></li></ol>
  
   </div>
 

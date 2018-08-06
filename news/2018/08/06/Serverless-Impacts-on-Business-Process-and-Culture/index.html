@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://salogs.com/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/7525865c-chu-tai-121706-unsplash.jpg">
 <meta property="og:image" content="https://salogs.com/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/c8535704-twitterreach-serverless-300x220.png">
 <meta property="og:image" content="https://salogs.com/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/68e1b769-google-trends-serverless.png">
-<meta property="og:updated_time" content="2018-08-06T06:34:08.000Z">
+<meta property="og:updated_time" content="2018-08-06T06:43:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Serverless 对商业、流程及文化的影响">
 <meta name="twitter:description" content="这篇文章是Serverless系列的第二篇文章，这一系列文章是为了探索Serverless的本质。 第一篇：Serverless的本质是什么？ 越来越多的企业与创业公司选择Serverless技术，并且Serverless技术发展速度远远快于之前的Container技术，而Container技术则是最近一次被行业广泛采用的新技术。 不论从何种维度分析，都可以看到Serverless这项技术正引起">
@@ -123,12 +123,12 @@
 <p>目前只有一些创业公司会在全面使用Serverless，大部分的企业只会在一些特定的项目中采用Serverless技术来测试基础架构的方案，以及测试团队文化是否适合实施Serverless。</p>
 <p>尽管Serverless技术只被用于一些独立的项目上进行测试，它们仍引起了多米诺骨牌效应，以一种意想不到的方式影响了公司业务。Serverless缩短了生产时间，引入了cost-for-usage（根据使用量付费）模型并鼓励团队成员更加自主。这些改变影响了企业的运作方式，包括如何选择需要在Serverless上运行的功能，企业研发新产品新功能的意愿，以及如何管理预算，程序员与产品经理如何履行职责等等。</p>
 <h2 id="Serverless和微服务"><a href="#Serverless和微服务" class="headerlink" title="Serverless和微服务"></a>Serverless和微服务</h2><p>O’Reilly系列的Microservices Architecture（微服务架构）书中提到 “微服务架构使Serverless更加快速，微服务使一个单体应用代码被拆分成小型的自治服务。因此，企业可以大规模的快速安全的构建解决方案”。</p>
-<p>今年年初的<a href="https://blog.algorithmia.com/introduction-to-serverless-microservices/" target="_blank" rel="noopener">一篇博客中</a>，机器学习平台Algorithmia的Mike Anderson演示了一个典型的高科技公司通过微服务将标准发布周期从65天缩短至16天。他写道“微服务帮助他们解耦了开发流程中的阻塞部分，缕清以及隔离了问题，使他们只关注组件级别的变化。”</p>
+<p>今年年初的<a href="https://blog.algorithmia.com/introduction-to-serverless-microservices/" target="_blank" rel="noopener">一篇博客中</a>，机器学习平台Algorithmia的Mike Anderson演示了一个典型的高科技公司通过微服务将标准发布周期从65天缩短至16天。他写道“<strong>微服务帮助他们解耦了开发流程中的阻塞部分，缕清以及隔离了问题，使他们只关注组件级别的变化。</strong>”</p>
 <p>当一个组织的代码是以微服务而不是单体应用的形式组织的时候，才可能使用Serverless技术。现在，企业可以识别出适合在Serverless架构运行的任务，这些任务是一些特定的，无状态的任务。云平台会通过分配计算资源来解决问题，运行服务器来做计算，在数据转换完成后将这些操作任务关闭。</p>
 <p>Red Hat产品管理部门的高级主管Rich Sharples 说道，该公司在过去两三年一直关注Serverless技术并且正在开发一个开源的，企业级别的Serverless产品，这个产品可以与Kubernetes一起使用。Red Hat希望今年能够发布整个产品。</p>
-<p>Sharples说道“通过客户，我们发现技术的技术成熟度曲线（ The Hyper Curve）飙升的十分迅速，例如微服务，而Serverless攀升的速度更快”</p>
-<p>因为微服务的增量交付，灵活，快速交付的特点，微服务收到越来越多企业的欢迎，Sharples说道“但是在我看来，这些使用者在疲于应对分布式系统管理和监控的运维复杂性，这也是为什么Serverless会引起他们的兴趣，通过Serverless，你可以获得微服务的好处，从开发人员角度来看，这也非常简单——仅仅只用修改一些代码。在运维人员看来，Serverless是一种非常适合建立自动化运维系统的模型，例如将回复一个日志事件实现成Serverless方法调用将会非常方便“。Sharples说道从他与企业级用户的日常对话中，可以感受到他们对Serverless的兴趣。</p>
-<p>Sharples说道“任何短时间运行的，无状态的，可以独立运行的任务都适用于Serverless”。</p>
+<p>Sharples说道 “通过客户，我们发现技术的技术成熟度曲线（ The Hyper Curve）飙升的十分迅速，例如微服务，而Serverless攀升的速度更快”</p>
+<p>因为微服务的增量交付，灵活，快速交付的特点，微服务受到越来越多企业的欢迎，Sharples说道“但是在我看来，这些使用者在疲于应对分布式系统管理和监控的运维复杂性，这也是为什么Serverless会引起他们的兴趣，通过Serverless，你可以获得微服务的好处，从开发人员角度来看，这也非常简单——仅仅只用修改一些代码。在运维人员看来，Serverless是一种非常适合建立自动化运维系统的模型，例如将回复一个日志事件实现成Serverless方法调用将会非常方便“。Sharples说道从他与企业级用户的日常对话中，可以感受到他们对Serverless的兴趣。</p>
+<p>Sharples说道 “<strong>任何短时间运行的，无状态的，可以独立运行的任务都适用于Serverless</strong>”。</p>
 <p>开源软件API Gateway Kong的高级解决方案工程师Aaron Miler说道，大部分开始设计Serverless架构的客户基本都采用了自下而上，或者自上而下的方案。使用自下而上方案的客户已经将他们的传统架构转换成微服务架构，并且正在寻找一种方案可以让他们在整个企业以不同方式使用Kong。他们倾向于选择开源技术公司的企业级方案，并且希望通过发掘Serverless方向的工作机会来进入一个新的领域。</p>
 <p>Miller说道：“在Kong，的确有一些优秀的Serverless项目引起了那些想要快速跟进新技术的CTO的关注。Expedia的Serverless项目就采用了Kong的技术，Expedia是Serverless的深度用户，这家公司在他们所有日常的API网关都使用了Kong，因为Kong提供了AWS Lamda插件，通过插件，Expedia可以很方便的使用AWS Lamda，例如，每当用户在Expedia上订了一间房或是一张机票时，Expedia都会为客户提供一个可以用于下次消费的折扣券。Serverless技术非常适用于这种场景。”</p>
 <p>Miller谈到，虽然减少成本是Serverless的一大优势，但是它更大的优势在于加快了开发速度。“如果团队只用专注于写代码，只用关心函数功能的质量，不用担心这些代码是在Linux哪个版本上运行，这些问题将由别人解决，而团队只用关心如何用Node、Python或是其他Serverless语言写代码，这样一来，每个人都从中收益。它可以让人更加专注于自己的事情同时交付更多的功能。”</p>
@@ -200,6 +200,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/news/2018/08/06/What-to-Know-Before-Making-the-Leap/" title="What to Know Before Making the Leap">
+  <strong>上一篇：</strong><br/>
+  <span>
+  What to Know Before Making the Leap</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/news/2018/08/06/What-is-the-essence-of-Serverless/"  title="Serverless的本质是什么？">
@@ -272,7 +280,7 @@
 		  
 		
 		  
-			<li><a href="/categories/serverless/" title="serverless">serverless<sup>2</sup></a></li>
+			<li><a href="/categories/serverless/" title="serverless">serverless<sup>3</sup></a></li>
 		  
 		
 		  
@@ -305,19 +313,7 @@
 			
 		
 			
-				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
 			
 		
 			
@@ -325,11 +321,7 @@
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
+				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
@@ -341,15 +333,27 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
+				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -361,9 +365,11 @@
 			
 		
 			
-				<li><a href="/tags/Kubernetes/" title="Kubernetes">Kubernetes<sup>1</sup></a></li>
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/Kubernetes/" title="Kubernetes">Kubernetes<sup>1</sup></a></li>
 			
 		
 		</ul>

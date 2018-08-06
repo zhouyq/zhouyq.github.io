@@ -79,6 +79,79 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt" itemprop="url">Ubuntu 安装salt</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-20T09:10:26.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
+    
+  </p>
+</header>
+
+    <div class="article-content">
+        
+        <h1 id="添加仓库"><a href="#添加仓库" class="headerlink" title="添加仓库"></a>添加仓库</h1><p>最新的salt包会发布在 Ubuntu saltstack PPA。如果你的系统中有<code>add-apt-repository</code> 工具，可以通过一条命令添加仓库并导入PPA key：</p>
+<h2 id="通过add-apt-repository添加仓库及PPA-key"><a href="#通过add-apt-repository添加仓库及PPA-key" class="headerlink" title="通过add-apt-repository添加仓库及PPA key"></a>通过add-apt-repository添加仓库及PPA key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">add-apt-repository ppa:saltstack/salt</span><br><span class="line"></span><br><span class="line"> Salt, the remote execution and configuration management tool.</span><br><span class="line"> More info: https://launchpad.net/~saltstack/+archive/ubuntu/salt</span><br><span class="line">Press [ENTER] to <span class="built_in">continue</span> or ctrl-c to cancel adding it</span><br><span class="line"></span><br><span class="line">gpg: keyring `/tmp/tmpys0ah_nb/secring.gpg<span class="string">' created</span></span><br><span class="line"><span class="string">gpg: keyring `/tmp/tmpys0ah_nb/pubring.gpg'</span> created</span><br><span class="line">gpg: requesting key 0E27C0A6 from hkp server keyserver.ubuntu.com</span><br><span class="line">gpg: /tmp/tmpys0ah_nb/trustdb.gpg: trustdb created</span><br><span class="line">gpg: key 0E27C0A6: public key <span class="string">"Launchpad PPA for Salt Stack"</span> imported</span><br><span class="line">gpg: Total number processed: 1</span><br><span class="line">gpg:               imported: 1  (RSA: 1)</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果没有找到add-apt-repository命令可以执行下面的命令进行安装</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install python-software-properties</span><br></pre></td></tr></table></figure>
+<p>可能也需要安装下面的包</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install software-properties-common</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="手动添加仓库及PPA-key"><a href="#手动添加仓库及PPA-key" class="headerlink" title="手动添加仓库及PPA  key"></a>手动添加仓库及PPA  key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> deb http://ppa.launchpad.net/saltstack/salt/ubuntu `lsb_release -sc` main | sudo tee /etc/apt/sources.list.d/saltstack.list</span><br><span class="line">wget -q -O- <span class="string">"http://keyserver.ubuntu.com:11371/pks/lookup?op=get&amp;search=0x4759FA960E27C0A6"</span> |apt-key add -</span><br></pre></td></tr></table></figure>
+<h2 id="更新仓库元数据"><a href="#更新仓库元数据" class="headerlink" title="更新仓库元数据"></a>更新仓库元数据</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<h1 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-master salt-minion salt-syndic</span><br></pre></td></tr></table></figure>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-minion</span><br></pre></td></tr></table></figure>
+<h1 id="ZEROMQ-4"><a href="#ZEROMQ-4" class="headerlink" title="ZEROMQ 4"></a>ZEROMQ 4</h1><p>ZeroMQ 4 在 Ubuntu 14.04 以上版本已经与系统集成。因此Ubuntu 12.04 LTS 之前的版本需要升级到ZEROMQ 4</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="../../categories/运维自动化/">运维自动化</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/salt/">salt</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/news/2015/08/20/iptables-save/" title="保存iptable规则并开机自动加载" itemprop="url">保存iptable规则并开机自动加载</a>
   </h1>
   <p class="article-author">By
@@ -666,7 +739,7 @@
 		  
 		
 		  
-			<li><a href="/categories/serverless/" title="serverless">serverless<sup>2</sup></a></li>
+			<li><a href="/categories/serverless/" title="serverless">serverless<sup>3</sup></a></li>
 		  
 		
 		  
@@ -699,19 +772,7 @@
 			
 		
 			
-				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
 			
 		
 			
@@ -719,11 +780,7 @@
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
+				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
@@ -735,15 +792,27 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
+				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -755,9 +824,11 @@
 			
 		
 			
-				<li><a href="/tags/Kubernetes/" title="Kubernetes">Kubernetes<sup>1</sup></a></li>
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/Kubernetes/" title="Kubernetes">Kubernetes<sup>1</sup></a></li>
 			
 		
 		</ul>

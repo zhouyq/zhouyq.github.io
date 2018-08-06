@@ -79,6 +79,89 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/news/2018/08/06/What-to-Know-Before-Making-the-Leap/" title="What to Know Before Making the Leap" itemprop="url">What to Know Before Making the Leap</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-06T06:48:53.000Z" itemprop="datePublished"> 发表于 2018-08-06</time>
+    
+  </p>
+</header>
+
+    <div class="article-content">
+        
+        <p><img src="3337e40d-organic-1280537_640.jpg" alt=""></p>
+<p>这篇文章是Serverless系列的第三篇文章，这一系列文章是为了探索Serverless的本质。</p>
+<p>第一篇：<a href="https://salogs.com/news/2018/08/06/What-is-the-essence-of-Serverless/">Serverless的本质是什么？</a></p>
+<p>第二篇：<a href="https://salogs.com/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/">Serverless 对商业、流程及文化的影响</a></p>
+<p>Serverless技术承诺说可以消除IT运维相关的大部分繁重工作，第三方服务商会承担起更多服务器维护相关的管理工作，而不像企业组织为容器编排和微服务平台所做的那样。使用Serverless平台可以节省资源，其中部分原因是因为Serverless允许组织通过 “按使用量付费” 的模式来使用服务器。</p>
+<p>迁移到Serverless资源有许多方法，有对的也有错的。在迁移之前，请记住以下几点。</p>
+<h2 id="不要被Serverless这个词迷惑"><a href="#不要被Serverless这个词迷惑" class="headerlink" title="不要被Serverless这个词迷惑"></a>不要被Serverless这个词迷惑</h2><p>DevOps的团队成员可能已经听说过Serverless，并希望知道迁移后这个平台可能为他们的组织提供哪些功能，但他们可能一开始就会对Serverless这个词产生疑惑，Serverless意思是无服务器的。但实际上，”Serverless” 应用程序仍在服务器上运行。</p>
+<p>“Serverless” 这个词的使用可以追溯到至少2012年，当时Ken Fromm在一篇ReadWrite论文 “<a href="https://readwrite.com/2012/10/15/why-the-future-of-software-and-apps-is-serverless/" target="_blank" rel="noopener">为什么软件和应用程序的未来是无服务器</a>” 中使用了这个术语。一个更精确，合适的定义出现在2016年一篇开创性的博客文章中，由Symphonia的合作伙伴兼联合创始人Mike Roberts在Martin Fowler的网站上提出。他写到Serverless架构是 “<strong>将第三方 <code>后端即服务</code>（BaaS，Backend as a Service）服务，和包含自定义的服务代码的容器整合在一起的应用，并将应用运行在 ‘功能即服务（Function as a Service，FaaS）’平台上。</strong>”</p>
+<p>Roberts写道：“通过整合实践这些想法以及相关的类似于单页面应用程序（SPA）的想法，这种架构消除了传统的对永远在线服务器组件的大部分需求。Serverless架构帮助企业降低运营成本，复杂性和工程准备时间，但代价是增加了对供应商的依赖和相对不成熟的支持服务的依赖。”</p>
+<p>以上定义概括了许多供应商提供的Serverless产品，包括亚马逊网络服务（AWS）的<a href="https://aws.amazon.com/lambda/" target="_blank" rel="noopener">Lambda</a>，它被广泛使用并提供BaaS（Backend as a Service）和FaaS（Function as a Service）服务。其他Serverless产品包括 <a href="https://cloud.google.com/functions/" target="_blank" rel="noopener">Cloud Functions</a>（Google），<a href="https://www.iron.io/platform/ironworker/" target="_blank" rel="noopener">IronWorker</a>（Iron.io），Manta Functions（Joyent），<a href="https://new-console.ng.bluemix.net/openwhisk/" target="_blank" rel="noopener">OpenWhisk</a>（IBM），<a href="https://www.pubnub.com/" target="_blank" rel="noopener">PubNub BLOCKS</a>（PubNub）以及<a href="https://github.com/bfirsh/serverless-docker" target="_blank" rel="noopener">Serverless Docker</a>（Docker）。</p>
+<h2 id="了解Serverless的优缺点"><a href="#了解Serverless的优缺点" class="headerlink" title="了解Serverless的优缺点"></a>了解Serverless的优缺点</h2><p>Serverless的优点在于它能够通过将服务器和相关的基础架构管理任务外包给第三方来帮助公司节省资源。例如，开发人员团队只需要开发应用程序，而Serverless提供商则在异地服务器上完成所有数据维护工作。</p>
+<p>Cloud Academy的产品营销经理Albert Qian表示： “Serverless的易用性可以提高开发人员的效率，Serverless计算使开发人员不用接触基础设施，他们可以完全只专注开发单一功能”。</p>
+<p>Serverless供应商允许组织根据他们的需求进行扩展或缩小，不再担心冗余的服务器容量。 </p>
+<p>“Serverless架构让云服务供应商管理服务器以及服务器的扩展以满足需求。将Serverless视为平台即服务（PaaS）的抽象，您需要做的就是上传代码，当您需要向上或向下扩展某个功能时，您只需扩展这个单一功能，”Qian说。 “因此，您无需扩展整个系统，容器或应用程序。另一个好处是无服务器具有内置的容错能力和设计的的高可用性。”</p>
+<p>因此，企业可以通过依赖第三方执行操作和数据管理任务来节省资金。 “Serverless的最大优势之一是它可以降低成本。使用FaaS作为您的计算层，您只需为正在运行的功能付费，”Qian说。 “尤其是对于利用率较低的工作负载，您会节省很多支出。因为您只需支付处理请求所需的计算资源，而不是为等待请求进入的空闲服务器付费。”</p>
+<p>但是，通过将服务器管理移交给第三方，您的组织也失去了对服务器的大部分控制权， 这一点在您确定是否以及何时迁移到Serverless时是需要慎重考虑的。</p>
+<p>“由于Serverless解决了资源管理问题，它正在迅速发展。对于不想维护服务器的小公司来说，这是完美的解决方案，”Raygun的高级开发人员Jeremy Scott说。 “您可以在几乎完全不用关心运维问题的前提下将工作完成，并且比使用自己搭建的服务器架构更便宜。但是Serverless也有其局限性，当你交出责任时，你同时也交出控制权和访问权，这样一来，对你的服务的监控和分析会变得非常困难。”</p>
+<p>通过这种方式，对在Serverless平台上运行的微服务和容器进行分析可能成为一个问题。 “你必须了解你的软件，否则就有可能在没有数据支持的情况下做出商业决策，”Scott说。 “因此，如果您使用Serverless，那么在某些情况下您可能需要在客户端（例如App或者浏览器）添加监控，或者您可以尝试为Serverless Function添加异常处理。”</p>
+<p>虽然具有挑战性，但将分析软件应用于Serverless部署仍然是可行的。如果为Serverless Function添加了异常处理，可以将Function包装在try-catch中然后发送https API请求，那么错误信息就会被记录在错误报告客户端（例如：Raygun[2]）。然而，如果是基于API的服务，将无法被监控，另一种解决办法就是观察API的行为方式”，Scott说。</p>
+<p>在决定哪些功能可以移植到Serverless架构时，需要考虑到Serverless部署的缺点——不太强大的计算性能。 “Serverless Function有很多限制。任何需要超过3GB内存的功能都必须重新设计否则无法运行，”Cloud Academy的Qian说。 “要确保团队了解这些限制，并确保他们有足够的知识，经验和培训，来决定适合特定工作负载的最佳技术，这一点非常重要。Serverless或任何新技术的‘酷’因素在架构方面有时会笼罩批判性思维，结果可能导致的松散的Function的组合，而不是整体一致的应用程序。”</p>
+<h2 id="安全清单"><a href="#安全清单" class="headerlink" title="安全清单"></a>安全清单</h2><p>就像监控和分析一样，在Serverless架构上保护你的数据也十分困难。毕竟服务器的管理和控制都被转移给了第三方。</p>
+<p>“例如，Serverless运行时环境不是标准化的，并且被运行的云服务隐藏起来，这使得我们更难以保护云上的数据”，Aqua Security营销副总裁Rani Osnat表示。“对于无服务器，我觉得有几个关键的安全问题，”Osnat说。在进行迁移时，某些安全检查尤其重要。 例如，如果在Serverless Functions中使用了潜在的易被攻击的代码，那么需要在使用之前解决这个问题”，同时对于那些违反政策的FaaS Functions， 我们必须使用强制控制来阻止这些功能的部署。</p>
+<p>Osnat说道：“尽管Serverless架构如此具有挑战性，企业组织们仍需要确保他们的Serverless平台在运行时会被监控，以便监测异常。”</p>
+<p>Cloud Academy的Qian表示，当迁移到无服务器时，同时也会面对多用户的挑战。 “即使客户的工作负载在虚拟机或容器中是被隔离的，也可能存在安全问题，特别是如果应用程序使用敏感数据。 一个客户代码中的潜在的bug可能会影响另一个应用程序的性能，从而影响客户服务和应用程序的质量。”</p>
+<blockquote>
+<p>译者：Grace Linktime Cloud公司全栈工程师</p>
+<p>原文链接：<a href="https://thenewstack.io/serverless-migration-strategies-what-to-know-before-making-the-leap/" target="_blank" rel="noopener">https://thenewstack.io/serverless-migration-strategies-what-to-know-before-making-the-leap/</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="categories/serverless/">serverless</a>
+</div>
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/" title="Serverless 对商业、流程及文化的影响" itemprop="url">Serverless 对商业、流程及文化的影响</a>
   </h1>
   <p class="article-author">By
@@ -110,12 +193,12 @@
 <p>目前只有一些创业公司会在全面使用Serverless，大部分的企业只会在一些特定的项目中采用Serverless技术来测试基础架构的方案，以及测试团队文化是否适合实施Serverless。</p>
 <p>尽管Serverless技术只被用于一些独立的项目上进行测试，它们仍引起了多米诺骨牌效应，以一种意想不到的方式影响了公司业务。Serverless缩短了生产时间，引入了cost-for-usage（根据使用量付费）模型并鼓励团队成员更加自主。这些改变影响了企业的运作方式，包括如何选择需要在Serverless上运行的功能，企业研发新产品新功能的意愿，以及如何管理预算，程序员与产品经理如何履行职责等等。</p>
 <h2 id="Serverless和微服务"><a href="#Serverless和微服务" class="headerlink" title="Serverless和微服务"></a>Serverless和微服务</h2><p>O’Reilly系列的Microservices Architecture（微服务架构）书中提到 “微服务架构使Serverless更加快速，微服务使一个单体应用代码被拆分成小型的自治服务。因此，企业可以大规模的快速安全的构建解决方案”。</p>
-<p>今年年初的<a href="https://blog.algorithmia.com/introduction-to-serverless-microservices/" target="_blank" rel="noopener">一篇博客中</a>，机器学习平台Algorithmia的Mike Anderson演示了一个典型的高科技公司通过微服务将标准发布周期从65天缩短至16天。他写道“微服务帮助他们解耦了开发流程中的阻塞部分，缕清以及隔离了问题，使他们只关注组件级别的变化。”</p>
+<p>今年年初的<a href="https://blog.algorithmia.com/introduction-to-serverless-microservices/" target="_blank" rel="noopener">一篇博客中</a>，机器学习平台Algorithmia的Mike Anderson演示了一个典型的高科技公司通过微服务将标准发布周期从65天缩短至16天。他写道“<strong>微服务帮助他们解耦了开发流程中的阻塞部分，缕清以及隔离了问题，使他们只关注组件级别的变化。</strong>”</p>
 <p>当一个组织的代码是以微服务而不是单体应用的形式组织的时候，才可能使用Serverless技术。现在，企业可以识别出适合在Serverless架构运行的任务，这些任务是一些特定的，无状态的任务。云平台会通过分配计算资源来解决问题，运行服务器来做计算，在数据转换完成后将这些操作任务关闭。</p>
 <p>Red Hat产品管理部门的高级主管Rich Sharples 说道，该公司在过去两三年一直关注Serverless技术并且正在开发一个开源的，企业级别的Serverless产品，这个产品可以与Kubernetes一起使用。Red Hat希望今年能够发布整个产品。</p>
-<p>Sharples说道“通过客户，我们发现技术的技术成熟度曲线（ The Hyper Curve）飙升的十分迅速，例如微服务，而Serverless攀升的速度更快”</p>
-<p>因为微服务的增量交付，灵活，快速交付的特点，微服务收到越来越多企业的欢迎，Sharples说道“但是在我看来，这些使用者在疲于应对分布式系统管理和监控的运维复杂性，这也是为什么Serverless会引起他们的兴趣，通过Serverless，你可以获得微服务的好处，从开发人员角度来看，这也非常简单——仅仅只用修改一些代码。在运维人员看来，Serverless是一种非常适合建立自动化运维系统的模型，例如将回复一个日志事件实现成Serverless方法调用将会非常方便“。Sharples说道从他与企业级用户的日常对话中，可以感受到他们对Serverless的兴趣。</p>
-<p>Sharples说道“任何短时间运行的，无状态的，可以独立运行的任务都适用于Serverless”。</p>
+<p>Sharples说道 “通过客户，我们发现技术的技术成熟度曲线（ The Hyper Curve）飙升的十分迅速，例如微服务，而Serverless攀升的速度更快”</p>
+<p>因为微服务的增量交付，灵活，快速交付的特点，微服务受到越来越多企业的欢迎，Sharples说道“但是在我看来，这些使用者在疲于应对分布式系统管理和监控的运维复杂性，这也是为什么Serverless会引起他们的兴趣，通过Serverless，你可以获得微服务的好处，从开发人员角度来看，这也非常简单——仅仅只用修改一些代码。在运维人员看来，Serverless是一种非常适合建立自动化运维系统的模型，例如将回复一个日志事件实现成Serverless方法调用将会非常方便“。Sharples说道从他与企业级用户的日常对话中，可以感受到他们对Serverless的兴趣。</p>
+<p>Sharples说道 “<strong>任何短时间运行的，无状态的，可以独立运行的任务都适用于Serverless</strong>”。</p>
 <p>开源软件API Gateway Kong的高级解决方案工程师Aaron Miler说道，大部分开始设计Serverless架构的客户基本都采用了自下而上，或者自上而下的方案。使用自下而上方案的客户已经将他们的传统架构转换成微服务架构，并且正在寻找一种方案可以让他们在整个企业以不同方式使用Kong。他们倾向于选择开源技术公司的企业级方案，并且希望通过发掘Serverless方向的工作机会来进入一个新的领域。</p>
 <p>Miller说道：“在Kong，的确有一些优秀的Serverless项目引起了那些想要快速跟进新技术的CTO的关注。Expedia的Serverless项目就采用了Kong的技术，Expedia是Serverless的深度用户，这家公司在他们所有日常的API网关都使用了Kong，因为Kong提供了AWS Lamda插件，通过插件，Expedia可以很方便的使用AWS Lamda，例如，每当用户在Expedia上订了一间房或是一张机票时，Expedia都会为客户提供一个可以用于下次消费的折扣券。Serverless技术非常适用于这种场景。”</p>
 <p>Miller谈到，虽然减少成本是Serverless的一大优势，但是它更大的优势在于加快了开发速度。“如果团队只用专注于写代码，只用关心函数功能的质量，不用担心这些代码是在Linux哪个版本上运行，这些问题将由别人解决，而团队只用关心如何用Node、Python或是其他Serverless语言写代码，这样一来，每个人都从中收益。它可以让人更加专注于自己的事情同时交付更多的功能。”</p>
@@ -914,79 +997,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/news/2015/08/20/ubuntu-install-salt/" title="Ubuntu 安装salt" itemprop="url">Ubuntu 安装salt</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-20T09:10:26.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
-    
-  </p>
-</header>
-
-    <div class="article-content">
-        
-        <h1 id="添加仓库"><a href="#添加仓库" class="headerlink" title="添加仓库"></a>添加仓库</h1><p>最新的salt包会发布在 Ubuntu saltstack PPA。如果你的系统中有<code>add-apt-repository</code> 工具，可以通过一条命令添加仓库并导入PPA key：</p>
-<h2 id="通过add-apt-repository添加仓库及PPA-key"><a href="#通过add-apt-repository添加仓库及PPA-key" class="headerlink" title="通过add-apt-repository添加仓库及PPA key"></a>通过add-apt-repository添加仓库及PPA key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">add-apt-repository ppa:saltstack/salt</span><br><span class="line"></span><br><span class="line"> Salt, the remote execution and configuration management tool.</span><br><span class="line"> More info: https://launchpad.net/~saltstack/+archive/ubuntu/salt</span><br><span class="line">Press [ENTER] to <span class="built_in">continue</span> or ctrl-c to cancel adding it</span><br><span class="line"></span><br><span class="line">gpg: keyring `/tmp/tmpys0ah_nb/secring.gpg<span class="string">' created</span></span><br><span class="line"><span class="string">gpg: keyring `/tmp/tmpys0ah_nb/pubring.gpg'</span> created</span><br><span class="line">gpg: requesting key 0E27C0A6 from hkp server keyserver.ubuntu.com</span><br><span class="line">gpg: /tmp/tmpys0ah_nb/trustdb.gpg: trustdb created</span><br><span class="line">gpg: key 0E27C0A6: public key <span class="string">"Launchpad PPA for Salt Stack"</span> imported</span><br><span class="line">gpg: Total number processed: 1</span><br><span class="line">gpg:               imported: 1  (RSA: 1)</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>如果没有找到add-apt-repository命令可以执行下面的命令进行安装</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install python-software-properties</span><br></pre></td></tr></table></figure>
-<p>可能也需要安装下面的包</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install software-properties-common</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="手动添加仓库及PPA-key"><a href="#手动添加仓库及PPA-key" class="headerlink" title="手动添加仓库及PPA  key"></a>手动添加仓库及PPA  key</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> deb http://ppa.launchpad.net/saltstack/salt/ubuntu `lsb_release -sc` main | sudo tee /etc/apt/sources.list.d/saltstack.list</span><br><span class="line">wget -q -O- <span class="string">"http://keyserver.ubuntu.com:11371/pks/lookup?op=get&amp;search=0x4759FA960E27C0A6"</span> |apt-key add -</span><br></pre></td></tr></table></figure>
-<h2 id="更新仓库元数据"><a href="#更新仓库元数据" class="headerlink" title="更新仓库元数据"></a>更新仓库元数据</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-<h1 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-master salt-minion salt-syndic</span><br></pre></td></tr></table></figure>
-<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install salt-minion</span><br></pre></td></tr></table></figure>
-<h1 id="ZEROMQ-4"><a href="#ZEROMQ-4" class="headerlink" title="ZEROMQ 4"></a>ZEROMQ 4</h1><p>ZeroMQ 4 在 Ubuntu 14.04 以上版本已经与系统集成。因此Ubuntu 12.04 LTS 之前的版本需要升级到ZEROMQ 4</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="categories/运维自动化/">运维自动化</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/salt/">salt</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/">Next<span></span></a>
@@ -1042,7 +1052,7 @@
 		  
 		
 		  
-			<li><a href="/categories/serverless/" title="serverless">serverless<sup>2</sup></a></li>
+			<li><a href="/categories/serverless/" title="serverless">serverless<sup>3</sup></a></li>
 		  
 		
 		  
@@ -1075,19 +1085,7 @@
 			
 		
 			
-				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
 			
 		
 			
@@ -1095,11 +1093,7 @@
 			
 		
 			
-				<li><a href="/tags/Go/" title="Go">Go<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
+				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
@@ -1111,15 +1105,27 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
+				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/其他/" title="其他">其他<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
@@ -1131,9 +1137,11 @@
 			
 		
 			
-				<li><a href="/tags/Kubernetes/" title="Kubernetes">Kubernetes<sup>1</sup></a></li>
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/Kubernetes/" title="Kubernetes">Kubernetes<sup>1</sup></a></li>
 			
 		
 		</ul>
