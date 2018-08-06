@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://salogs.com/css/custom.css</loc>
+    
+    <lastmod>2018-08-06T04:01:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://salogs.com/news/2018/08/06/What-is-the-essence-of-Serverless/</loc>
     
     <lastmod>2018-08-06T03:29:32.000Z</lastmod>
