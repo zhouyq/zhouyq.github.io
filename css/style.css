@@ -91,7 +91,7 @@ a img {
 }
 /* custom Font*/
 @font-face {
-  font-family: "covered_by_your_graceregular";
+  font-family: "San Francisco", "Lucida Grande", "Lucida Sans Unicode", "helvetica neue", Verdana, tahoma, Aril, PingFangSC-Light, "hiragino sans gb", STXihei, "华文细黑", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", "微软雅黑", Heiti, "黑体", sans-serif;
   font-weight: normal;
   font-style: normal;
   src: url("../font/coveredbyyourgrace-webfont.eot");
@@ -106,7 +106,7 @@ a img {
   src: url("../font/fontawesome-webfont.eot?#iefix&v=#4.0.3") format("embedded-opentype"), url("../font/fontawesome-webfont.woff?v=#4.0.3") format("woff"), url("../font/fontawesome-webfont.ttf?v=#4.0.3") format("truetype"), url("../font/fontawesome-webfont.svg#fontawesomeregular?v=#4.0.3") format("svg");
 }
 @font-face {
-  font-family: "fontdiao";
+  font-family: "San Francisco", "Lucida Grande", "Lucida Sans Unicode", "helvetica neue", Verdana, tahoma, Aril, PingFangSC-Light, "hiragino sans gb", STXihei, "华文细黑", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", "微软雅黑", Heiti, "黑体", sans-serif;
   font-weight: normal;
   font-style: normal;
   src: url("../font/fontdiao.eot");
