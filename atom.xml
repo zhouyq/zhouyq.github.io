@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://salogs.com/"/>
-  <updated>2018-08-06T04:38:21.000Z</updated>
+  <updated>2018-08-06T06:34:08.000Z</updated>
   <id>https://salogs.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://salogs.com/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/"/>
     <id>https://salogs.com/news/2018/08/06/Serverless-Impacts-on-Business-Process-and-Culture/</id>
     <published>2018-08-06T04:27:38.000Z</published>
-    <updated>2018-08-06T04:38:21.000Z</updated>
+    <updated>2018-08-06T06:34:08.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="7525865c-chu-tai-121706-unsplash.jpg" alt=""></p>
 <p>这篇文章是Serverless系列的第二篇文章，这一系列文章是为了探索Serverless的本质。</p>
@@ -30,8 +30,8 @@
 <p><img src="c8535704-twitterreach-serverless-300x220.png" alt=""></p>
 <ul>
 <li>ServerlessConf以及ServerlssDays这两个活动的参与人和演讲人数量和范围一直在增长扩大。</li>
-<li>Developer Economics最新的季度调查[1]表明，19%的后台人员正在使用Serverless平台，这个数据已经接近于使用虚拟机的人数了。而在6个月前，这个数字还只是16%。</li>
-<li>Cloudability的2018年度云状态报告（State of the Cloud 2018 Report[2]）中分析了1500个组织的IT支出，结果显示Serverless的环比增长率为 667%。</li>
+<li><a href="https://www.developereconomics.com/reports/developer-economics-state-of-the-developer-nation-14th-edition" target="_blank" rel="noopener">Developer Economics最新的季度调查表明</a>，19%的后台人员正在使用Serverless平台，这个数据已经接近于使用虚拟机的人数了。而在6个月前，这个数字还只是16%。</li>
+<li><a href="http://get.cloudability.com/ebook-state-of-cloud-2018-thank-you.html?aliId=3136040" target="_blank" rel="noopener">Cloudability的2018年度云状态报告</a>中分析了1500个组织的IT支出，结果显示Serverless的环比增长率为 667%。</li>
 <li>TweetReach 估计每小时都有100条左右的推文被标记成serverless</li>
 <li>谷歌搜索显示serverless的搜索量在最近12月内稳步增长。</li>
 </ul>
@@ -39,7 +39,7 @@
 <p>目前只有一些创业公司会在全面使用Serverless，大部分的企业只会在一些特定的项目中采用Serverless技术来测试基础架构的方案，以及测试团队文化是否适合实施Serverless。</p>
 <p>尽管Serverless技术只被用于一些独立的项目上进行测试，它们仍引起了多米诺骨牌效应，以一种意想不到的方式影响了公司业务。Serverless缩短了生产时间，引入了cost-for-usage（根据使用量付费）模型并鼓励团队成员更加自主。这些改变影响了企业的运作方式，包括如何选择需要在Serverless上运行的功能，企业研发新产品新功能的意愿，以及如何管理预算，程序员与产品经理如何履行职责等等。</p>
 <h2 id="Serverless和微服务"><a href="#Serverless和微服务" class="headerlink" title="Serverless和微服务"></a>Serverless和微服务</h2><p>O’Reilly系列的Microservices Architecture（微服务架构）书中提到 “微服务架构使Serverless更加快速，微服务使一个单体应用代码被拆分成小型的自治服务。因此，企业可以大规模的快速安全的构建解决方案”。</p>
-<p>今年年初的一篇博客中[3]，机器学习平台Algorithmia的Mike Anderson演示了一个典型的高科技公司通过微服务将标准发布周期从65天缩短至16天。他写道“微服务帮助他们解耦了开发流程中的阻塞部分，缕清以及隔离了问题，使他们只关注组件级别的变化。”</p>
+<p>今年年初的<a href="https://blog.algorithmia.com/introduction-to-serverless-microservices/" target="_blank" rel="noopener">一篇博客中</a>，机器学习平台Algorithmia的Mike Anderson演示了一个典型的高科技公司通过微服务将标准发布周期从65天缩短至16天。他写道“微服务帮助他们解耦了开发流程中的阻塞部分，缕清以及隔离了问题，使他们只关注组件级别的变化。”</p>
 <p>当一个组织的代码是以微服务而不是单体应用的形式组织的时候，才可能使用Serverless技术。现在，企业可以识别出适合在Serverless架构运行的任务，这些任务是一些特定的，无状态的任务。云平台会通过分配计算资源来解决问题，运行服务器来做计算，在数据转换完成后将这些操作任务关闭。</p>
 <p>Red Hat产品管理部门的高级主管Rich Sharples 说道，该公司在过去两三年一直关注Serverless技术并且正在开发一个开源的，企业级别的Serverless产品，这个产品可以与Kubernetes一起使用。Red Hat希望今年能够发布整个产品。</p>
 <p>Sharples说道“通过客户，我们发现技术的技术成熟度曲线（ The Hyper Curve）飙升的十分迅速，例如微服务，而Serverless攀升的速度更快”</p>
@@ -48,7 +48,7 @@
 <p>开源软件API Gateway Kong的高级解决方案工程师Aaron Miler说道，大部分开始设计Serverless架构的客户基本都采用了自下而上，或者自上而下的方案。使用自下而上方案的客户已经将他们的传统架构转换成微服务架构，并且正在寻找一种方案可以让他们在整个企业以不同方式使用Kong。他们倾向于选择开源技术公司的企业级方案，并且希望通过发掘Serverless方向的工作机会来进入一个新的领域。</p>
 <p>Miller说道：“在Kong，的确有一些优秀的Serverless项目引起了那些想要快速跟进新技术的CTO的关注。Expedia的Serverless项目就采用了Kong的技术，Expedia是Serverless的深度用户，这家公司在他们所有日常的API网关都使用了Kong，因为Kong提供了AWS Lamda插件，通过插件，Expedia可以很方便的使用AWS Lamda，例如，每当用户在Expedia上订了一间房或是一张机票时，Expedia都会为客户提供一个可以用于下次消费的折扣券。Serverless技术非常适用于这种场景。”</p>
 <p>Miller谈到，虽然减少成本是Serverless的一大优势，但是它更大的优势在于加快了开发速度。“如果团队只用专注于写代码，只用关心函数功能的质量，不用担心这些代码是在Linux哪个版本上运行，这些问题将由别人解决，而团队只用关心如何用Node、Python或是其他Serverless语言写代码，这样一来，每个人都从中收益。它可以让人更加专注于自己的事情同时交付更多的功能。”</p>
-<h2 id="哪些功能应该运行在Serverless上呢？"><a href="#哪些功能应该运行在Serverless上呢？" class="headerlink" title="哪些功能应该运行在Serverless上呢？"></a>哪些功能应该运行在Serverless上呢？</h2><p>许多企业和创业公司都找一个简单的例子来测试Serverless的潜力。The New Stack会定期列举一些简单事件作为Serverless用例（ a number of the low-hanging fruit use cases for serverless[4]）。</p>
+<h2 id="哪些功能应该运行在Serverless上呢？"><a href="#哪些功能应该运行在Serverless上呢？" class="headerlink" title="哪些功能应该运行在Serverless上呢？"></a>哪些功能应该运行在Serverless上呢？</h2><p>许多企业和创业公司都找一个简单的例子来测试Serverless的潜力。The New Stack会定期列举一些简单事件作为Serverless用例（ <a href="https://thenewstack.io/serverless-architecture-five-design-patterns/" target="_blank" rel="noopener">a number of the low-hanging fruit use cases for serverless</a>）。</p>
 <ul>
 <li>调整图片大小（或是任何一个需要清理或者操作媒体文件的任务）</li>
 <li>需要清理非结构化数据或是将数据转换成某种标准格式的ETL任务</li>
@@ -84,13 +84,7 @@
 <h2 id="Serverless将会成为行业的兴奋剂"><a href="#Serverless将会成为行业的兴奋剂" class="headerlink" title="Serverless将会成为行业的兴奋剂"></a>Serverless将会成为行业的兴奋剂</h2><p>Indevelo的Beswick认为，在许多企业，IT主管和业务部门经理会对未来的发展存在分歧。 云技术已经引入了新的领域，但Serverless的出现则向前推进了更大的一步。</p>
 <p>“我从未像现在这样对一项技术感到如此兴奋，”Beswick说道，Faulkner，Surgnier，Miller和Sharples都表达了同样的观点。 “Serverless使所有事物汇集于一处，”Beswick继续说道。 “Serverless能交付的远超想象， 以后可以将它添加到机器学习，也可以被应用于移动方向。 你需要以一种全新的思维方式去思考，而不是继续维持老旧的思想，这才是Serverless令人兴奋的地方。 我们可以更好地去询问客户的问题，以及如何让每个人更容易解决这些问题。”</p>
 <blockquote>
-<p>译者：Grace Linktime Cloud公司全栈工程师<br>原文链接：<a href="https://thenewstack.io/serverless-impacts-on-business-process-and-culture/" target="_blank" rel="noopener">https://thenewstack.io/serverless-impacts-on-business-process-and-culture/</a><br>相关链接：</p>
-<ol>
-<li><a href="https://www.developereconomics.com/reports/developer-economics-state-of-the-developer-nation-14th-edition" target="_blank" rel="noopener">https://www.developereconomics.com/reports/developer-economics-state-of-the-developer-nation-14th-edition</a></li>
-<li><a href="http://get.cloudability.com/ebook-state-of-cloud-2018-thank-you.html?aliId=3136040" target="_blank" rel="noopener">http://get.cloudability.com/ebook-state-of-cloud-2018-thank-you.html?aliId=3136040</a></li>
-<li><a href="https://blog.algorithmia.com/introduction-to-serverless-microservices/" target="_blank" rel="noopener">https://blog.algorithmia.com/introduction-to-serverless-microservices/</a></li>
-<li><a href="https://thenewstack.io/serverless-architecture-five-design-patterns/" target="_blank" rel="noopener">https://thenewstack.io/serverless-architecture-five-design-patterns/</a></li>
-</ol>
+<p>译者：Grace Linktime Cloud公司全栈工程师<br>原文链接：<a href="https://thenewstack.io/serverless-impacts-on-business-process-and-culture/" target="_blank" rel="noopener">https://thenewstack.io/serverless-impacts-on-business-process-and-culture/</a></p>
 </blockquote>
 ]]></content>
     
@@ -112,7 +106,7 @@
     <link href="https://salogs.com/news/2018/08/06/What-is-the-essence-of-Serverless/"/>
     <id>https://salogs.com/news/2018/08/06/What-is-the-essence-of-Serverless/</id>
     <published>2018-08-06T03:08:04.000Z</published>
-    <updated>2018-08-06T03:29:32.000Z</updated>
+    <updated>2018-08-06T06:33:57.000Z</updated>
     
     <content type="html"><![CDATA[<p>Serverless直译为中文是 “无服务器”，但是实际上它仍需要服务器，只不过服务器的管理以及资源分配部分对用户不可见，为避免误导读者，译文中还是将英文保留。</p>
 <p>最开始，一台单用户的物理服务器便能满足我们的日常所需，它快速，可靠并且安全，只对管理员负责。但是在实际中配置和扩展都很麻烦。虚拟机的出现满足了灵活性和可扩展性的需求，之后云服务提供商为我们带来了基础架构即服务（IaaS），云平台自助服务也由此诞生。在这片肥沃的土壤中出现AWS（Amazon Web Services），编排，以及基础设施即代码（IaC），之后开始了集装箱化，带来了平台即服务（PaaS）的架构，一切看起来都很顺利……但程序员仍想要更多的功能，如独立于编程语言（language agnostic）的端点，服务器的水平伸缩能力，以及可以实时支付服务使用量的能力。</p>
@@ -161,8 +155,8 @@
     
     </summary>
     
+      <category term="serverless" scheme="https://salogs.com/categories/serverless/"/>
     
-      <category term="serverless" scheme="https://salogs.com/tags/serverless/"/>
     
   </entry>
   
