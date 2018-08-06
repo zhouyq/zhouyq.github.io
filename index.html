@@ -79,6 +79,99 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/news/2018/08/06/What-is-the-essence-of-Serverless/" title="What is the essence of Serverless" itemprop="url">What is the essence of Serverless</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-06T03:08:04.000Z" itemprop="datePublished"> 发表于 2018-08-06</time>
+    
+  </p>
+</header>
+
+    <div class="article-content">
+        
+        <p>Serverless直译为中文是 “无服务器”，但是实际上它仍需要服务器，只不过服务器的管理以及资源分配部分对用户不可见，为避免误导读者，译文中还是将英文保留。</p>
+<p>最开始，一台单用户的物理服务器便能满足我们的日常所需，它快速，可靠并且安全，只对管理员负责。但是在实际中配置和扩展都很麻烦。虚拟机的出现满足了灵活性和可扩展性的需求，之后云服务提供商为我们带来了基础架构即服务（IaaS），云平台自助服务也由此诞生。在这片肥沃的土壤中出现AWS（Amazon Web Services），编排，以及基础设施即代码（IaC），之后开始了集装箱化，带来了平台即服务（PaaS）的架构，一切看起来都很顺利……但程序员仍想要更多的功能，如独立于编程语言（language agnostic）的端点，服务器的水平伸缩能力，以及可以实时支付服务使用量的能力。</p>
+<p>为了满足这些需求，Serverless计算应运而生，Serverless计算也被称为功能即服务（FaaS）。运行时只会执行程序但不会存储数据。这意味着像AWS（Amazon Web Service），谷歌云以及微软Azure云这样的云服务提供商会动态的管理资源的分配和分布。</p>
+<p><strong>Serverless是付完即走</strong>，基于实际的消费而不是基于预测的预付款进行收费的。这本是基础设施应该有的样子，在2018年终于出现在我们面前。</p>
+<h2 id="这并不是魔法"><a href="#这并不是魔法" class="headerlink" title="这并不是魔法"></a>这并不是魔法</h2><p>首先，这个名字非常有误导性。 Serveless（无服务器）计算仍然需要服务器，它并不是什么神秘魔法。</p>
+<p>这个术语的出现是因为<strong>服务器的管理以及容量规划都被隐藏起来了</strong>。Serverless被称作是无服务的是因为用户/程序员无需关心甚至意识到基础架构的存在——服务器被完全抽象出去了。Serveless代码可以和传统方式部署的代码一起使用，例如微服务，甚至一个应用程序可以完全不需要配置服务器，只需要以无服务器的方式编写即可。</p>
+<p><strong>Serveless 真正的价值不在于节省了成本，而在于节省了时间</strong>。</p>
+<p>Bitnami的现任云技术高级总监Sebastien Goasguen说到 “我会把Serverles 想像成一个具有微型PaaS的像胶水一样的软件，它最大的优点就是可以从云中发生的事件中调用函数（即胶水）“，Goasguen描述了一个场景，例如，将图像放在AWS（Amazon Web Service）的storage bucket中存储，然后调用函数来调整该图像的大小。Serverless系统会获取这段代码并且自动注入到运行时环境（服务器或者容器），之后将这个函数暴露出来以便调用。</p>
+<h2 id="那么，讲完了什么是Serverless，然后呢？"><a href="#那么，讲完了什么是Serverless，然后呢？" class="headerlink" title="那么，讲完了什么是Serverless，然后呢？"></a>那么，讲完了什么是Serverless，然后呢？</h2><p><strong>传统云计算和Serverless云计算最主要的区别在于客户是否需要为未被使用或者未被充分使用的资源支付费用。</strong>以前，无论是内部数据中心还是云上，我们都需要提前预测容量和资源需求，并且提前准备好。在之前的例子中，这意味着我们提前启动AWS服务器以便随时执行这项调整镜像大小的服务。而在Serverless配置中，你只需要调整代码执行的时机，即只在函数被调用时候执行。</p>
+<p>Serverless计算服务将您的函数作为输入，执行逻辑，返回输出，之后关闭。你只需要为函数实际执行所消耗的资源付费。</p>
+<p>即用即付（Pay-as-you-play），并且只用为你实际使用的资源付费，这显然是件好事，但是Goasguen以及其他Cloud Native的专家强调Serverless真正的价值在于时间效率，而不是成本效率。</p>
+<h2 id="像时间机器一样？"><a href="#像时间机器一样？" class="headerlink" title="像时间机器一样？"></a>像时间机器一样？</h2><p>Serverless就像一扇通往未来的门，它和其他即服务（other as-a-service）的技术一样，为公司提供了很多工具，可以让公司专注于构建使用如AI，机器学习等尖端技术的应用程序。而不是浪费时间精力在不停的构建，重建必需的基础设施。</p>
+<p>Serverless其他的时间机器功能在于缩短了从代码开发到投入生产的时间。它真正实现了“这是我的代码，现在立刻运行它”。不会因为基础设施产生延迟。</p>
+<p>Oracle公司负责Serverless业务的副总裁Chad Arimura说到“Serverless的基本思想是程序员只需要写代码然后推送到Serverless的服务就足够了，其余的事情都由这个服务来处理”。他还补充道，像数据库和数据存储这类的依赖关系也被当作服务无缝集成到Serverless底下。</p>
+<p>Arimura说到“在Serverless背后，专业的团队和自动化工作相结合，大规模的操作这些系统，以便开发人员无需考虑这些问题，这项技术看起来就像是魔法一样，这也是为什么这项技术被炒作的如此厉害，正因为它带给了我们如此美妙的体验”。</p>
+<h2 id="感受-FaaS（功能即服务）平台的强大"><a href="#感受-FaaS（功能即服务）平台的强大" class="headerlink" title="感受 FaaS（功能即服务）平台的强大"></a>感受 FaaS（功能即服务）平台的强大</h2><p>虽然Docker技术简化了分布式应用打包和依赖管理的问题。Kubernetes帮助企业在生产中运行这些应用。但是使用它们并不简单易用。Dcokerfile、基础设施细节、Kubernets manifests文件，这些即便对于程序员听众来说，也异常复杂。</p>
+<p>Serverless计算的核心就是作为一个功能即服务平台。从本质上讲亚马逊的AWS Lambda以及Google Cloud Function就是Serverless的实现。它们处理了资源管理，负载均衡以及多线程，开发人员就可以只关注他们的代码，而企业只用关心他们的目标。</p>
+<p>iguaz.io的创始人兼CTO Yaron Haviv提到，一个持续的数据平台是为提升云上的性能而设计的，将一个新的技术栈按照FaaS（功能即服务）的工作流运行一遍，步骤如下：</p>
+<ol>
+<li>Serverless平台提取了功能代码——即FaaS（功能即服务）的功能部分——以及所有依赖项（如必需的库，内存的数量，属性等等），构建成一个集装箱化的应用程序包，通常采用Docker镜像的形式。</li>
+<li>当另一个平台服务，例如对象存储或数据库想要触发这个功能，或者一个外部的http请求想要调用这个功能，Serverless平台会将这个请求转发到一个可用的功能微服务。如果当前没有可用的微服务，那么它将部署“冷启动”（cold start）一个这样的实例。</li>
+<li>Serverless平台需要负责在微服务失败的时候恢复它，自动扩展以适应需求，记录和监控功能活动，并且在代码被修改后进行实时滚动升级。专门有人来管理平台服务，这样程序员就可以专注于“功能”方面。</li>
+</ol>
+<h2 id="那么Severless的缺点是什么呢？"><a href="#那么Severless的缺点是什么呢？" class="headerlink" title="那么Severless的缺点是什么呢？"></a>那么Severless的缺点是什么呢？</h2><p>除了以上列出的优点之外，FaaS（功能即服务）也存在一些潜在的缺点。专家提到，云服务提供商通常会降低那些不经常的运行环境的资源，他们也会限制你的可用资源的总量，由此带来延迟以及低性能问题。并且由于任何云计算工作流事实上都会运行在一个公有云环境，而你无法控制或者进入这些云环境，导致监控，调试，以及安全性都无法保障。</p>
+<p>亚马逊Lambda已成称为Serverless计算的代名词，这也是大多数人可以完全理解一种Servless的模式。尽管Lambda已经开辟了Serverlss的前路，它也涵盖了所有Serverless的缺点：缓慢的冷启动（cold start），低性能，短时间存在的功能，以及一组封闭的触发器。目前普遍认为，所有的Severless平台都具有这些限制性，但事实上这些限制性可以在平台的实施中避免。值得注意的是有一些更新的Serverless平台比如 <a href="https://nuclio.io/" target="_blank" rel="noopener">Nuclio</a>，它演变出了很多更广泛的用例，这些更新的平台具有更少的限制，更高的性能，并且可以运行在多个云服务上甚至是内部环境。</p>
+<p>Haviv说道“极客们喜欢Serverless，但是企业们仍在试水——他们甚至还没有熟悉Docker/Kubernetes，Serverless就开始出现了”，就如任何新技术一样，一开始总是由一些聪敏，愿意冒险的早期受众开始试用，之后慢慢面向大众。而大众往往需要在看到这项技术是值得信赖，并且有可靠证据证明它能解决性能问题，安全问题等等问题之后才会采用这项技术。</p>
+<p>鉴于Serverlss这项技术几乎每天都在发展壮大，所以并非所有的方面都可以令人满意。虽然称不上是个缺点，但是这一点的确令整个董事会坐立不安。Haviv 指出“由于数字化转型”正影响着当代企业，创新者们以及Serverless一类的某某即服务（Other As A Service）技术正在威胁着现任者，让企业变的更加敏捷以及更加愿意承担风险。最有趣的是尽管Serverless比Docker/Kubernetes技术更新，但如果将Docker/Kubernetes的复杂性抽象出来，Serverless会更快更容易的被采用。 </p>
+<h2 id="如何知道Serverless是否适合你的公司"><a href="#如何知道Serverless是否适合你的公司" class="headerlink" title="如何知道Serverless是否适合你的公司"></a>如何知道Serverless是否适合你的公司</h2><p>这里不是讨论你的公司到底适不适合Serverless，这里只是讨论一下那些最先采用Serverless技术的公司。</p>
+<p>Oracle的Arimura说道“表面上来说，任何编写软件的公司和组织都非常适合采用Serverless”，不过，就当前的文化以及离达成全面“原生云”目标的距离而言，采用Serverless将会使这个过程变得更加艰难。换句话说，<strong>如果一个公司没有使用过任何的公有云，没有任何Docker/Kubernetes的实施经历。那么他们就不该从Serverless开始</strong>。</p>
+<p>“这是一种全新的架构，需要完全不同的思维方式，最简单的例子就是如果要把一个单体应用拆分成10个微服务，100个函数，并且每个都具有独立的部署周期以及复杂的依赖图，配合成熟健壮的CI/CD以及自动化的系统。把这些和Serverlss一起使用的时候，将会大幅提升敏捷性和创新性，但是如果仅仅只有其中一个，那么带来的损失远大于收益。”</p>
+<p>Arimura继续说道 “这就是为什么Devops（运维人员）不会变成noOps（无运维人员），因为这是一条完全错误的方向。“事实上，Serverless的出现使得DevOps比以往更重要。</p>
+<p>事实上，Bitnami的Goasguen指出，他观察到的大部分使用Serverless的公司都是以程序员为中心的组织，尤其是使用AWS Lamba服务的，这些公司原本就使用AWS并且用AWS将服务连接在一起。 Goasguen说道“所以很有可能，如果你不使用AWS，那么你便不需要Serverless，但是你始终需要保持警惕，开始评估，辨别企业中哪些事件源可以被用来建立完整的应用程序管道。</p>
+<h2 id="企业试水Serverless的最佳途径？"><a href="#企业试水Serverless的最佳途径？" class="headerlink" title="企业试水Serverless的最佳途径？"></a>企业试水Serverless的最佳途径？</h2><p>Arimura建议道“如果一个企业仍处在适应DevOps的阶段，那么它不需要一开始就将一个大型的单体应用完全拆分转换成微服务或者功能，或是为了学习一个新架构就在一个重要的新项目中使用这项技术。最好是从小处着手，例如创建一些自动化的任务，或是事件驱动的用例。”</p>
+<p>本系列Serverless的文章可以帮助您的公司开始使用这项技术。</p>
+<blockquote>
+<p>译者：Grace Linktime Cloud公司全栈工程师</p>
+<p>原文：<a href="https://thenewstack.io/serverless-101-how-to-get-serverless-started-in-the-enterprise/" target="_blank" rel="noopener">https://thenewstack.io/serverless-101-how-to-get-serverless-started-in-the-enterprise/</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/serverless/">serverless</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/news/2018/08/01/how-kubernetes-became-solution-migrating-legacy-applications/" title="Kubernetes 是如何成为传统应用迁移的终极方案的" itemprop="url">Kubernetes 是如何成为传统应用迁移的终极方案的</a>
   </h1>
   <p class="article-author">By
@@ -850,107 +943,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/news/2015/08/17/database-backup-and-recovery/" title="MySQL备份与恢复" itemprop="url">MySQL备份与恢复</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-17T06:04:14.000Z" itemprop="datePublished"> 发表于 2015-08-17</time>
-    
-  </p>
-</header>
-
-    <div class="article-content">
-        
-        <h1 id="数据库备份与恢复"><a href="#数据库备份与恢复" class="headerlink" title="数据库备份与恢复"></a>数据库备份与恢复</h1><h2 id="当前数据库结构"><a href="#当前数据库结构" class="headerlink" title="当前数据库结构"></a>当前数据库结构</h2><p>db01 （主）</p>
-<p>db02 （从）</p>
-<h2 id="备份策略"><a href="#备份策略" class="headerlink" title="备份策略"></a>备份策略</h2><ul>
-<li>每天一次全量备份</li>
-<li>每小时一次增量备份</li>
-<li>通过热备工具（不锁表，不影响线上应用）备份主库数据</li>
-<li>备份数据保存到db01，备份完成scp到db02</li>
-<li>保留一个月的增量及全量备份</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>时间</th>
-<th>备份类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>00:01</td>
-<td>全量备份</td>
-</tr>
-<tr>
-<td>01:01</td>
-<td>增量备份(当天首次)</td>
-</tr>
-<tr>
-<td>02:01~23:01</td>
-<td>增量备份</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>随着数据量的增加，全量备份可以做成每周一次，每2~8小时一次增量备份</p>
-</blockquote>
-<h2 id="备份目录"><a href="#备份目录" class="headerlink" title="备份目录"></a>备份目录</h2><p>db{01,02}:/data/backup/{full,incremental}/</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">backup/</span><br><span class="line">├── full</span><br><span class="line">│   ├── 2015-08-16       <span class="comment"># 每日全量备份</span></span><br><span class="line">│   └── 2015-08-16.log   <span class="comment"># 全量备份日志</span></span><br><span class="line">└── incremental </span><br><span class="line">    ├── 2015-08-16_14        <span class="comment"># 每小时增量备份</span></span><br><span class="line">    ├── 2015-08-16_14.log    <span class="comment"># 每小时增量备份日志</span></span><br><span class="line">    ├── 2015-08-16_15</span><br><span class="line">    ├── 2015-08-16_15.log</span><br><span class="line">    ├── 2015-08-16_16</span><br><span class="line">    ├── 2015-08-16_16.log</span><br><span class="line">    ├── 2015-08-16_17</span><br><span class="line">    ├── 2015-08-16_17.log</span><br><span class="line">    ├── 2015-08-16_18</span><br><span class="line">    ├── 2015-08-16_18.log</span><br><span class="line">    ├── 2015-08-16_19</span><br><span class="line">    └── 2015-08-16_19.log</span><br></pre></td></tr></table></figure>
-<h2 id="备份计划任务"><a href="#备份计划任务" class="headerlink" title="备份计划任务"></a>备份计划任务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Info   : 数据库备份</span></span><br><span class="line"><span class="comment"># Author : zhouyq</span></span><br><span class="line"><span class="comment"># CTime  : 2015-08-16</span></span><br><span class="line"><span class="comment"># 全量备份</span></span><br><span class="line">1 0 * * *     /bin/bash /root/bin/bakdb.sh full</span><br><span class="line"><span class="comment"># 第一次增量备份</span></span><br><span class="line">1 1 * * *     /bin/bash /root/bin/bakdb.sh incremental first</span><br><span class="line"><span class="comment"># 其他时间段增量备份</span></span><br><span class="line">1 2-23 * * *  /bin/bash /root/bin/bakdb.sh incremental</span><br></pre></td></tr></table></figure>
-<h2 id="备份脚本"><a href="#备份脚本" class="headerlink" title="备份脚本"></a>备份脚本</h2><p>/root/bin/bakdb.sh</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">fullPath=<span class="string">"/data/backup/full"</span></span><br><span class="line">incrPath=<span class="string">"/data/backup/incremental"</span></span><br><span class="line">bakdate=`date +<span class="string">'%F'</span>`</span><br><span class="line">bakhour=`date +<span class="string">'%H'</span>`</span><br><span class="line"></span><br><span class="line">oneHourAgo=`date <span class="_">-d</span> <span class="string">'1 hours ago'</span> +<span class="string">'%F_%H'</span>`</span><br><span class="line"></span><br><span class="line">BakB<span class="keyword">in</span>=<span class="string">"/usr/bin/innobackupex --no-timestamp --user=root --socket /data/db/tmp/mysql.sock  --defaults-file=/usr/local/mysql/my.cnf --sleep 100"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># backup function</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">hotbackup</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">  baktype=<span class="variable">$1</span></span><br><span class="line">  logfile=<span class="variable">$2</span></span><br><span class="line">  incrpath=<span class="variable">$3</span></span><br><span class="line">  bakpath=<span class="variable">$4</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="variable">$BakBin</span>  <span class="variable">$bakpath</span>   &gt; <span class="variable">$logfile</span> 2&gt;&amp;1</span><br><span class="line">  <span class="keyword">elif</span> [ <span class="string">"<span class="variable">$baktype</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="variable">$BakBin</span> --incremental <span class="variable">$incrpath</span> --incremental-basedir <span class="variable">$bakpath</span> &gt; <span class="variable">$logfile</span> 2&gt;&amp;1</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># ============= Main =============</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"full"</span> ];<span class="keyword">then</span></span><br><span class="line">   <span class="comment"># 全量备份</span></span><br><span class="line">   hotbackup <span class="string">"full"</span> <span class="string">"<span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>.log"</span> <span class="string">"none"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></span><br><span class="line">   /usr/bin/scp -P 9922 -rp  <span class="variable">$&#123;fullPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>* db02:<span class="variable">$&#123;fullPath&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"incremental"</span> ];<span class="keyword">then</span></span><br><span class="line">  <span class="comment"># 判断是否为第一次增量备份，只有第一次增量备份目录指向全量备份</span></span><br><span class="line">  <span class="comment"># 第二次开始增量备份的上一次目录指向第一次增量目录即可</span></span><br><span class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$2</span>"</span> == <span class="string">"first"</span> ];<span class="keyword">then</span></span><br><span class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$fullPath</span>/<span class="variable">$bakdate</span>"</span></span><br><span class="line">     /usr/bin/scp -P 9922 -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">     hotbackup <span class="string">"incremental"</span> <span class="string">"<span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>.log"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>"</span> <span class="string">"<span class="variable">$incrPath</span>/<span class="variable">$&#123;oneHourAgo&#125;</span>"</span></span><br><span class="line">     /usr/bin/scp -P 9922 -rp <span class="variable">$&#123;incrPath&#125;</span>/<span class="variable">$&#123;bakdate&#125;</span>_<span class="variable">$&#123;bakhour&#125;</span>* db02:<span class="variable">$&#123;incrPath&#125;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><h3 id="全量备份恢复"><a href="#全量备份恢复" class="headerlink" title="全量备份恢复"></a>全量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --apply-log /data/backup/full/2015-08-16</span><br><span class="line"></span><br><span class="line">innobackupex --user=root --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --move-back /data/backup/full/2015-08-16</span><br></pre></td></tr></table></figure>
-<h3 id="增量备份恢复"><a href="#增量备份恢复" class="headerlink" title="增量备份恢复"></a>增量备份恢复</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 </span><br><span class="line">  </span><br><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 --incremental-dir=/data/backup/incremental/2015-08-16_14  </span><br><span class="line">  </span><br><span class="line">innobackupex --defaults-file=/usr/<span class="built_in">local</span>/mysql/my.cnf --user=root --apply-log --redo-only /data/backup/full/2015-08-16 --incremental-dir=/data/backup/incremental/2015-08-16_15</span><br></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="categories/经验分享/">经验分享</a>►<a class="article-category-link" href="categories/经验分享/MySQL/">MySQL</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/XtraBackup/">XtraBackup</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/">Next<span></span></a>
@@ -1035,7 +1027,7 @@
 			
 		
 			
-				<li><a href="/tags/iptables/" title="iptables">iptables<sup>1</sup></a></li>
+				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
 			
 		
 			
@@ -1067,7 +1059,7 @@
 			
 		
 			
-				<li><a href="/tags/route/" title="route">route<sup>1</sup></a></li>
+				<li><a href="/tags/iptables/" title="iptables">iptables<sup>1</sup></a></li>
 			
 		
 			
@@ -1075,11 +1067,11 @@
 			
 		
 			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
+				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
 			
@@ -1088,6 +1080,10 @@
 		
 			
 				<li><a href="/tags/monitor/" title="monitor">monitor<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/serverless/" title="serverless">serverless<sup>1</sup></a></li>
 			
 		
 			
