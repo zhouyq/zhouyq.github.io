@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://salogs.com/"/>
-  <updated>2018-08-16T03:13:33.000Z</updated>
+  <updated>2018-08-16T03:16:10.000Z</updated>
   <id>https://salogs.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>useful-git-tips-commands</title>
+    <title>Git实用技巧和命令</title>
     <link href="https://salogs.com/news/2018/08/16/useful-git-tips-commands/"/>
     <id>https://salogs.com/news/2018/08/16/useful-git-tips-commands/</id>
     <published>2018-08-16T03:11:50.000Z</published>
-    <updated>2018-08-16T03:13:33.000Z</updated>
+    <updated>2018-08-16T03:16:10.000Z</updated>
     
     <content type="html"><![CDATA[<p>Git是一个非常强大的工具，它包含丰富的工具用以维护项目。本文我们将会看见一些Git日常使用过程中的实用技巧和命令。希望其中的一些内容能够对读者有所帮助。</p>
 <h2 id="Git-diff"><a href="#Git-diff" class="headerlink" title="Git diff"></a>Git diff</h2><p>通常情况下，我们会在自己的独立分支中完成需求开发，此时就会有需求将自己的分支和其他分支进行对比。这个功能可以通过</p>
