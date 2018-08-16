@@ -79,6 +79,132 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/news/2018/08/16/useful-git-tips-commands/" title="useful-git-tips-commands" itemprop="url">useful-git-tips-commands</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-16T03:11:50.000Z" itemprop="datePublished"> 发表于 2018-08-16</time>
+    
+  </p>
+</header>
+
+    <div class="article-content">
+        
+        <p>Git是一个非常强大的工具，它包含丰富的工具用以维护项目。本文我们将会看见一些Git日常使用过程中的实用技巧和命令。希望其中的一些内容能够对读者有所帮助。</p>
+<h2 id="Git-diff"><a href="#Git-diff" class="headerlink" title="Git diff"></a>Git diff</h2><p>通常情况下，我们会在自己的独立分支中完成需求开发，此时就会有需求将自己的分支和其他分支进行对比。这个功能可以通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git diff branch1 branch</span><br></pre></td></tr></table></figure>
+<p>命令来实现。</p>
+<p>如果希望对比暂存区和当前的HEAD，那么使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git diff --cached</span><br></pre></td></tr></table></figure>
+<p>命令会非常方便。普通的<code>git diff</code>命令默认对比的是没有加到索引中的文件。</p>
+<p>恢复暂存区</p>
+<p>如果已经将一些文件添加到暂存区后又后悔了，Git提供了多个命令来实现这个功能，具体需要根据当时情况而定。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git rm path/to/file --cached</span><br></pre></td></tr></table></figure>
+<p>命令将文件从暂存区索引中删除，但是仍然会将文件保留在工作目录。这比直接使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git rm file -f</span><br></pre></td></tr></table></figure>
+<p>命令完全删除文件会安全一点。</p>
+<h2 id="Git-reset"><a href="#Git-reset" class="headerlink" title="Git reset"></a>Git reset</h2><p>如果希望恢复一些已经提交的改动，我们可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git reset</span><br></pre></td></tr></table></figure>
+<p>命令。该命令有许多不同的行为，因此需要按照实际场景进行使用。</p>
+<p>如果希望的是去除所有修改，包括索引中的内容和工作目录中的修改，那么可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git reset --hard</span><br></pre></td></tr></table></figure>
+<p>如果仅仅是希望重置索引，那么可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git reset --mixed</span><br></pre></td></tr></table></figure>
+<p>命令，这也是git reset命令的默认行为。混合的重置会保留当前工作目录中的改动。最后，如果仅仅希望修改分支的HEAD，可以通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git reset --soft</span><br></pre></td></tr></table></figure>
+<p>实现。</p>
+<p>当运行git reset命令的时候，我们可以指定多个目标文件作为参数传入。当然可以通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git reset --hard COMMIT_ID</span><br></pre></td></tr></table></figure>
+<p>恢复到指定的提交版本。</p>
+<h2 id="Git-stash"><a href="#Git-stash" class="headerlink" title="Git stash"></a>Git stash</h2><p>大家应该对git stash命令并不陌生，它可以通过git stash pop命令方便的将之前的改动恢复回来。然而，如果工作目录中有未追踪的文件，默认情况下是不会将其存入临时储藏区的。为了能够临时保存未追踪的文件，可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git stash --include-untracked</span><br></pre></td></tr></table></figure>
+<p>命令。另外一个非常有用的命令是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git stash list</span><br></pre></td></tr></table></figure>
+<p>它能列出临时储藏区中的内容。</p>
+<h2 id="历史记录"><a href="#历史记录" class="headerlink" title="历史记录"></a>历史记录</h2><p>Git自带了非常强大的工具来查看项目以及特定文件的变更情况。我个人非常喜欢用其中的一个命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log --graph --decorate --oneline</span><br></pre></td></tr></table></figure>
+<p>用以展示经过修饰的提交历史。这个命令非常冗长，因此我建议可以为它创建一个别名（这可能是所有技巧中最有用的，因为许多命令都比较难记）。git log命令可以显示HEAD、所有提交的ID以及分支信息。有了这些信息之后，我们可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git show COMMIT_ID/HEAD/BRANCH</span><br></pre></td></tr></table></figure>
+<p>命令来显示更详细的信息。</p>
+<p>有的时候我们需要了解谁对一个文件做了哪些改动，这正是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git blame path/to/file</span><br></pre></td></tr></table></figure>
+<p>命令所提供的功能。</p>
+<p>之前提到过git diff命令，它也是一个查看历史的工具。例如，如果需要对比当前HEAD和前两个提交，可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git diff HEAD HEAD~2</span><br></pre></td></tr></table></figure>
+<p>为了能够展示每个提交中的更详细的更新信息，可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log --patch</span><br></pre></td></tr></table></figure>
+<p>命令。如果只想要看包含关键字“apple”的提交，使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log --grep apples --oneline</span><br></pre></td></tr></table></figure>
+<p>命令。</p>
+<p>需要查看历史提交记录中两个点之间的提交历史，我们可以用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log HEAD~5..HEAD^ --oneline</span><br></pre></td></tr></table></figure>
+<p>命令，对于分支可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log branch_name..master --oneline</span><br></pre></td></tr></table></figure>
+<p>修复错误提交</p>
+<p><strong>注意：以下一些命令会修改提交历史，使用前请确保了解后再执行。</strong></p>
+<p>当提交出错时，我们可能会希望能够修改提交历史。我不建议修改已经推送到远程仓库的提交历史（即使git允许这样做），但是对于本地仓库的提交历史，我个人认为还是可以修改的。通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+<p>命令可以删除前一次提交，并创建一个新的提交记录以替代之前的提交。</p>
+<p>另一个我最喜欢的git使用技巧是交互式变基(rebase）。它可以用来编辑提交信息，或者将多个提交压缩成一个提交，这也是我最喜欢的一个功能。为了在远程仓库origin的master分支之后的所有提交上执行交互式变基，可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git rebase -i origin/master</span><br></pre></td></tr></table></figure>
+<p>该命令会显示提交列表和可执行操作的详细描述。例如以下操作将会把多个提交压缩成一个：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 pick 80f2a48 Add feature X</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2 squash 2c74ea2 Add junit tests for feature X</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">3 squash 4k81nm5 Bugfix for feature X</span><br></pre></td></tr></table></figure>
+<p>最终的结果会是生成一个提交消息为“Add feature X”的提交。</p>
+<p>如果需要恢复一个有问题的提交，我们可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git revert COMMIT_ID</span><br></pre></td></tr></table></figure>
+<p>该命令会创建一个新的提交，让当前项目状态恢复到指定提交之前。</p>
+<p>如果我们在修复问题时出现了误操作，例如不小心删除了不应该删除的文件。我们还是可以从版本库中恢复回来，因为git保存了所有修改的版本，包括被移除的提交。git reflog命令就是用来实现这个功能的。</p>
+<h2 id="挑拣提交（cherry-pick）"><a href="#挑拣提交（cherry-pick）" class="headerlink" title="挑拣提交（cherry-pick）"></a>挑拣提交（cherry-pick）</h2><p>假设我们和同事在各自单独的分支上进行开发，同事有一个重要的提交我们也想应用到自己的分支上来，但是不需要对方分支的其他提交。这时我们可以使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git cherry-pick COMMIT_ID</span><br></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>以上都是我最喜欢的git实用技巧。希望你也能从中学到一些新知识。这些都是我在日常使用中发现非常有用的命令，它们对我的日常工作非常有用。如果你也有类似常用的git实用技巧或者常用命令，可以分享出来大家一起交流。</p>
+<p><strong>查看英文原文：</strong><a href="https://thecuriousdev.org/useful-git-tips-commands/" target="_blank" rel="noopener">Useful Git Tips and Commands</a></p>
+<p><strong>中文原文：</strong> <a href="http://www.infoq.com/cn/news/2018/08/git-techinique-commands-trick" target="_blank" rel="noopener">Git实用技巧和命令</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Git/">Git</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/news/2018/08/06/What-to-Know-Before-Making-the-Leap/" title="迁移到Serverless之前应该想清楚的几件事" itemprop="url">迁移到Serverless之前应该想清楚的几件事</a>
   </h1>
   <p class="article-author">By
@@ -925,78 +1051,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/news/2015/08/20/configure-salt/" title="配置 salt" itemprop="url">配置 salt</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="zhouyq" target="_blank" itemprop="author">zhouyq</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-20T09:31:26.000Z" itemprop="datePublished"> 发表于 2015-08-20</time>
-    
-  </p>
-</header>
-
-    <div class="article-content">
-        
-        <h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><p>客户端配置比较简单，只需要配置一下server的地址就可以了，复杂的配置等到以后遇到的适合在进行介绍</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置salt服务端地址</span></span><br><span class="line">vi /etc/salt/minion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里也可以写主机名</span></span><br><span class="line">master: 192.168.1.100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完成后重启服务</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
-<h2 id="服务端操作"><a href="#服务端操作" class="headerlink" title="服务端操作"></a>服务端操作</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看有哪些client发起了验证请求 </span></span><br><span class="line">salt-key list</span><br><span class="line"></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:  <span class="comment"># 这里列出了为被接受的client 主机名</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Rejected Keys:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接受所有验证请求</span></span><br><span class="line">salt-key -A</span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion host01 accepted.</span><br><span class="line">Key <span class="keyword">for</span> minion host02 accepted.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再查看一下</span></span><br><span class="line">salt-key list</span><br><span class="line">Accepted Keys:  <span class="comment"># 已经接受</span></span><br><span class="line">host01</span><br><span class="line">host02</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
-<h1 id="简单验证执行命令"><a href="#简单验证执行命令" class="headerlink" title="简单验证执行命令"></a>简单验证执行命令</h1><h2 id="远程执行命令"><a href="#远程执行命令" class="headerlink" title="远程执行命令"></a>远程执行命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">salt aws-bj* cmd.run uptime</span><br><span class="line">host01:</span><br><span class="line">     09:42:13 up  2:02,  2 users,  load average: 0.05, 0.03, 0.05</span><br><span class="line">host02:</span><br><span class="line">     09:42:12 up  1:28,  1 user,  load average: 0.00, 0.01, 0.05</span><br></pre></td></tr></table></figure>
-<h1 id="下篇预告"><a href="#下篇预告" class="headerlink" title="下篇预告"></a>下篇预告</h1><ul>
-<li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
-</ul>
-<h1 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h1><ul>
-<li><a href="http://salogs.com/news/2015/08/20/ubuntu-install-salt/">01. Ubuntu 安装salt</a></li>
-<li><a href="http://salogs.com/news/2015/08/20/configure-salt/">02. 配置 salt</a></li>
-<li><a href="http://salogs.com/news/2015/08/20/group-salt/">03. 将client主机分组</a></li>
-</ul>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="categories/运维自动化/">运维自动化</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/salt/">salt</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/">Next<span></span></a>
@@ -1089,7 +1143,15 @@
 			
 		
 			
+				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/array/" title="array">array<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
 			
 		
 			
@@ -1105,15 +1167,7 @@
 			
 		
 			
-				<li><a href="/tags/XtraBackup/" title="XtraBackup">XtraBackup<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/script/" title="script">script<sup>1</sup></a></li>
 			
 		
 			
@@ -1125,7 +1179,7 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
 			
 		
 			
@@ -1137,11 +1191,15 @@
 			
 		
 			
-				<li><a href="/tags/hexo-seo/" title="hexo,seo">hexo,seo<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/Kubernetes/" title="Kubernetes">Kubernetes<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
 			
 		
 		</ul>
